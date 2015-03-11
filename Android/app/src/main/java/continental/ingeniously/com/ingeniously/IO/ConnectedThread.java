@@ -54,7 +54,7 @@ public class ConnectedThread extends Thread{
                 //mainHandler.obtainMessage()
                 mainHandler.obtainMessage(Codes.MESSAGE_READ, bytes, -1, buffer).sendToTarget();
                 //DEBUG!!!
-                write("OK! This is the server".getBytes());
+                //write("OK! This is the server".getBytes());
 
             } catch (IOException e) {
                 e.printStackTrace();
