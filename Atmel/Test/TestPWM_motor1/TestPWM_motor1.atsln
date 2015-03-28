@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "TestPWM_motor1", "TestPWM_motor1\TestPWM_motor1.cproj", "{6A803B3B-4783-4091-A310-A6CEBA24535F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A803B3B-4783-4091-A310-A6CEBA24535F}.Debug|AVR.ActiveCfg = Debug|AVR
+		{6A803B3B-4783-4091-A310-A6CEBA24535F}.Debug|AVR.Build.0 = Debug|AVR
+		{6A803B3B-4783-4091-A310-A6CEBA24535F}.Release|AVR.ActiveCfg = Release|AVR
+		{6A803B3B-4783-4091-A310-A6CEBA24535F}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

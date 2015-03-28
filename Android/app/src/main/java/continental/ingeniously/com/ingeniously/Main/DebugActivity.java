@@ -37,4 +37,72 @@ public class DebugActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    public  String fetchCommand(String command) {
+
+        command = command.toLowerCase();
+        String commands[] = command.split("\\;");
+
+        for (int i=0 ; i <= commands.length-1 ; i++)
+        {
+           // System.out.println("Commands: "+commands[i]+"\n");
+
+            if(commands[i].startsWith("move=")) {
+
+                String tokens[] =  commands[i].split("\\=");
+                String parameterList = tokens[1];
+                move(parameterList);
+
+            }else if(commands[i].startsWith("search")){
+
+                serachForDevices();
+
+            }else {
+                System.out.println("Undefined command: \"" + commands[i] + "\" !");
+            }
+
+        }
+
+        return command;
+    }
+
+
+    private  void move(String parameterList) {
+
+        String parameters[] = parameterList.split("\\,");
+        int leftOrRight,forwardOrBackward,time;
+        try {
+            leftOrRight = Integer.parseInt(parameters[0]);
+            forwardOrBackward = Integer.parseInt(parameters[1]);
+            time = Integer.parseInt(parameters[2]);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        if(leftOrRight > 0 ) {
+            System.out.print("Moving left: " + leftOrRight);
+        }else {
+            System.out.print("Moving right: " + leftOrRight);
+        }
+
+        if(forwardOrBackward > 0) {
+            System.out.print(" - forward: " + forwardOrBackward);
+        }else {
+            System.out.print(" - backward: " + forwardOrBackward);
+        }
+
+        System.out.println(" - time:" + time);
+
+    }
+
+
+    private static void serachForDevices() {
+        // TODO Auto-generated method stub
+        System.out.println("This is where you implement the \"search\" function!");
+    }
+
+
 }

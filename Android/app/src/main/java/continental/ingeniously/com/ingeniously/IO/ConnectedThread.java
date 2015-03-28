@@ -51,13 +51,14 @@ public class ConnectedThread extends Thread{
                 // Read from the InputStream
                 bytes = mmInStream.read(buffer);
                 // Send the obtained bytes to the UI activity
-                //mainHandler.obtainMessage()
                 mainHandler.obtainMessage(Codes.MESSAGE_READ, bytes, -1, buffer).sendToTarget();
                 //DEBUG!!!
                 //write("OK! This is the server".getBytes());
 
             } catch (IOException e) {
                 e.printStackTrace();
+                System.err.println("Connection Lost!");
+                mainHandler.obtainMessage(Codes.CONNECTION_LOST);
                 break;
             }
         }

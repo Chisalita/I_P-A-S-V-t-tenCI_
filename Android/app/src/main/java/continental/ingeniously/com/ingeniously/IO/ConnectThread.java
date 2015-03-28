@@ -26,13 +26,15 @@ public class ConnectThread extends Thread {
         BluetoothSocket tmp = null;
         mmDevice = device;
         mainHandler = handler;
-        ParcelUuid uid[]=device.getUuids();
+
+
+        /*ParcelUuid uid[]=device.getUuids();
 
         if(uid !=null ) {
             for (int i = 0; i < device.getUuids().length; i++) {
                 System.out.println(device.getUuids()[i]);
             }
-        }
+        }*/
 
 
 
@@ -42,7 +44,7 @@ public class ConnectThread extends Thread {
         // Get a BluetoothSocket to connect with the given BluetoothDevice
         try {
             // MY_UUID is the app's UUID string, also used by the server code
-            tmp = device.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"));
+            tmp = device.createRfcommSocketToServiceRecord(Codes.MY_UUID);
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("ConnectThread: Unable to get bluetooth socket!");
@@ -60,7 +62,7 @@ public class ConnectThread extends Thread {
             mmSocket.connect();
         } catch (IOException connectException) {
             // Unable to connect; close the socket and get out
-            System.out.println("Connect Thread: can not connect!");
+            System.err.println("Connect Thread: can not connect!");
             try {
                 mmSocket.close();
             } catch (IOException closeException) {
