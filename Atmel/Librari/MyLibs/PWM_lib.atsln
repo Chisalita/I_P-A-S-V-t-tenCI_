@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Atmel Studio Solution File, Format Version 11.00
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "PWM_lib", "PWM_lib\PWM_lib.cproj", "{BCC05E37-4BE0-4D18-9E66-7B6391EDE3F6}"
 EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Communication", "Communication\Communication.cproj", "{2E5997AA-E1AA-4943-A70D-5CDE9FDF3532}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Sensors", "Sensors\Sensors.cproj", "{0AD098AD-F8AF-4B0B-8271-F76FA147A1FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -13,6 +17,14 @@ Global
 		{BCC05E37-4BE0-4D18-9E66-7B6391EDE3F6}.Debug|AVR.Build.0 = Debug|AVR
 		{BCC05E37-4BE0-4D18-9E66-7B6391EDE3F6}.Release|AVR.ActiveCfg = Release|AVR
 		{BCC05E37-4BE0-4D18-9E66-7B6391EDE3F6}.Release|AVR.Build.0 = Release|AVR
+		{2E5997AA-E1AA-4943-A70D-5CDE9FDF3532}.Debug|AVR.ActiveCfg = Debug|AVR
+		{2E5997AA-E1AA-4943-A70D-5CDE9FDF3532}.Debug|AVR.Build.0 = Debug|AVR
+		{2E5997AA-E1AA-4943-A70D-5CDE9FDF3532}.Release|AVR.ActiveCfg = Release|AVR
+		{2E5997AA-E1AA-4943-A70D-5CDE9FDF3532}.Release|AVR.Build.0 = Release|AVR
+		{0AD098AD-F8AF-4B0B-8271-F76FA147A1FA}.Debug|AVR.ActiveCfg = Debug|AVR
+		{0AD098AD-F8AF-4B0B-8271-F76FA147A1FA}.Debug|AVR.Build.0 = Debug|AVR
+		{0AD098AD-F8AF-4B0B-8271-F76FA147A1FA}.Release|AVR.ActiveCfg = Release|AVR
+		{0AD098AD-F8AF-4B0B-8271-F76FA147A1FA}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

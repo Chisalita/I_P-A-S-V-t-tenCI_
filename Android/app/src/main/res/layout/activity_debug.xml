@@ -12,7 +12,9 @@
         android:id="@+id/DebugCommand_editText"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:text="move=40,40,40"
+        />
 
     <Button
         android:layout_width="match_parent"
@@ -21,7 +23,10 @@
         android:id="@+id/debugSendCommand_button"
         android:layout_below="@+id/DebugCommand_editText"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:enabled="true"
+        android:onClick="SendCommand" />
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -35,6 +40,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:text="Response from debuging"
-            android:inputType="textMultiLine"/>
+            android:inputType="textMultiLine"
+            />
     </ScrollView>
 </RelativeLayout>

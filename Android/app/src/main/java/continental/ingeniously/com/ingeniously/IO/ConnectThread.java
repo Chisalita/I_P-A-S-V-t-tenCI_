@@ -81,10 +81,10 @@ public class ConnectThread extends Thread {
         connection.start();
     }
 
-    public void sendData(String s){
+    public void sendData(byte data[]){
 
         if(connection != null){
-            connection.write(s.getBytes());
+            connection.write(data);
         }
 
     }

@@ -22,6 +22,9 @@ import java.util.Set;
 
 import continental.ingeniously.com.ingeniously.IO.AcceptThread;
 import continental.ingeniously.com.ingeniously.IO.ConnectThread;
+import continental.ingeniously.com.ingeniously.IO.Protocol.BluetoothIO;
+import continental.ingeniously.com.ingeniously.IO.Protocol.Protocol;
+import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolCommand;
 import continental.ingeniously.com.ingeniously.R;
 
 
@@ -29,11 +32,12 @@ public class Main extends ActionBarActivity {
 
     private BluetoothAdapter mBluetoothAdapter;
     private ArrayAdapter<String> BluetoothDevicesArrayAdapter;
-    private ConnectThread connection;
+    //private ConnectThread connection;
     private ApplicationBrodcastReciver mReciver;
     private boolean isRegisterd = false;
     private EditText ParkPos;
     private EditText ExitNo;
+    private BluetoothIO bluetoothIO;
 
 
     private final Handler MainHandler = new Handler() {
@@ -45,8 +49,18 @@ public class Main extends ActionBarActivity {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    System.out.println("Recived: " + readMessage);
-                    ShowToastMesage("Recived: " + readMessage);
+                    System.out.print("Recived: ");
+                   // System.out.println("Recived: " + readMessage);
+                    for(int i=0; i<msg.arg1; i++){
+                        //if(readBuf[i]<'0'){
+                         //   System.out.print((char)(readBuf[i]+'0'));
+                        //}else{
+                            System.out.print((char)(readBuf[i]));
+                        //}
+                    }
+                    System.out.println("-----------------------------------------------------------");
+
+                    //ShowToastMesage("Recived: " + readMessage);
                     break;
                 case Codes.CONNECTION_ESTABLISHED:
                     System.out.println("Connection established");
@@ -55,7 +69,7 @@ public class Main extends ActionBarActivity {
                 case Codes.CONNECTION_LOST:
                     ShowToastMesage("Connection lost!!");
                     //Connection lost, so try to reconnect
-                    tryConnection();
+                    //tryConnection();
                     break;
             }
 
@@ -78,6 +92,7 @@ public class Main extends ActionBarActivity {
             Toast.makeText(this, "There is no Bluetooth on this device!", Toast.LENGTH_LONG).show();
             //finish();
         }
+
 
 
         ParkPos = (EditText) findViewById(R.id.ParkingPos_editText);
@@ -106,11 +121,14 @@ public class Main extends ActionBarActivity {
         //BluetoothDevicesArrayAdapter.add("Care/");
 
 
-        // TurnBluetoothOn();
+        TurnBluetoothOn();
         mReciver = new ApplicationBrodcastReciver(BluetoothDevicesArrayAdapter);
-        printPairedDevices();
+        //printPairedDevices();
 
-        tryConnection();
+        //tryConnection();
+         bluetoothIO = new BluetoothIO(this,mBluetoothAdapter, MainHandler);
+        bluetoothIO.connect();
+
 
 
         /*
@@ -176,6 +194,8 @@ public class Main extends ActionBarActivity {
 
         if (id == R.id.action_debug) {
             ///////TEST/////////
+            bluetoothIO.disconnect();
+
             Intent intent = new Intent(this, DebugActivity.class);
             startActivity(intent);
             /////////////////
@@ -188,13 +208,24 @@ public class Main extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (isRegisterd) {
+
+        if(bluetoothIO != null){
+            bluetoothIO.unRegisterBluetoothSearch();
+        }
+
+
+        /*if (isRegisterd) {
             unregisterReceiver(mReciver);
             isRegisterd = false;
         }
+        */
 
+        /*
         //Nu stiu daca este corect sau daca nu cumva ar trebui sa apelez cancel dintr-o metoda diferita
-        connection.cancel();
+        if(connection!=null) {
+            connection.cancel();
+        }*/
+
 
     }
 
@@ -234,7 +265,7 @@ public class Main extends ActionBarActivity {
 
     */
 
-    public void SearchForBluetoothDevices() {
+ /*   public void SearchForBluetoothDevices() {
         // Searches for bluetooth devices
 
 
@@ -249,6 +280,8 @@ public class Main extends ActionBarActivity {
         mBluetoothAdapter.startDiscovery();
 
     }
+*/
+
 
 /*
     public void TurnBluetoothOn(View v) {
@@ -282,7 +315,7 @@ public class Main extends ActionBarActivity {
 
     }
 
-    private void tryConnection() {
+/*    private void tryConnection() {
 
         BluetoothDevice carBluetooth = getPairedDeviceByName(Codes.CAR_BLUETOOTH_NAME);
         if (carBluetooth == null) {
@@ -297,6 +330,7 @@ public class Main extends ActionBarActivity {
         }
 
     }
+*/
 
     public void StartBluetoothServer(View v) {
         // Starts the bluetooth server for accepting connections
@@ -310,10 +344,10 @@ public class Main extends ActionBarActivity {
     }
 
     public void Start(View v) {
-        /*
-        System.out.println(ParkiPos_editText.getText());
-        System.out.println(ExitNo_editText.getText());
-        */
+/*
+        //System.out.println(ParkiPos_editText.getText());
+        //System.out.println(ExitNo_editText.getText());
+
         String message = ParkPos.getText().toString();
 
         if (message == null || message.isEmpty()) {
@@ -330,6 +364,7 @@ public class Main extends ActionBarActivity {
         }
     }
 
+
     public void ModeSelect(View v) {
         switch (v.getId()) {
             case R.id.Normal_radioButton:
@@ -340,10 +375,24 @@ public class Main extends ActionBarActivity {
                 break;
         }
 
+
+*/
+
+
+        String message = ParkPos.getText().toString();
+
+        if (message == null || message.isEmpty()) {
+            message = "S";
+        } else {
+            message = message.substring(0, 1);
+        }
+        ProtocolCommand comm = new ProtocolCommand((byte)10,(byte)38,(byte)((message.charAt(0)-'0')*10),(short)2056);
+
+        bluetoothIO.sendCommand(comm);
     }
 
 
-    private Set<BluetoothDevice> getPairedDevices() {
+/*    private Set<BluetoothDevice> getPairedDevices() {
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         Set<BluetoothDevice> mine = new HashSet<BluetoothDevice>();
 
@@ -361,8 +410,8 @@ public class Main extends ActionBarActivity {
 
         return mine;
     }
-
-    //#######################TEST###################################
+*/
+/*    //#######################TEST###################################
     private void printPairedDevices() {
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 
@@ -378,7 +427,7 @@ public class Main extends ActionBarActivity {
 
     }
     //#######################TEST###################################
-
+*/
 
     public void ShowToastMesage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();

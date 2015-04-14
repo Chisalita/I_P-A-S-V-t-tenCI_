@@ -30,6 +30,34 @@ OCR2B = ((duty/100.0) * 255);
 }
 	 
 
+void stopTurning(){
+		//setez directia initiala
+		MOTOR_LF_DIR_PORT2 |= (1<<MOTOR_LF_DIR_PIN2x);
+		MOTOR_LF_DIR_PORT1 &= ~(1<<MOTOR_LF_DIR_PIN1x);
+		MOTOR_LB_DIR_PORT2 |= (1<<MOTOR_LB_DIR_PIN2x);
+		MOTOR_LB_DIR_PORT1 &= ~(1<<MOTOR_LB_DIR_PIN1x);
+		
+		
+		MOTOR_RF_DIR_PORT2 |= (1<<MOTOR_RF_DIR_PIN2x);
+		MOTOR_RF_DIR_PORT1 &= ~(1<<MOTOR_RF_DIR_PIN1x);
+		MOTOR_RB_DIR_PORT2 |= (1<<MOTOR_RB_DIR_PIN2x);
+		MOTOR_RB_DIR_PORT1 &= ~(1<<MOTOR_RB_DIR_PIN1x);
+	
+	
+}
+
+void turnLeft(){
+	changeMotorDirectionLB();
+	changeMotorDirectionLF();
+	
+}
+
+void turnRight(){
+	changeMotorDirectionRB();
+	changeMotorDirectionRF();
+}
+
+
 void changeMotorDirectionLF(){
 	MOTOR_LF_DIR_PIN1 |= (1<<MOTOR_LF_DIR_PIN1x);
 	MOTOR_LF_DIR_PIN2 |= (1<<MOTOR_LF_DIR_PIN2x);
@@ -78,10 +106,10 @@ void initTimer0(){
 	MOTOR_LB_DIR_DDR2 |= (1<<MOTOR_LB_DIR_PIN1x);
 	
 	//setez directia initiala
-	MOTOR_LF_DIR_PORT1 |= (1<<MOTOR_LF_DIR_PIN1x);
-	MOTOR_LF_DIR_PORT2 &= ~(1<<MOTOR_LF_DIR_PIN2x);
-	MOTOR_LB_DIR_PORT1 |= (1<<MOTOR_LB_DIR_PIN1x);
-	MOTOR_LB_DIR_PORT2 &= ~(1<<MOTOR_LB_DIR_PIN2x);
+	MOTOR_LF_DIR_PORT2 |= (1<<MOTOR_LF_DIR_PIN2x);
+	MOTOR_LF_DIR_PORT1 &= ~(1<<MOTOR_LF_DIR_PIN1x);
+	MOTOR_LB_DIR_PORT2 |= (1<<MOTOR_LB_DIR_PIN2x);
+	MOTOR_LB_DIR_PORT1 &= ~(1<<MOTOR_LB_DIR_PIN1x);
 	
 	
 	//Pt portul OC0A
@@ -123,10 +151,10 @@ void initTimer2(){
 	MOTOR_RB_DIR_DDR2 |= (1<<MOTOR_RB_DIR_PIN2x);
 	
 	//setez directia initiala
-	MOTOR_RF_DIR_PORT1 |= (1<<MOTOR_RF_DIR_PIN1x);
-	MOTOR_RF_DIR_PORT2 &= ~(1<<MOTOR_RF_DIR_PIN2x);
-	MOTOR_RB_DIR_PORT1 |= (1<<MOTOR_RB_DIR_PIN1x);
-	MOTOR_RB_DIR_PORT2 &= ~(1<<MOTOR_RB_DIR_PIN2x);	
+	MOTOR_RF_DIR_PORT2 |= (1<<MOTOR_RF_DIR_PIN2x);
+	MOTOR_RF_DIR_PORT1 &= ~(1<<MOTOR_RF_DIR_PIN1x);
+	MOTOR_RB_DIR_PORT2 |= (1<<MOTOR_RB_DIR_PIN2x);
+	MOTOR_RB_DIR_PORT1 &= ~(1<<MOTOR_RB_DIR_PIN1x);	
 	
 	
 	

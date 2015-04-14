@@ -13,6 +13,8 @@ void changePwm_MotorLF(int duty);
 void changePwm_MotorLB(int duty);
 void changePwm_MotorRF(int duty);
 void changePwm_MotorRB(int duty);
+void turnLeft();
+void turnRight();
 
 
 void initTimer0();
@@ -24,6 +26,7 @@ void changeMotorDirectionLF();
 void changeMotorDirectionLB();
 void changeMotorDirectionRF();
 void changeMotorDirectionRB();
+void stopTurning();
 
 
 #endif /* PWM_LIB_H_ */

@@ -1,13 +1,46 @@
 #ifndef _IODEFINITIONS_INCLUDE
 #define _IODEFINITIONS_INCLUDE
 
+//Define the CPU frequency if it is not already defined
+#ifndef F_CPU
+#define F_CPU 8000000
+#endif
+
+
 #include <avr/io.h>
 
-//LED pins, directions and potrs
-#define LED_CMD_DDR DDRB
+
+// USART pins, directions and ports
+#define USART0_RX_PINx PIND0
+#define USART0_RX_PIN PIND
+#define USART0_RX_DDR DDRD
+#define USART0_RX_PORT PORTD
+
+#define USART0_TX_PINx PIND1
+#define USART0_TX_PIN PIND
+#define USART0_TX_DDR DDRD
+#define USART0_TX_PORT PORTD
+
+#define USART1_RX_PINx PIND2
+#define USART1_RX_PIN PIND
+#define USART1_RX_DDR DDRD
+#define USART1_RX_PORT PORTD
+
+#define USART1_TX_PINx PIND3
+#define USART1_TX_PIN PIND
+#define USART1_TX_DDR DDRD
+#define USART1_TX_PORT PORTD
+
+//LED pins, directions and ports
+/*#define LED_CMD_DDR DDRB
 #define LED_CMD_PIN PINB
 #define LED_CMD_PINx PINB1
 #define LED_CMD_PORT PORTB
+*/
+#define LED_CMD_DDR DDRA
+#define LED_CMD_PIN PINA
+#define LED_CMD_PINx PINA7
+#define LED_CMD_PORT PORTA
 
 //Pwm pins, directions and ports(L = left, R = right, F = forward, B = back)
 #define PWM_MOTOR_LF_PINx PINB3
@@ -31,8 +64,10 @@
 #define PWM_MOTOR_RB_PORT PORTD
 
 //direction select pins, directions and ports (L = left, R = right, F = forward, B = back)
-#define MOTOR_LF_DIR_PIN1x PIND0
-#define MOTOR_LF_DIR_PIN2x PIND1
+//#define MOTOR_LF_DIR_PIN1x PIND0
+//#define MOTOR_LF_DIR_PIN2x PIND1
+#define MOTOR_LF_DIR_PIN1x PINB0
+#define MOTOR_LF_DIR_PIN2x PINB1
 #define MOTOR_LB_DIR_PIN1x PINB2
 #define MOTOR_LB_DIR_PIN2x PINB5
 #define MOTOR_RF_DIR_PIN1x PINC6
@@ -40,8 +75,10 @@
 #define MOTOR_RB_DIR_PIN1x PINC0
 #define MOTOR_RB_DIR_PIN2x PINC1
 
-#define MOTOR_LF_DIR_PIN1 PIND
-#define MOTOR_LF_DIR_PIN2 PIND
+//#define MOTOR_LF_DIR_PIN1 PIND
+//#define MOTOR_LF_DIR_PIN2 PIND
+#define MOTOR_LF_DIR_PIN1 PINB
+#define MOTOR_LF_DIR_PIN2 PINB
 #define MOTOR_LB_DIR_PIN1 PINB
 #define MOTOR_LB_DIR_PIN2 PINB
 #define MOTOR_RF_DIR_PIN1 PINC
@@ -49,8 +86,10 @@
 #define MOTOR_RB_DIR_PIN1 PINC
 #define MOTOR_RB_DIR_PIN2 PINC
 
-#define MOTOR_LF_DIR_DDR1 DDRD
-#define MOTOR_LF_DIR_DDR2 DDRD
+//#define MOTOR_LF_DIR_DDR1 DDRD
+//#define MOTOR_LF_DIR_DDR2 DDRD
+#define MOTOR_LF_DIR_DDR1 DDRB
+#define MOTOR_LF_DIR_DDR2 DDRB
 #define MOTOR_LB_DIR_DDR1 DDRB
 #define MOTOR_LB_DIR_DDR2 DDRB
 #define MOTOR_RF_DIR_DDR1 DDRC
@@ -58,8 +97,10 @@
 #define MOTOR_RB_DIR_DDR1 DDRC
 #define MOTOR_RB_DIR_DDR2 DDRC
 
-#define MOTOR_LF_DIR_PORT1 PORTD
-#define MOTOR_LF_DIR_PORT2 PORTD
+//#define MOTOR_LF_DIR_PORT1 PORTD
+//#define MOTOR_LF_DIR_PORT2 PORTD
+#define MOTOR_LF_DIR_PORT1 PORTB
+#define MOTOR_LF_DIR_PORT2 PORTB
 #define MOTOR_LB_DIR_PORT1 PORTB
 #define MOTOR_LB_DIR_PORT2 PORTB
 #define MOTOR_RF_DIR_PORT1 PORTC
@@ -68,9 +109,25 @@
 #define MOTOR_RB_DIR_PORT2 PORTC
 
 //Sensor pins, directions and ports
+#define IR_SENSOR_F_PINx PINA0
+#define IR_SENSOR_F_PIN PINA
+#define IR_SENSOR_F_PORT PORTA
+#define IR_SENSOR_F_DDR DDRA
 
+#define IR_SENSOR_R_PINx PINA1
+#define IR_SENSOR_R_PIN PINA
+#define IR_SENSOR_R_PORT PORTA
+#define IR_SENSOR_R_DDR DDRA
 
+#define IR_SENSOR_B_PINx PINA2
+#define IR_SENSOR_B_PIN PINA
+#define IR_SENSOR_B_PORT PORTA
+#define IR_SENSOR_B_DDR DDRA
 
+#define IR_SENSOR_L_PINx PINA3
+#define IR_SENSOR_L_PIN PINA
+#define IR_SENSOR_L_PORT PORTA
+#define IR_SENSOR_L_DDR DDRA
 
 
 //////////////////////////////////////////////////////////////////////////
