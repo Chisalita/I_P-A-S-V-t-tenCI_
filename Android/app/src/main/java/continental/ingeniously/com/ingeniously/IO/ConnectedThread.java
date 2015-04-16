@@ -67,6 +67,16 @@ public class ConnectedThread extends Thread{
     /* Call this from the main activity to send data to the remote device */
     public void write(byte[] bytes) {
         try {
+            //////////////
+            System.out.print("CommandTRUELY: ");
+            for(int i=0; i<bytes.length; i++){
+                if(bytes[i]<0){
+                    bytes[i]+=256;
+                }
+                System.out.print(String.format("%02X ", bytes[i])+";" );
+            }
+            System.out.print("\n");
+            ////////////////
             mmOutStream.write(bytes);
         } catch (IOException e) {
             e.printStackTrace();

@@ -16,7 +16,7 @@
 #define COMMAND_SIZE 7
 
 typedef struct{
-	int8_t data;
+	uint8_t data;
 	int8_t pack_no;
 } info;
 
@@ -105,14 +105,30 @@ int8_t checkPackIsFullLength(uint8_t lastPackPos){
 
 command fetchCommand(uint8_t lastPackPos, uint8_t *CRC_correct){
 	
+	
+	//Aici se poate sa mai fie greseli din cauza semnelor (signed, unsigned)
 	command comm = {.header = 0, .right = 0, .forward = 0, .time = 0, .CRC = 0};
 	comm.header = rxBuffer[lastPackPosInBuff % RX_BUFFER_SIZE].data;
 	comm.right = (int8_t) rxBuffer[(lastPackPosInBuff+1) % RX_BUFFER_SIZE].data; //recover the sign
 	comm.forward = (int8_t) rxBuffer[(lastPackPosInBuff+2) % RX_BUFFER_SIZE].data;
+	
+	/*int16_t x = 0;
+	int16_t h = 0;
+	h =   rxBuffer[(lastPackPosInBuff+3) % RX_BUFFER_SIZE].data;
+	x=  h<<8;
+	x |= rxBuffer[(lastPackPosInBuff+4) % RX_BUFFER_SIZE].data;
+	*/
 	comm.time = rxBuffer[(lastPackPosInBuff+3) % RX_BUFFER_SIZE].data << 8;
 	comm.time |= rxBuffer[(lastPackPosInBuff+4) % RX_BUFFER_SIZE].data;
+	//comm.time = x;
 	comm.CRC = rxBuffer[(lastPackPosInBuff+5) % RX_BUFFER_SIZE].data << 8;
 	comm.CRC |= rxBuffer[(lastPackPosInBuff+6) % RX_BUFFER_SIZE].data;
+
+	//sendResponse((x & 0xff00) >> 8);
+	//h = comm.time;
+	//sendResponse(h>>8);
+	//sendResponse( rxBuffer[(lastPackPosInBuff+3) % RX_BUFFER_SIZE].data);
+	//sendResponse(x & 0xff);
 
 	int8_t i;
 	//uint16_t crc = comm.CRC;
@@ -132,7 +148,7 @@ command fetchCommand(uint8_t lastPackPos, uint8_t *CRC_correct){
 }
 
 
-void sendResponse(char r){
+void sendResponse(uint8_t r){
 	
 //UDR1 = r;
 	if (UCSR1A & (1<<UDRE1))

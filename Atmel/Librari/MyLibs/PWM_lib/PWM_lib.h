@@ -28,5 +28,7 @@ void changeMotorDirectionRF();
 void changeMotorDirectionRB();
 void stopTurning();
 
+void move(uint16_t argc, int16_t* argv);
+void turnRight_90degrees();
 
 #endif /* PWM_LIB_H_ */

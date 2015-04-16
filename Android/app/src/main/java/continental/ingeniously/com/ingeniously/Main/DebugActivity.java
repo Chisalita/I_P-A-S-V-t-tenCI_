@@ -9,15 +9,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import continental.ingeniously.com.ingeniously.IO.Protocol.BluetoothIO;
 import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolCommand;
+import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolObserver;
+import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolResponse;
 import continental.ingeniously.com.ingeniously.R;
 
-public class DebugActivity extends ActionBarActivity {
+public class DebugActivity extends ActionBarActivity implements ProtocolObserver {
 
     private EditText commandPrompt;
     private BluetoothAdapter mBluetoothAdapter;
@@ -25,6 +28,7 @@ public class DebugActivity extends ActionBarActivity {
     private ArrayAdapter<String> BluetoothDevicesArrayAdapter;
     private BluetoothIO bluetoothIO;
 
+    /*
     private final Handler DebugHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -32,10 +36,19 @@ public class DebugActivity extends ActionBarActivity {
             switch (msg.what) {
                 case Codes.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
+                    /*
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     System.out.println("Recived: " + readMessage);
+
+                    for(int i= 0; i< msg.arg1; i++){
+                        System.out.print(String.format("%02X ", readBuf[i]));
+                    }
+
+                    System.out.println("---------------------------");
                     //ShowToastMesage("Recived: " + readMessage);
+                    */
+                    /*
                     break;
                 case Codes.CONNECTION_ESTABLISHED:
                     System.out.println("Connection established");
@@ -51,12 +64,15 @@ public class DebugActivity extends ActionBarActivity {
         }
     };
 
-
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
+
+        // Do not let screen to be turned off
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         commandPrompt = (EditText) findViewById(R.id.DebugCommand_editText);
 
@@ -72,7 +88,7 @@ public class DebugActivity extends ActionBarActivity {
         //printPairedDevices();
 
         //tryConnection();
-        bluetoothIO = new BluetoothIO(this,mBluetoothAdapter, DebugHandler);
+        bluetoothIO = new BluetoothIO(this,mBluetoothAdapter);//, DebugHandler);
         bluetoothIO.connect();
 
 
@@ -197,4 +213,8 @@ public class DebugActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    public void responseArrived(ProtocolResponse response) {
+
+    }
 }

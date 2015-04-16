@@ -18,7 +18,17 @@ typedef struct{
 	uint16_t CRC; 
 	} command;
 
-
+/*
+typedef struct{
+	uint8_t header;
+	uint8_t no_of_sensors;
+	////sensor information
+	uint8_t sensorInfo_p[no_of_sensors];
+	///
+	uint16_t time;
+	uint16_t CRC;	
+	} response;
+*/
 
 void initUSART1(int baud);
 //char getLastChar();
@@ -28,6 +38,6 @@ command fetchCommand(uint8_t lastPackPos, uint8_t *CRC_correct);
 
 
 //////////////////////////////////////////////////////////////////////////TEST
-void sendResponse(char r);
+void sendResponse(uint8_t r);
 
 #endif /* COMMUNICATION_H_ */

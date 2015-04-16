@@ -9,9 +9,9 @@
 
 #include <io_definitions.h>
 #include <PWM_lib/PWM_lib.h>
-//#include "io_definitions.h"
-//#include "PWM_lib.h"
-
+#include <Time/time.h>
+////
+#include <Communication/communication.h> //TESTE
 
 void changePwm_MotorLF(int duty){	
 	OCR0A = ((duty/100.0) * 255);
@@ -30,6 +30,25 @@ OCR2B = ((duty/100.0) * 255);
 }
 	 
 
+
+void turnRight_90degrees(){
+	
+	
+	
+	int16_t arg1[] = {0xB0B0, 0x5050};
+	/*int8_t inv = -80;
+	//arg1[1] = inv << 8;
+	arg1[1] |= inv;
+	arg1[1] <<=8;
+	arg1[1] |= inv;
+		*/
+	int16_t arg2[] = {0, 0};
+	executeCommandForTime(&move, &move, 2, arg1,2, arg2,90);
+	
+	
+}
+
+
 void stopTurning(){
 		//setez directia initiala
 		MOTOR_LF_DIR_PORT2 |= (1<<MOTOR_LF_DIR_PIN2x);
@@ -45,6 +64,67 @@ void stopTurning(){
 	
 	
 }
+
+void move(uint16_t argc, int16_t* argv){
+	//setez directia initiala
+	MOTOR_LF_DIR_PORT2 |= (1<<MOTOR_LF_DIR_PIN2x);
+	MOTOR_LF_DIR_PORT1 &= ~(1<<MOTOR_LF_DIR_PIN1x);
+	MOTOR_LB_DIR_PORT2 |= (1<<MOTOR_LB_DIR_PIN2x);
+	MOTOR_LB_DIR_PORT1 &= ~(1<<MOTOR_LB_DIR_PIN1x);
+	
+	
+	MOTOR_RF_DIR_PORT2 |= (1<<MOTOR_RF_DIR_PIN2x);
+	MOTOR_RF_DIR_PORT1 &= ~(1<<MOTOR_RF_DIR_PIN1x);
+	MOTOR_RB_DIR_PORT2 |= (1<<MOTOR_RB_DIR_PIN2x);
+	MOTOR_RB_DIR_PORT1 &= ~(1<<MOTOR_RB_DIR_PIN1x);
+	
+	changePwm_MotorLF(argv[0] >> 8);
+	changePwm_MotorLB(argv[0] & 0xff);
+	changePwm_MotorRF(argv[1] >> 8);
+	changePwm_MotorRB(argv[1] & 0xff);
+	
+	int8_t d;
+	
+	d = argv[0] >> 8;
+	
+	if (d < 0){
+		d=-d;
+		changeMotorDirectionLF();
+	}
+	changePwm_MotorLF(d);
+	
+	
+	d = argv[0] & 0xff;
+	
+	if (d < 0){
+		d=-d;
+		changeMotorDirectionLB();
+	}
+	changePwm_MotorLB(d);
+
+	d = argv[1] >> 8;
+	if (d < 0){
+		d=-d;
+		changeMotorDirectionRF();
+	}
+	changePwm_MotorRF(d);
+	
+	d = argv[1] & 0xff;
+	
+	if (d < 0){
+		d=-d;
+		changeMotorDirectionRB();
+	}	
+	changePwm_MotorRB(d);
+	
+	sendResponse(argv[0] >> 8);
+	sendResponse(argv[0] & 0xff);
+	sendResponse(argv[1] >>8);
+	sendResponse(argv[1] & 0xff);
+	
+	
+}
+
 
 void turnLeft(){
 	changeMotorDirectionLB();

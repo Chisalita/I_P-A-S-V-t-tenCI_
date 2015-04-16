@@ -25,10 +25,13 @@ import continental.ingeniously.com.ingeniously.IO.ConnectThread;
 import continental.ingeniously.com.ingeniously.IO.Protocol.BluetoothIO;
 import continental.ingeniously.com.ingeniously.IO.Protocol.Protocol;
 import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolCommand;
+import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolObservable;
+import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolObserver;
+import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolResponse;
 import continental.ingeniously.com.ingeniously.R;
 
 
-public class Main extends ActionBarActivity {
+public class Main extends ActionBarActivity implements ProtocolObserver {
 
     private BluetoothAdapter mBluetoothAdapter;
     private ArrayAdapter<String> BluetoothDevicesArrayAdapter;
@@ -39,7 +42,7 @@ public class Main extends ActionBarActivity {
     private EditText ExitNo;
     private BluetoothIO bluetoothIO;
 
-
+/*
     private final Handler MainHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -75,6 +78,7 @@ public class Main extends ActionBarActivity {
 
         }
     };
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +96,6 @@ public class Main extends ActionBarActivity {
             Toast.makeText(this, "There is no Bluetooth on this device!", Toast.LENGTH_LONG).show();
             //finish();
         }
-
 
 
         ParkPos = (EditText) findViewById(R.id.ParkingPos_editText);
@@ -126,7 +129,7 @@ public class Main extends ActionBarActivity {
         //printPairedDevices();
 
         //tryConnection();
-         bluetoothIO = new BluetoothIO(this,mBluetoothAdapter, MainHandler);
+        bluetoothIO = new BluetoothIO(this, mBluetoothAdapter);//, MainHandler);
         bluetoothIO.connect();
 
 
@@ -209,7 +212,7 @@ public class Main extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        if(bluetoothIO != null){
+        if (bluetoothIO != null) {
             bluetoothIO.unRegisterBluetoothSearch();
         }
 
@@ -332,6 +335,7 @@ public class Main extends ActionBarActivity {
     }
 */
 
+    /*
     public void StartBluetoothServer(View v) {
         // Starts the bluetooth server for accepting connections
 
@@ -342,6 +346,7 @@ public class Main extends ActionBarActivity {
         serverAccepter.start();
 
     }
+*/
 
     public void Start(View v) {
 /*
@@ -386,7 +391,7 @@ public class Main extends ActionBarActivity {
         } else {
             message = message.substring(0, 1);
         }
-        ProtocolCommand comm = new ProtocolCommand((byte)10,(byte)38,(byte)((message.charAt(0)-'0')*10),(short)2056);
+        ProtocolCommand comm = new ProtocolCommand((byte) 10, (byte) 38, (byte) ((message.charAt(0) - '0') * 10), (short) 2056);
 
         bluetoothIO.sendCommand(comm);
     }
@@ -450,4 +455,8 @@ public class Main extends ActionBarActivity {
         return null;
     }
 
+    @Override
+    public void responseArrived(ProtocolResponse response) {
+
+    }
 }

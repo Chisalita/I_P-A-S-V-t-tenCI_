@@ -6,6 +6,10 @@
 #define F_CPU 8000000
 #endif
 
+#ifndef PRESCALER_TIMER_0_1
+#define PRESCALER_TIMER_0_1 64
+#endif
+
 
 #include <avr/io.h>
 

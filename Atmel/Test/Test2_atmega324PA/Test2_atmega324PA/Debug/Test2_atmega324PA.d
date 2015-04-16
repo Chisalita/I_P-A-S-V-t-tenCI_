@@ -18,7 +18,8 @@ Test2_atmega324PA.d Test2_atmega324PA.o: .././Test2_atmega324PA.c \
  ../../../../Librari/MyLibs/io_definitions.h \
  ../../../../Librari/MyLibs/PWM_lib/PWM_lib.h \
  ../../../../Librari/MyLibs/Communication/communication.h \
- ../../../../Librari/MyLibs/Sensors/sensors.h
+ ../../../../Librari/MyLibs/Sensors/sensors.h \
+ ../../../../Librari/MyLibs/Time/time.h
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -59,3 +60,5 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 ../../../../Librari/MyLibs/Communication/communication.h:
 
 ../../../../Librari/MyLibs/Sensors/sensors.h:
+
+../../../../Librari/MyLibs/Time/time.h:

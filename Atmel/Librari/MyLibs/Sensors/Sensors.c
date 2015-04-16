@@ -255,7 +255,7 @@ ISR(ADC_vect){
 }
 
 ISR(USART0_RX_vect){
-LED_CMD_PIN |= (1<<LED_CMD_PINx);
+
 
 	uint8_t data;
 	data = UDR0;

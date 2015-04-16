@@ -110,6 +110,7 @@
             <Value>libPWM_lib.a</Value>
             <Value>libSensors.a</Value>
             <Value>libCommunication.a</Value>
+            <Value>libTime.a</Value>
           </ListValues>
         </avrgcc.linker.libraries.Libraries>
         <avrgcc.linker.libraries.LibrarySearchPaths>
@@ -118,6 +119,7 @@
             <Value>G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug</Value>
             <Value>G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug</Value>
             <Value>G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug</Value>
+            <Value>G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug</Value>
           </ListValues>
         </avrgcc.linker.libraries.LibrarySearchPaths>
       </AvrGcc>
@@ -154,6 +156,7 @@
             <Value>libPWM_lib.a</Value>
             <Value>libSensors.a</Value>
             <Value>libCommunication.a</Value>
+            <Value>libTime.a</Value>
           </ListValues>
         </avrgcc.linker.libraries.Libraries>
         <avrgcc.linker.libraries.LibrarySearchPaths>
@@ -163,6 +166,7 @@
             <Value>G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug</Value>
             <Value>G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug</Value>
             <Value>G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug</Value>
+            <Value>G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug</Value>
           </ListValues>
         </avrgcc.linker.libraries.LibrarySearchPaths>
         <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
