@@ -8,7 +8,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <io_definitions.h>
-#define MAX_ARGS 10
+#include <Time/time.h>
+
 ////
 #include <Communication/communication.h> //TEST
 

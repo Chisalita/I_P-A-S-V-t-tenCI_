@@ -9,6 +9,7 @@ import android.os.Message;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import java.util.Observer;
 import java.util.Set;
 
 import continental.ingeniously.com.ingeniously.IO.ConnectThread;
@@ -28,6 +29,11 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
     private ArrayAdapter<String> BluetoothDevicesArrayAdapter;
     private boolean isRegistered = false;
     private ProtocolResponse currentResponse = new ProtocolResponse();
+
+    //this stores the last response only if it is valid!
+    private ProtocolResponse lastResponse = new ProtocolResponse();
+    //private Class<? extends ProtocolObserver> observer;
+    private ProtocolObserver observer;
 
     private boolean isResponseStarted = false;
 
@@ -70,13 +76,26 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
     };
 
     private void decodeResponseData(byte[] data, int length) {
+
+        for(int i=0; i< length; i++){
+            System.out.println("Am primit: "+String.format(" %02X", data[i]));
+        }
+
+
             if(!isResponseStarted){ //if the response starts now
                 isResponseStarted = true;
 
                 switch (length){
                     default:
                     case 2:
-                        currentResponse.setNo_of_sensors(data[1]);
+                        if(data[1]>=0){
+                            currentResponse.setNo_of_sensors(data[1]);
+                        }else{
+                            //discard
+                            currentResponse = new ProtocolResponse();
+                            isResponseStarted = false;
+                            return;
+                        }
                     case 1:
                         currentResponse.setHeader(data[0]);
                         break;
@@ -88,11 +107,23 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
 
                     if(length >= no_of_Sens+2){ // iterate all the sensor info
                         for(int i = 0; i<no_of_Sens; i++){
-                            currentResponse.setInfo(data[2+i],i);
+                            try {
+                                currentResponse.setInfo(data[2+i],i);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                                discardCurrentResponse();
+                                return;
+                            }
                         }
-                    }else{// iterate just as much that we have bow
+                    }else{// iterate just as much that we have now
                         for(int i = 0; i<length-2; i++){
-                            currentResponse.setInfo(data[2+i],i);
+                            try {
+                                currentResponse.setInfo(data[2+i],i);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                discardCurrentResponse();
+                                return;
+                            }
                         }
                     }
 
@@ -110,32 +141,105 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
                     }else if(length > no_of_Sens+4){
                         short c =0;
                         c |= (data[no_of_Sens+4] << 8);
-                        c |= data[no_of_Sens+5];
+                        c |= data[(no_of_Sens+5) & 0xff];
                         currentResponse.setCRC(c);
 
                         // the response is over
                         if(currentResponse.verifyCRC()){
                             notifyResponseArrived(currentResponse);
                         }
-                        isResponseStarted = false;
-                        currentResponse = new ProtocolResponse(); //CRC is not valid is also discards the response
+                        discardCurrentResponse();
+                        //isResponseStarted = false;
+                        //currentResponse = new ProtocolResponse(); //if CRC is not valid this also discards the response
                     }
 
                 }
 
             }else{ // it is in the middle of the response
+                for(int i=0; i<length; i++){//for all data received check where to put in response
 
+                    int index_pos = currentResponse.getIndex();
+                    switch (index_pos){
+                        case 0:
+                            currentResponse.setHeader(data[i]);
+                        case 1:
+                            if(data[i]>=0){
+                                currentResponse.setNo_of_sensors(data[i]);
+                            }else{
+                                //discard
+                                discardCurrentResponse();
+                                //currentResponse = new ProtocolResponse();
+                                //isResponseStarted = false;
+                            }
+                            break;
+                        case 2:
+                            try {
+                                currentResponse.setInfo(data[i],0);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                discardCurrentResponse();
+                                return;
+                            }
+                            break;
+                        default:
+                            byte no_of_sens = currentResponse.getNo_of_sensors();
+
+                            if(index_pos < (no_of_sens + 2)){ //continue setting info
+                                System.out.println("index_pos < (no_of_sens + 3)\t"+index_pos+"\t< "+no_of_sens);
+                                try {
+                                    currentResponse.setInfo(data[i], index_pos-2);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    discardCurrentResponse();
+                                }
+
+                            }else {//finished setting the info
+                                if(index_pos == (no_of_sens+2)){
+                                    currentResponse.setTime_High(data[i]);
+                                }else if(index_pos == (no_of_sens+3)){
+                                    currentResponse.setTime_Low(data[i]);
+                                }else if(index_pos == (no_of_sens+4)){
+                                    currentResponse.setCRC_High(data[i]);
+                                    System.out.println("CRC_high: "+String.format(" %02X", data[i]));
+                                }else if(index_pos == (no_of_sens+5)){
+                                    System.out.println("CRC_low: "+String.format(" %02X", data[i]));
+                                    currentResponse.setCRC_Low(data[i]);
+                                    // the response is complete
+                                    System.out.println("crc"+currentResponse.getCRC()+"CRC corect>: "+currentResponse.verifyCRC());
+                                    if(currentResponse.verifyCRC()){
+                                        notifyResponseArrived(currentResponse);
+                                        System.out.println("gata  e bun");
+                                    }
+                                    System.out.println("discarded");
+                                    discardCurrentResponse();
+                                    //isResponseStarted = false;
+                                    //currentResponse = new ProtocolResponse(); //if CRC is not valid this also discards the response
+
+                                }else { //something went wrong
+                                    System.out.println("something went wrong 2");
+                                    discardCurrentResponse();
+                                    return;
+                                    //currentResponse = new ProtocolResponse();//discard the current response
+                                    //isResponseStarted = false;
+                                }
+
+                            }
+
+                    }
+
+                }
 
             }
 
 
     }
 
-    public BluetoothIO(Context context, BluetoothAdapter ba){//, Handler handler){
+    public  BluetoothIO(Context context, ProtocolObserver theClass, BluetoothAdapter ba){//, Handler handler){
         //mainHandler = handler;
         mBluetoothAdapter  = ba;
         mReciver = new ApplicationBrodcastReciver(BluetoothDevicesArrayAdapter);
         mainContext = context;
+        observer = theClass;
     }
 
 
@@ -245,6 +349,11 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
 
     }
 
+    private void discardCurrentResponse(){
+        currentResponse = new ProtocolResponse();
+        isResponseStarted = false;
+    }
+
     private void ShowToastMesage(String s) {
         Toast.makeText(mainContext, s, Toast.LENGTH_SHORT).show();
 
@@ -252,9 +361,9 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
 
     @Override
     public void notifyResponseArrived(ProtocolResponse response) {
-        ProtocolResponse resp = new ProtocolResponse(response);
+        lastResponse = new ProtocolResponse(response);
         /// notify...
-
-
+        observer.responseArrived(lastResponse);
+        //observer.cast(observer).responseArrived(lastResponse);
     }
 }

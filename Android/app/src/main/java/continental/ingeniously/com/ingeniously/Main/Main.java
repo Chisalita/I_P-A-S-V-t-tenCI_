@@ -129,7 +129,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
         //printPairedDevices();
 
         //tryConnection();
-        bluetoothIO = new BluetoothIO(this, mBluetoothAdapter);//, MainHandler);
+        bluetoothIO = new BluetoothIO(this, this,mBluetoothAdapter);//, MainHandler);
         bluetoothIO.connect();
 
 

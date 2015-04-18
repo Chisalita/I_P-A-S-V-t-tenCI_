@@ -40,7 +40,7 @@ public class CRC16 {
             0x8201, 0x42C0, 0x4380, 0x8341, 0x4100, 0x81C1, 0x8081, 0x4040,
     };
 
-    public static short crc16(final byte[] buffer){
+    public static short generateCrc16(final byte[] buffer){
 
         int crc = 0xFFFF;
 
@@ -54,6 +54,23 @@ public class CRC16 {
 
         return crc_invers;
     }
+
+    public static short runCrc16Check(final byte[] buffer){
+
+        int crc = 0xFFFF;
+
+        for (byte b : buffer) {
+            //System.out.println("CrC check: "+String.format(" %02X", b));
+            crc = (crc >>> 8) ^ table[(crc ^ b) & 0xff];
+        }
+
+      /*  short crc_invers = 0;
+        crc_invers = (short)(crc>>8);
+        crc_invers |= (short)((crc & 0x00ff)<<8);
+*/
+        return (short)crc;
+    }
+
 
 
     /*public static short crc16(final byte[] buffer) {

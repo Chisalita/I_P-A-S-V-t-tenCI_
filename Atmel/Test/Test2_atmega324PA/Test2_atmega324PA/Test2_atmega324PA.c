@@ -20,6 +20,9 @@
 #include <Sensors/sensors.h>
 #include <Time/time.h>
 
+//
+#include <util/crc16.h> //TESTE
+
 /*
 #define changePwm0A(duty) OCR0A = duty * (255/9)
 #define changePwm0B(duty) OCR0B = duty * (255/9)
@@ -81,7 +84,7 @@ int main(void)
 	sei();
 
 	breakAll();
-
+		
 	
 	while(1)
 	{
@@ -100,12 +103,46 @@ void executeCommands(){
 		
 		if(lastcmd.time){
 			
+				/*sendByte(1);//header
+				sendByte(2);//no of sens
+				sendByte(3);//info 1
+				sendByte(4);//info 2
+				sendByte(5);//time1
+				sendByte(6);//time2
+				
+				volatile uint16_t crc =0xffff;//important sa inceapa cu 0xffff
+				
+				for(int i=0; i<6; i++){
+					crc = _crc16_update(crc, (uint8_t)(i+1));
+				}
+				//sendByte(crc & 0xff);//crc1
+				//crc = (crc >> 8); 
+				//sendByte(crc);//crc2
+				sendByte((crc & 0xff));//crc1
+
+				sendByte((crc >> 8));//crc2	
+					*/		
+				
+				response resp;
+				resp.header = lastcmd.header;
+				resp.sensorInfo[0]=2;
+				resp.sensorInfo[1]=3;
+				resp.time=lastcmd.time;
+				sendResponse(resp);
+			
 			uint16_t arg1[] = {lastcmd.forward, lastcmd.forward};
 			uint16_t arg2[2];
 			arg2[0]= 0;
 			arg2[1]=0;
 			
-			if(lastcmd.right>0){
+			/*if(lastcmd.right>0){
+				turnRight_90degrees();
+			}else if(lastcmd.right<0){
+				turnLeft_90degrees();
+			}*/
+			
+			
+			/*if(lastcmd.right>0){
 				turnRight_90degrees();
 			}else{
 				//executeCommandForTime(&move, &move, 2, arg1, 2, arg2, lastcmd.time);
@@ -114,6 +151,7 @@ void executeCommands(){
 				changePwm_MotorLF(lastcmd.forward);
 				changePwm_MotorRF(lastcmd.forward);
 			}
+			*/
 			
 			/*sendResponse(lastcmd.header);
 			sendResponse(lastcmd.right);

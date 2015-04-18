@@ -13,6 +13,10 @@
 
 #define RX_BUFFER_SIZE 128//128
 #define TX_BUFFER_SIZE 128//128
+#define RX_BUFFER_SIZE_MSK 127
+#define TX_BUFFER_SIZE_MSK 127
+
+
 #define COMMAND_SIZE 7
 
 typedef struct{
@@ -30,7 +34,6 @@ volatile uint8_t lastPackPosInBuff = 0;
 
 
 
-///////////////TEST////////////////
 volatile info txBuffer[TX_BUFFER_SIZE];
 volatile uint8_t txReadPos=0;
 volatile uint8_t txWritePos=0;
@@ -39,14 +42,15 @@ volatile uint8_t txWritePos=0;
 void initUSART1(int baud){
 	
 	//init buffer
-	int16_t i;
+	/*int16_t i;
 	for(i=0; i<RX_BUFFER_SIZE; i++){
 		rxBuffer[i].pack_no =-1;
 		
 		///TEST////
 		txBuffer[i].pack_no =-1;
 		txBuffer[i].data =0;
-	}
+	}*/
+	__clearBuffers();
 	
 
 	USART1_RX_DDR &= ~(1<<USART1_RX_PINx);
@@ -85,18 +89,18 @@ void initUSART1(int baud){
 int8_t checkPackIsFullLength(uint8_t lastPackPos){
 	uint8_t pc_no;
 	
-	if(rxBuffer[(lastPackPos)% RX_BUFFER_SIZE].pack_no == -1){
+	if(rxBuffer[lastPackPos & RX_BUFFER_SIZE_MSK].pack_no == -1){
 		return 0;
 	}else{
-		pc_no = rxBuffer[(lastPackPos)% RX_BUFFER_SIZE].pack_no;
+		pc_no = rxBuffer[lastPackPos & RX_BUFFER_SIZE_MSK].pack_no;
 	}
 
 	
 	//check if there is a valid pack and that all data corresponds to the same pack
 	int8_t i;
 	for(i=0;i< COMMAND_SIZE; i++){
-		if(rxBuffer[(lastPackPos+i)% RX_BUFFER_SIZE].pack_no == -1 
-		|| rxBuffer[(lastPackPos+i)% RX_BUFFER_SIZE].pack_no != pc_no){
+		if(rxBuffer[(lastPackPos+i) & RX_BUFFER_SIZE_MSK].pack_no == -1 
+		|| rxBuffer[(lastPackPos+i) & RX_BUFFER_SIZE_MSK].pack_no != pc_no){
 			return 0;
 		}
 	}
@@ -108,9 +112,9 @@ command fetchCommand(uint8_t lastPackPos, uint8_t *CRC_correct){
 	
 	//Aici se poate sa mai fie greseli din cauza semnelor (signed, unsigned)
 	command comm = {.header = 0, .right = 0, .forward = 0, .time = 0, .CRC = 0};
-	comm.header = rxBuffer[lastPackPosInBuff % RX_BUFFER_SIZE].data;
-	comm.right = (int8_t) rxBuffer[(lastPackPosInBuff+1) % RX_BUFFER_SIZE].data; //recover the sign
-	comm.forward = (int8_t) rxBuffer[(lastPackPosInBuff+2) % RX_BUFFER_SIZE].data;
+	comm.header = rxBuffer[lastPackPosInBuff & RX_BUFFER_SIZE_MSK].data;
+	comm.right = (int8_t) rxBuffer[(lastPackPosInBuff+1) & RX_BUFFER_SIZE_MSK].data; //recover the sign
+	comm.forward = (int8_t) rxBuffer[(lastPackPosInBuff+2) & RX_BUFFER_SIZE_MSK].data;
 	
 	/*int16_t x = 0;
 	int16_t h = 0;
@@ -118,11 +122,11 @@ command fetchCommand(uint8_t lastPackPos, uint8_t *CRC_correct){
 	x=  h<<8;
 	x |= rxBuffer[(lastPackPosInBuff+4) % RX_BUFFER_SIZE].data;
 	*/
-	comm.time = rxBuffer[(lastPackPosInBuff+3) % RX_BUFFER_SIZE].data << 8;
-	comm.time |= rxBuffer[(lastPackPosInBuff+4) % RX_BUFFER_SIZE].data;
+	comm.time = rxBuffer[(lastPackPosInBuff+3) & RX_BUFFER_SIZE_MSK].data << 8;
+	comm.time |= rxBuffer[(lastPackPosInBuff+4) & RX_BUFFER_SIZE_MSK].data;
 	//comm.time = x;
-	comm.CRC = rxBuffer[(lastPackPosInBuff+5) % RX_BUFFER_SIZE].data << 8;
-	comm.CRC |= rxBuffer[(lastPackPosInBuff+6) % RX_BUFFER_SIZE].data;
+	comm.CRC = rxBuffer[(lastPackPosInBuff+5) & RX_BUFFER_SIZE_MSK].data << 8;
+	comm.CRC |= rxBuffer[(lastPackPosInBuff+6) & RX_BUFFER_SIZE_MSK].data;
 
 	//sendResponse((x & 0xff00) >> 8);
 	//h = comm.time;
@@ -134,8 +138,8 @@ command fetchCommand(uint8_t lastPackPos, uint8_t *CRC_correct){
 	//uint16_t crc = comm.CRC;
 	uint16_t crc = 0xFFFF;
 	for(i=0; i<COMMAND_SIZE; i++){
-		crc = _crc16_update(crc, rxBuffer[(lastPackPosInBuff+i) % RX_BUFFER_SIZE].data);
-		rxBuffer[(lastPackPosInBuff+i) % RX_BUFFER_SIZE].pack_no = -1;
+		crc = _crc16_update(crc, rxBuffer[(lastPackPosInBuff+i) & RX_BUFFER_SIZE_MSK].data);
+		rxBuffer[(lastPackPosInBuff+i) & RX_BUFFER_SIZE_MSK].pack_no = -1;
 	}
 	
 	if (crc == 0){
@@ -147,8 +151,53 @@ command fetchCommand(uint8_t lastPackPos, uint8_t *CRC_correct){
 	return comm;
 }
 
+void sendResponse(response r){
+	
+	int8_t header = r.header;
+	uint16_t i = txWritePos;
+	
+	
+	txBuffer[i&TX_BUFFER_SIZE_MSK].data = header;
+	txBuffer[i&TX_BUFFER_SIZE_MSK].pack_no = header;
+	i++;
+	txBuffer[i&TX_BUFFER_SIZE_MSK].data = NO_OF_SENSORS; // this must be sent!!
+	txBuffer[i&TX_BUFFER_SIZE_MSK].pack_no = header;
+	i++;
+	
+	for(uint8_t j=0; j<NO_OF_SENSORS; j++){
+		txBuffer[i&TX_BUFFER_SIZE_MSK].data = r.sensorInfo[j];
+		txBuffer[i&TX_BUFFER_SIZE_MSK].pack_no = header;
+		i++;
+	}
+	
+	txBuffer[i&TX_BUFFER_SIZE_MSK].data = (r.time >> 8); // first 8 bits
+	txBuffer[i&TX_BUFFER_SIZE_MSK].pack_no = header;
+	i++;
+	
+	txBuffer[i&TX_BUFFER_SIZE_MSK].data = (r.time & 0xFF); // next 8 bits
+	txBuffer[i&TX_BUFFER_SIZE_MSK].pack_no = header;
+	i++;
+	
+	//calculate CRC
+	uint16_t crc = 0xFFFF;
+	for(uint8_t j=0; j<NO_OF_SENSORS+4; j++){ // 4 = header, no_of_sensors, time(2)
+		crc = _crc16_update(crc, txBuffer[(txWritePos+j) & TX_BUFFER_SIZE_MSK].data);
+	}
+	
+	//send CRC in reverse order!
+	txBuffer[i&TX_BUFFER_SIZE_MSK].data = (crc & 0xFF); // last 8 bits
+	txBuffer[i&TX_BUFFER_SIZE_MSK].pack_no = header;
+	i++;
+	
+	txBuffer[i&TX_BUFFER_SIZE_MSK].data = (crc >> 8); // first 8 bits
+	txBuffer[i&TX_BUFFER_SIZE_MSK].pack_no = header;
+	i++;
+	txWritePos = i & TX_BUFFER_SIZE_MSK;
+	
+	__tryToSend();
+}
 
-void sendResponse(uint8_t r){
+void sendByte(uint8_t r){
 	
 //UDR1 = r;
 	if (UCSR1A & (1<<UDRE1))
@@ -160,13 +209,51 @@ void sendResponse(uint8_t r){
 		txBuffer[txWritePos].data = r;
 		txBuffer[txWritePos].pack_no = 1;
 		txWritePos++;
-		if(txWritePos > TX_BUFFER_SIZE){
+		
+		txWritePos &=TX_BUFFER_SIZE_MSK;
+		/*
+		if(txWritePos >= TX_BUFFER_SIZE){
 			txWritePos=0;
 		}
+		*/
 	}
 	
 }
 
+void __clearBuffers(){
+		for(int16_t i=0; i<RX_BUFFER_SIZE; i++){
+			rxBuffer[i].pack_no =-1;
+			txBuffer[i].pack_no =-1;
+			txBuffer[i].data =0;
+		}
+		txWritePos = 0;
+		txReadPos = 0;
+		rxReadPos = 0;
+		rxWritePos = 0;
+		
+	
+}
+
+//this is used to send data so that USART1_TX_vect can be triggered
+void __tryToSend(){ 
+	if (UCSR1A & (1<<UDRE1)) //if data register is empty send a byte
+	{
+		cli();
+		if(txBuffer[txReadPos].pack_no != -1){
+				UDR1 = txBuffer[txReadPos].data;
+				txBuffer[txReadPos].pack_no = -1;
+				txBuffer[txReadPos].data = 0;
+				txReadPos++;
+				txReadPos &= TX_BUFFER_SIZE_MSK;
+				/*
+				if(txReadPos >= TX_BUFFER_SIZE){
+					txReadPos=0;
+				}
+				*/
+		}
+		sei();
+	}
+}
 
 command getLastCommand(int8_t *success){
 	
@@ -266,10 +353,11 @@ ISR(USART1_RX_vect){
 	//rxBuffer[rxWritePos].data = UDR1;
 	//rxBuffer[rxWritePos].pack_no = 1;
 	rxWritePos++;
+	rxWritePos &= RX_BUFFER_SIZE_MSK;
 	
-	if(rxWritePos>=RX_BUFFER_SIZE){
+	/*if(rxWritePos>=RX_BUFFER_SIZE){
 			rxWritePos = 0;
-	}
+	}*/
 	
 	//LED_CMD_PIN |= (1<<LED_CMD_PINx);
 	
@@ -284,9 +372,12 @@ ISR(USART1_TX_vect){
 	txBuffer[txReadPos].data =0;
 	txBuffer[txReadPos].pack_no =-1;
 	txReadPos++;
-		if(txReadPos>TX_BUFFER_SIZE){
+	txReadPos &= TX_BUFFER_SIZE_MSK;
+	/*
+		if(txReadPos>=TX_BUFFER_SIZE){
 			txReadPos =0;
 		}
+		*/
 	}
 	
 }

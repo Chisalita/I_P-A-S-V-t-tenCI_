@@ -31,11 +31,24 @@ OCR2B = ((duty/100.0) * 255);
 	 
 
 
-void turnRight_90degrees(){
-	
-	
+void turnRight_90degrees(){	
 	
 	int16_t arg1[] = {0xB0B0, 0x5050};
+	/*int8_t inv = -80;
+	//arg1[1] = inv << 8;
+	arg1[1] |= inv;
+	arg1[1] <<=8;
+	arg1[1] |= inv;
+		*/
+	int16_t arg2[] = {0, 0};
+	executeCommandForTime(&move, &move, 2, arg1,2, arg2,90);
+	
+	
+}
+
+void turnLeft_90degrees(){	
+	
+	int16_t arg1[] = {0x5050, 0xB0B0};
 	/*int8_t inv = -80;
 	//arg1[1] = inv << 8;
 	arg1[1] |= inv;
@@ -117,10 +130,10 @@ void move(uint16_t argc, int16_t* argv){
 	}	
 	changePwm_MotorRB(d);
 	
-	sendResponse(argv[0] >> 8);
-	sendResponse(argv[0] & 0xff);
-	sendResponse(argv[1] >>8);
-	sendResponse(argv[1] & 0xff);
+	sendByte(argv[0] >> 8);
+	sendByte(argv[0] & 0xff);
+	sendByte(argv[1] >>8);
+	sendByte(argv[1] & 0xff);
 	
 	
 }

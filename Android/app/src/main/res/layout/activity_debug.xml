@@ -41,6 +41,7 @@
             android:layout_height="fill_parent"
             android:text="Response from debuging"
             android:inputType="textMultiLine"
+            android:id="@+id/debugInputConsole"
             />
     </ScrollView>
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import continental.ingeniously.com.ingeniously.IO.Protocol.BluetoothIO;
@@ -27,6 +28,7 @@ public class DebugActivity extends ActionBarActivity implements ProtocolObserver
     private ApplicationBrodcastReciver mReciver;
     private ArrayAdapter<String> BluetoothDevicesArrayAdapter;
     private BluetoothIO bluetoothIO;
+    private TextView debugInputConsole;
 
     /*
     private final Handler DebugHandler = new Handler() {
@@ -75,6 +77,7 @@ public class DebugActivity extends ActionBarActivity implements ProtocolObserver
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         commandPrompt = (EditText) findViewById(R.id.DebugCommand_editText);
+        debugInputConsole = (TextView) findViewById(R.id.debugInputConsole);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
@@ -88,7 +91,7 @@ public class DebugActivity extends ActionBarActivity implements ProtocolObserver
         //printPairedDevices();
 
         //tryConnection();
-        bluetoothIO = new BluetoothIO(this,mBluetoothAdapter);//, DebugHandler);
+        bluetoothIO = new BluetoothIO(this,this,mBluetoothAdapter);//, DebugHandler);
         bluetoothIO.connect();
 
 
@@ -213,8 +216,16 @@ public class DebugActivity extends ActionBarActivity implements ProtocolObserver
 
     }
 
+    public void updateInputConsole(ProtocolResponse response){
+        debugInputConsole.setText("Ceva...");
+    }
+
     @Override
     public void responseArrived(ProtocolResponse response) {
-
+        updateInputConsole(response);
+        byte r[] = response.getBytes();
+        for (int i=0; i< r.length; i++){
+            System.out.print(String.format(" %02X", r[i]));
+        }
     }
 }

@@ -15,8 +15,11 @@
 #include <Communication/communication.h> //TESTE
 #include <stdlib.h> //TESTE
 
-#define MAX 3
-#define MAX_ULTRASONIC_VALUES 10
+#define MAX 3 //asta trebuie redenumit... ii pt senzor pe adc
+#define MAX_ULTRASONIC_VALUES 16
+#define MAX_ULTRASONIC_VALUES_MSK 15
+
+
 volatile unsigned int i =0;
 volatile float dis[MAX];
 volatile float distance=0.0;
@@ -274,9 +277,11 @@ ISR(USART0_RX_vect){
 			lastUSonicValue = val;
 			US_pos_in_buffer++;
 
+			US_pos_in_buffer &= MAX_ULTRASONIC_VALUES_MSK;
+			/*
 			if (US_pos_in_buffer>=MAX_ULTRASONIC_VALUES){ //reset buff pos
 				US_pos_in_buffer =0;
-			}
+			}*/
 			
 			//clear 
 				uint8_t i;

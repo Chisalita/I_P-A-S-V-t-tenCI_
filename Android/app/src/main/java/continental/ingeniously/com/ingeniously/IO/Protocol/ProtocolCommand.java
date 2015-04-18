@@ -25,7 +25,8 @@ public class ProtocolCommand {
 
     public boolean verifyCRC(){
       //  if(crc16(getBytes()) == 0){
-        if(CRC16.crc16(getBytes()) == 0){
+        //ii generate nu runcheck pt ca trebuie ultimii 2 bytes intreschimbati
+        if(CRC16.generateCrc16(getBytes()) == 0){
             return  true;
         }
         return false;
@@ -67,7 +68,7 @@ public class ProtocolCommand {
         comm[2] = Forward;
         comm[3] = (byte) (Time>>8);
         comm[4] = (byte) Time;
-        CRC = CRC16.crc16(comm);
+        CRC = CRC16.generateCrc16(comm);
 
     }
 
