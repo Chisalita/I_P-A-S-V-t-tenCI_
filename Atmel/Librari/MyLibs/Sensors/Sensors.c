@@ -15,55 +15,58 @@
 #include <Communication/communication.h> //TESTE
 #include <stdlib.h> //TESTE
 
-#define MAX 3 //asta trebuie redenumit... ii pt senzor pe adc
+#define MAX 5//asta trebuie redenumit... ii pt senzor pe adc
 #define MAX_ULTRASONIC_VALUES 16
 #define MAX_ULTRASONIC_VALUES_MSK 15
 
-
-volatile unsigned int i =0;
-volatile float dis[MAX];
-volatile float distance=0.0;
+//
+volatile unsigned int iter =0;
+volatile uint8_t dis[MAX];
+volatile uint8_t distance=0;
 
 //ultrasonic
-volatile float UltraSonicValues[MAX_ULTRASONIC_VALUES];
-volatile float lastUSonicValue=0.0;
+volatile uint16_t UltraSonicValues[MAX_ULTRASONIC_VALUES];
+volatile uint16_t lastUSonicValue=0;
 volatile uint8_t ultrasonicDataPack[4];
 volatile uint8_t US_data_part_no = 0;
 volatile uint8_t US_pos_in_buffer = 0;
 volatile uint8_t US_manual_start = 0;
 
 
-float getDistance(){
+//Functia asta trebuie neaparat schimbata!!
+uint8_t getDistance(){
 	
-	distance=0.0;
+	uint32_t avreage = 0;
+	
 	int j;
 	for (j=0;j<MAX;j++)
 	{
-		distance += dis[j];
+		avreage += dis[j];
 	}
 	
-	return distance/MAX;
+	distance = avreage/MAX;
+	
+	return distance;
 }
 
-float getLastUltrasonicValue(){
+uint16_t getLastUltrasonicValue(){
 	return UltraSonicValues[US_pos_in_buffer-1];//because it is always the next position
 }
 
-float getAverageUltrasonicValue(uint8_t no_of_values){
+uint16_t getAverageUltrasonicValue(uint8_t no_of_values){
 	if (no_of_values > MAX_ULTRASONIC_VALUES){
 		no_of_values = MAX_ULTRASONIC_VALUES;
 	}
 	
-	float averrage = 0.0;
-	uint8_t i;
+	uint32_t averrage = 0; //it can overflow if it is 16 bit
 	uint8_t good_vals=0;
 	
-	for (i=0; i<no_of_values; i++)
+	for (uint8_t i=0; i<no_of_values; i++) // iterate from right to left
 	{
-		float aux;
-		if(US_pos_in_buffer-i >= 0){ // rap around
+		uint16_t aux;
+		if(US_pos_in_buffer-i >= 0){ 
 			aux = UltraSonicValues[US_pos_in_buffer-i];
-		}else{
+		}else{// rap around
 			aux = UltraSonicValues[MAX_ULTRASONIC_VALUES - i + US_pos_in_buffer];
 		}
 		
@@ -75,7 +78,7 @@ float getAverageUltrasonicValue(uint8_t no_of_values){
 		
 	}
 	
-	averrage /= (float) good_vals;
+	averrage /= good_vals; //it may be better to round it up to the nearest
 	
 	return averrage;
 }
@@ -125,7 +128,7 @@ void initUSART0(int baud){
 	uint8_t i;
 	for (i=0; i<MAX_ULTRASONIC_VALUES; i++)
 	{
-		UltraSonicValues[i] = 0.0;
+		UltraSonicValues[i] = 0;
 	}
 	
 	for (i=0; i<4; i++)
@@ -237,23 +240,23 @@ ISR(ADC_vect){
 	*/
 	
 		
-		dis[i%MAX] = 2076.0 / (theTenBitResult - 11.0);
+		dis[iter%MAX] = floor((2076.0 / (theTenBitResult - 11.0)) + 0.5);
 		
 		//under lower limit
-		if (dis[i%MAX] < 4.0)
+		if (dis[iter%MAX] < 4)
 		{
-			dis[i%MAX] =4.0;
+			dis[iter%MAX] = 4;
 		}
 		
 		//above upper limit
-		if (dis[i%MAX] > 30.0)
+		if (dis[iter%MAX] > 30)
 		{
 			
-			dis[i%MAX] = 30.0;
+			dis[iter%MAX] = 30;
 		}
 	
 	
-	i++;
+	iter++;
 	ADCSRA |= 1<<ADSC;
 }
 
@@ -271,10 +274,11 @@ ISR(USART0_RX_vect){
 		if(ultrasonicDataPack[0] == 'R' && US_data_part_no == 4 && data == 13){// the pack is all read
 			
 			float val = 100.0 * ultrasonicDataPack[1] + 10.0 * ultrasonicDataPack[2] + ultrasonicDataPack[3];
-			//transform from inch to cm
-			val *= 2.54;
-			UltraSonicValues[US_pos_in_buffer] = val;
-			lastUSonicValue = val;
+			//transform from inch to mm
+			val *= 25.4;
+			uint16_t mm = floor(val+0.5); // round to the nearest
+			UltraSonicValues[US_pos_in_buffer] = mm; 
+			lastUSonicValue = mm;
 			US_pos_in_buffer++;
 
 			US_pos_in_buffer &= MAX_ULTRASONIC_VALUES_MSK;

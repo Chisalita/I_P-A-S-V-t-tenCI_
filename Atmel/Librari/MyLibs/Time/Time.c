@@ -14,8 +14,6 @@
 #include <Communication/communication.h> //TEST
 
 
-
-
 //the function called when the timer begins
 //void (*startFunction) (uint16_t argc, uint16_t* argv) = 0;
 //the function called when the timer ends
@@ -36,6 +34,8 @@ void executeCommandForTime(void (*startF) (uint16_t, int16_t*), void (*stopF) (u
 uint16_t argc_start, int16_t* argv_start, uint16_t argc_stop, int16_t* argv_stop, uint16_t time){
 	//init timer
 
+
+	cli();
 	stopFunction = stopF;
 	argc2 = argc_stop;
 	for(uint16_t i =0; i< argc_stop; i++){ // it needs to be manually copied!!!
@@ -89,7 +89,8 @@ uint16_t argc_start, int16_t* argv_start, uint16_t argc_stop, int16_t* argv_stop
 	//call start function
 	ticks = time;
 	startF(argc_start, argv_start);
-				LED_CMD_PORT |= (1<<LED_CMD_PINx);
+	LED_CMD_PORT |= (1<<LED_CMD_PINx);
+	sei();
 }
 
 void initTimer1()
@@ -131,10 +132,11 @@ ISR(TIMER1_COMPA_vect){
 			ticks--;
 			//LED_CMD_PIN |= (1<<LED_CMD_PINx);
 		}else if(ticks == 0){
+			ticks = 99999;
 			stopFunction(argc2,argv2);
 			//LED_CMD_PIN |= (1<<LED_CMD_PINx);
 			LED_CMD_PORT &= ~(1<<LED_CMD_PINx);
-			ticks = 99999;
+			
 		}
 		
 /*		

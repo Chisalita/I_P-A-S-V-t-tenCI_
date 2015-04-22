@@ -29,19 +29,178 @@ void changePwm_MotorRB(int duty){
 OCR2B = ((duty/100.0) * 255);
 }
 	 
+void driveRightForTime(uint8_t pwm, uint16_t time){
+	
+	
+	//check if it is a negative number and if it is call the complementary function
+	if(pwm & (1<<((sizeof(pwm)*8) - 1))){ 
+		//it is a negative pwm
+		int8_t pwm_signed = pwm;
+		pwm_signed = -pwm_signed;
+		
+		driveLeftForTime(pwm_signed, time);
+		
+	}else{
+	
+	int16_t arg1[] = {0xB0B0, 0x5050};
+	int16_t arg2[3];	
+	
+	arg2[0] = pwm;
+	arg2[0] |= pwm << 8;	
+	arg2[1] = pwm;
+	arg2[1] |= pwm << 8;	
 
+	arg2[2] = time;
+
+	executeCommandForTime(&move, &move, 2, arg1,3, arg2, TIME_TO_TURN_MS);//turn for TIME_TO_TURN_MS ms and then move forward for time ms
+	}
+	
+}
+
+void driveForwardForTime(uint8_t pwm, uint16_t time){
+	
+	//check if it is a negative number and if it is call the complementary function
+	if(pwm & (1<<((sizeof(pwm)*8) - 1))){
+		//it is a negative pwm
+		int8_t pwm_signed = pwm;
+		pwm_signed = -pwm_signed;
+		driveBackwardForTime(pwm_signed, time);
+	} 
+	else
+	{
+		int16_t arg1[3];
+		int16_t arg2[]= {0, 0};
+		
+		arg1[0] = pwm;
+		arg1[0] |= pwm << 8;
+		arg1[1] = pwm;
+		arg1[1] |= pwm << 8;
+
+		executeCommandForTime(&move, &move, 2, arg1,2, arg2, time);
+	}	
+	
+}
+
+void driveBackwardForTime(uint8_t pwm, uint16_t time){
+	
+		//check if it is a negative number and if it is call the complementary function
+		if(pwm & (1<<((sizeof(pwm)*8) - 1))){
+			//it is a negative pwm
+			int8_t pwm_signed = pwm;
+			pwm_signed = -pwm_signed;
+			driveForwardForTime(pwm_signed, time);
+		}
+		else
+		{
+			int16_t arg1[3];
+			int16_t arg2[]= {0, 0};
+			
+			// the pwm is for backward but expressed like forward
+			// it must be reversed
+			
+			int8_t pwm_signed = pwm;
+			pwm_signed = -pwm_signed;
+			//change back to unsigned so that the bit operations work properly
+			pwm = pwm_signed;
+			
+			arg1[0] = pwm;
+			arg1[0] |= pwm << 8;
+			arg1[1] = pwm;
+			arg1[1] |= pwm << 8;
+			
+			executeCommandForTime(&move, &move, 2, arg1,2, arg2, time);
+		}
+	
+	
+}
+
+
+
+void driveLeftForTime(uint8_t pwm, uint16_t time){
+	
+	//check if it is a negative number and if it is call the complementary function
+	if(pwm & (1<<((sizeof(pwm)*8) - 1))){
+		//it is a negative pwm
+		int8_t pwm_signed = pwm;
+		pwm_signed = -pwm_signed;
+		
+		driveRightForTime(pwm_signed, time);
+		
+		}else{
+		
+		int16_t arg1[] = {0x5050, 0xB0B0};
+		int16_t arg2[3];
+		
+		arg2[0] = pwm;
+		arg2[0] |= pwm << 8;
+		arg2[1] = pwm;
+		arg2[1] |= pwm << 8;
+
+		arg2[2] = time;
+		
+		executeCommandForTime(&move, &move, 2, arg1,3, arg2, TIME_TO_TURN_MS);//turn for TIME_TO_TURN_MS ms and then move forward for time ms
+	}
+	
+}
+
+void driveRight(uint8_t pwm){
+	//check if it is a negative number and if it is call the complementary function
+	if(pwm & (1<<((sizeof(pwm)*8) - 1))){
+		//it is a negative pwm
+		int8_t pwm_signed = pwm;
+		pwm_signed = -pwm_signed;
+			
+		driveLeft(pwm_signed);
+			
+		}else{
+		int16_t arg1[] = {0xB0B0, 0x5050};
+		int16_t arg2[2];
+	
+					///////////////Asta doar pt ca merge cu spatele//////////////////////////////
+					int8_t pwm_signed = pwm;
+					pwm_signed = -pwm_signed;
+					//change back to unsigned so that the bit operations work properly
+					pwm = pwm_signed;
+					/////////////////////////////////////////////////////////////////////////////
+	
+		arg2[0] = pwm;
+		arg2[0] |= pwm << 8;
+		arg2[1] = pwm;
+		arg2[1] |= pwm << 8;
+	
+		executeCommandForTime(&move, &move, 2, arg1,2, arg2, TIME_TO_TURN_MS);//turn for TIME_TO_TURN_MS ms and then move forward indefinitely
+		}
+}
+
+void driveLeft(uint8_t pwm){
+	
+	//check if it is a negative number and if it is call the complementary function
+	if(pwm & (1<<((sizeof(pwm)*8) - 1))){
+		//it is a negative pwm
+		int8_t pwm_signed = pwm;
+		pwm_signed = -pwm_signed;
+		
+		driveRight(pwm_signed);
+		
+		}else{
+		
+		int16_t arg1[] = {0x5050, 0xB0B0};
+		int16_t arg2[2];
+		
+		arg2[0] = pwm;
+		arg2[0] |= pwm << 8;
+		arg2[1] = pwm;
+		arg2[1] |= pwm << 8;
+		executeCommandForTime(&move, &move, 2, arg1,2, arg2, TIME_TO_TURN_MS);//turn for TIME_TO_TURN_MS ms and then move forward indefinitly
+	}
+	
+}
 
 void turnRight_90degrees(){	
 	
 	int16_t arg1[] = {0xB0B0, 0x5050};
-	/*int8_t inv = -80;
-	//arg1[1] = inv << 8;
-	arg1[1] |= inv;
-	arg1[1] <<=8;
-	arg1[1] |= inv;
-		*/
 	int16_t arg2[] = {0, 0};
-	executeCommandForTime(&move, &move, 2, arg1,2, arg2,90);
+	executeCommandForTime(&move, &move, 2, arg1,2, arg2, TIME_TO_TURN_MS);
 	
 	
 }
@@ -49,14 +208,8 @@ void turnRight_90degrees(){
 void turnLeft_90degrees(){	
 	
 	int16_t arg1[] = {0x5050, 0xB0B0};
-	/*int8_t inv = -80;
-	//arg1[1] = inv << 8;
-	arg1[1] |= inv;
-	arg1[1] <<=8;
-	arg1[1] |= inv;
-		*/
 	int16_t arg2[] = {0, 0};
-	executeCommandForTime(&move, &move, 2, arg1,2, arg2,90);
+	executeCommandForTime(&move, &move, 2, arg1,2, arg2, TIME_TO_TURN_MS);
 	
 	
 }
@@ -78,7 +231,16 @@ void stopTurning(){
 	
 }
 
+void reverse(){
+	changeMotorDirectionLB();
+	changeMotorDirectionLF();
+	changeMotorDirectionRB();
+	changeMotorDirectionRF();
+}
+
 void move(uint16_t argc, int16_t* argv){
+	
+	if(argc == 2){
 	//setez directia initiala
 	MOTOR_LF_DIR_PORT2 |= (1<<MOTOR_LF_DIR_PIN2x);
 	MOTOR_LF_DIR_PORT1 &= ~(1<<MOTOR_LF_DIR_PIN1x);
@@ -91,10 +253,7 @@ void move(uint16_t argc, int16_t* argv){
 	MOTOR_RB_DIR_PORT2 |= (1<<MOTOR_RB_DIR_PIN2x);
 	MOTOR_RB_DIR_PORT1 &= ~(1<<MOTOR_RB_DIR_PIN1x);
 	
-	changePwm_MotorLF(argv[0] >> 8);
-	changePwm_MotorLB(argv[0] & 0xff);
-	changePwm_MotorRF(argv[1] >> 8);
-	changePwm_MotorRB(argv[1] & 0xff);
+
 	
 	int8_t d;
 	
@@ -129,12 +288,17 @@ void move(uint16_t argc, int16_t* argv){
 		changeMotorDirectionRB();
 	}	
 	changePwm_MotorRB(d);
+	}else if (argc == 3){
+		
+	int16_t arg1[2];
+	arg1[0] = argv[0];
+	arg1[1] = argv[1];
 	
-	sendByte(argv[0] >> 8);
-	sendByte(argv[0] & 0xff);
-	sendByte(argv[1] >>8);
-	sendByte(argv[1] & 0xff);
+	int16_t arg2[] = {0, 0};
+	executeCommandForTime(&move, &move, 2, arg1,2, arg2,argv[2]);
 	
+		
+	}
 	
 }
 

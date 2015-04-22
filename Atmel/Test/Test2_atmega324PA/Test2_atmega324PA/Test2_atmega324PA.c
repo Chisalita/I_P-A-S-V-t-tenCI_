@@ -23,30 +23,6 @@
 //
 #include <util/crc16.h> //TESTE
 
-/*
-#define changePwm0A(duty) OCR0A = duty * (255/9)
-#define changePwm0B(duty) OCR0B = duty * (255/9)
-*/
-
-/*
-typedef struct{
-	char data;
-	char pack_no;
-} info;
-
-*/
-
-//void initUSART1(int baud);
-//void startPwm();
-//void stopPwm();
-//char getLastChar();
-
-//volatile char rxBuffer[RX_BUFFER_SIZE];
-/*volatile info rxBuffer[RX_BUFFER_SIZE];
-volatile uint8_t rxReadPos=0;
-volatile uint8_t rxWritePos=0;
-*/
-
 void executeCommands();
 void initAll();
 
@@ -55,7 +31,14 @@ volatile int read=0;
 int enableRight = 1;
 int enableLeft = 1;
 int turning=0;
+int isAutonomous=0;
 
+volatile uint8_t cm_IR=0;
+volatile uint16_t mm_US =0;
+volatile uint8_t car_speed = 0;
+
+
+int bune =0; //teste
 
 
 void initAll(){
@@ -71,14 +54,6 @@ int main(void)
 {
 	
 	initAll();
-	/*
-	initUSART1(9600);
-	initTimer0();
-	initTimer2();
-	initSensors();
-	*/
-
-	
 	LED_CMD_DDR |= (1<<LED_CMD_PINx);
 	
 	sei();
@@ -102,107 +77,97 @@ void executeCommands(){
 		//CHECK CRC
 		
 		if(lastcmd.time){
-			
-				/*sendByte(1);//header
-				sendByte(2);//no of sens
-				sendByte(3);//info 1
-				sendByte(4);//info 2
-				sendByte(5);//time1
-				sendByte(6);//time2
-				
-				volatile uint16_t crc =0xffff;//important sa inceapa cu 0xffff
-				
-				for(int i=0; i<6; i++){
-					crc = _crc16_update(crc, (uint8_t)(i+1));
-				}
-				//sendByte(crc & 0xff);//crc1
-				//crc = (crc >> 8); 
-				//sendByte(crc);//crc2
-				sendByte((crc & 0xff));//crc1
-
-				sendByte((crc >> 8));//crc2	
-					*/		
-				
+					
+				isAutonomous = 0;	
 				response resp;
 				resp.header = lastcmd.header;
 				resp.sensorInfo[0]=2;
 				resp.sensorInfo[1]=3;
 				resp.time=lastcmd.time;
 				sendResponse(resp);
-			
-			uint16_t arg1[] = {lastcmd.forward, lastcmd.forward};
-			uint16_t arg2[2];
-			arg2[0]= 0;
-			arg2[1]=0;
-			
-			/*if(lastcmd.right>0){
-				turnRight_90degrees();
-			}else if(lastcmd.right<0){
-				turnLeft_90degrees();
-			}*/
-			
-			
-			/*if(lastcmd.right>0){
-				turnRight_90degrees();
+				
+			if(lastcmd.right!=0){
+				driveRightForTime(lastcmd.right, lastcmd.time);
 			}else{
-				//executeCommandForTime(&move, &move, 2, arg1, 2, arg2, lastcmd.time);
-				changePwm_MotorLB(lastcmd.forward);
-				changePwm_MotorRB(lastcmd.forward);
-				changePwm_MotorLF(lastcmd.forward);
-				changePwm_MotorRF(lastcmd.forward);
+				driveForwardForTime(lastcmd.forward, lastcmd.time);
+			}
+			
+		}else{
+			isAutonomous=1;
+			car_speed = lastcmd.forward;
+			changePwm_MotorLB(car_speed);
+			changePwm_MotorRB(car_speed);
+			changePwm_MotorLF(car_speed);
+			changePwm_MotorRF(car_speed);
+			reverse();
+			
+			
+		}
+
+	}
+	
+		
+			if(isAutonomous){
+			cm_IR = getDistance();
+			mm_US = getAverageUltrasonicValue(3);
+							
+			if(cm_IR<20 && (turning >> 1 == 0)){
+				//turnRight_90degrees();
+				turnLeft();
+				turning|=1<<1;
+				//breakAll();
+				}else if((turning >> 1 == 1) && cm_IR>=20){
+				turning&= ~(1<<1);
+				stopTurning();
+				reverse();
+				
+			}else if(mm_US<250 && ((turning & 1) == 0)){
+				//turnRight_90degrees();
+				turnLeft();
+				turning|=1;
+				//breakAll();
+				}else if(((turning &1) ==1) && mm_US>=250){
+				turning&=~1;
+				stopTurning();
+				reverse();	
+			}
+	
+
+			/*
+			//Ultima incercare
+			cm_IR = getDistance();
+
+			if(cm_IR<20 && (turning >> 1 == 0)){
+				//turnRight_90degrees();
+				mm_US = getAverageUltrasonicValue(3);
+				 if(mm_US<=200 && ((turning & 1) == 0)){
+					 //turnRight_90degrees();
+					 turnLeft_90degrees();
+					 turning|=1;
+					 //breakAll();
+					 }else if(((turning &1) == 0) && mm_US>200){
+					 turning|=1;
+					 turnRight_90degrees();
+				 }
+				
+				turning|=1<<1;
+				//breakAll();
+				}else if((turning >> 1 == 1) && cm_IR>=20){
+				turning&= ~(1<<1);
+				turning&=~1;
+				stopTurning();
+				changePwm_MotorLB(car_speed);
+				changePwm_MotorRB(car_speed);
+				changePwm_MotorLF(car_speed);
+				changePwm_MotorRF(car_speed);
+				reverse();
+				
 			}
 			*/
-			
-			/*sendResponse(lastcmd.header);
-			sendResponse(lastcmd.right);
-			sendResponse(lastcmd.forward);
-			sendResponse(lastcmd.time >> 8);
-			sendResponse(lastcmd.time);*/
+
+
+
+
 		}
-		
-		/*changePwm_MotorLB(lastcmd.forward);
-		changePwm_MotorRB(lastcmd.forward);
-		changePwm_MotorLF(lastcmd.forward);
-		changePwm_MotorRF(lastcmd.forward);	
-			*/
-	}
-	
-	/*
-	float US_distance =getAverageUltrasonicValue(5);// getLastUltrasonicValue();// getAverageUltrasonicValue(1);
-
-
-	float IR = getDistance();
-	
-	if(IR<15.0 && (turning >> 1 ==0)){
-		//turnRight_90degrees();
-		turning|=1<<1;
-		//breakAll();
-		}else if((turning >>1 ==1) && IR>=15.0){
-		turning&= ~(1<<1);
-		
-		stopTurning();
-		changeMotorDirectionLB();
-		changeMotorDirectionRB();
-		changeMotorDirectionLF();
-		changeMotorDirectionRF();
-	
-	}	
-	
-
-	if(US_distance<25.0 && ((turning & 1) == 0)){
-		//turnRight_90degrees();
-		turning|=1;
-		//breakAll();
-		}else if(((turning &1) ==1) && US_distance>=25.0){
-		turning&=~1;
-	
-		stopTurning();
-		changeMotorDirectionLB();
-		changeMotorDirectionRB();
-		changeMotorDirectionLF();
-		changeMotorDirectionRF();
-	
-	}
-	*/
 	
 }

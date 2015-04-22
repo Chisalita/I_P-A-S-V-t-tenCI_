@@ -217,7 +217,22 @@ public class DebugActivity extends ActionBarActivity implements ProtocolObserver
     }
 
     public void updateInputConsole(ProtocolResponse response){
-        debugInputConsole.setText("Ceva...");
+        StringBuilder sb = new StringBuilder();
+        byte no_of_sens = response.getNo_of_sensors();
+        byte info[] = response.getInfo();
+
+        sb.append("Header = "+response.getHeader());
+        sb.append("\nNo of sensors = "+no_of_sens);
+        sb.append("\nInfo = "+no_of_sens);
+
+        for (int i=0; i<no_of_sens; i++){
+            sb.append(info[i]+"; ");
+        }
+
+        sb.append("\nTime = "+response.getTime());
+        sb.append("\nCRC = "+response.getCRC());
+
+        debugInputConsole.setText(sb.toString());
     }
 
     @Override

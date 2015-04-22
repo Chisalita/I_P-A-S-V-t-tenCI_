@@ -13,10 +13,10 @@
 
 void initADC();
 void initUSART0(int baud);
-float getDistance();
+uint8_t getDistance();
 void initSensors();
-float getLastUltrasonicValue();
-float getAverageUltrasonicValue(uint8_t no_of_values);
+uint16_t getLastUltrasonicValue();
+uint16_t getAverageUltrasonicValue(uint8_t no_of_values);
 void startUltrasonicMeasure();
 void setUltrasonicManualMeasure(uint8_t val);
 
