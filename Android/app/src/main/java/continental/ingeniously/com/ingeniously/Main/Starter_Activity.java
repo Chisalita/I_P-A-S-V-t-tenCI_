@@ -19,10 +19,6 @@ public class Starter_Activity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starter_);
-
-        ParkiPos_editText = (TextView) findViewById(R.id.ParkingPos_editText);
-        ExitNo_editText = (TextView) findViewById(R.id.ExitNo_editText);
-
     }
 
 
@@ -46,18 +42,6 @@ public class Starter_Activity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void ModeSelect(View v){
-        switch (v.getId()){
-            case R.id.Normal_radioButton:
-
-                break;
-            case R.id.Sideways_radioButton:
-
-                break;
-        }
-
     }
 
     public void Start(View v){
