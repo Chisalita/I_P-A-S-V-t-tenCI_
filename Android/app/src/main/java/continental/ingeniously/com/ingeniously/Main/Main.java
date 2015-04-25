@@ -14,8 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.Toast;
+import android.widget.CheckBox;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -39,9 +40,18 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
     //private ConnectThread connection;
     private ApplicationBrodcastReciver mReciver;
     private boolean isRegisterd = false;
-    private EditText ParkPos;
-    private EditText ExitNo;
     private BluetoothIO bluetoothIO;
+    private Button exitA;
+    private Button exitB;
+    private Button exitC;
+    private Button exitD;
+    private Button position1;
+    private Button position2;
+    private Button position3;
+    private Button position4;
+    private Button position5;
+    private Button position6;
+    private CheckBox sidewaysBox;
 
 /*
     private final Handler MainHandler = new Handler() {
@@ -99,10 +109,6 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
         }*/
 
 
-        ParkPos = (EditText) findViewById(R.id.ParkingPos_editText);
-        ExitNo = (EditText) findViewById(R.id.ExitNo_editText);
-
-
 
         /*
         BluetoothDevicesArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
@@ -134,7 +140,101 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
         bluetoothIO.connect();
 
 
+        exitA = (Button) findViewById(R.id.exitA);
+        exitB = (Button) findViewById(R.id.exitB);
+        exitC = (Button) findViewById(R.id.exitC);
+        exitD = (Button) findViewById(R.id.exitD);
+        position1 = (Button) findViewById(R.id.position1);
+        position2 = (Button) findViewById(R.id.position2);
+        position3 = (Button) findViewById(R.id.position3);
+        position4 = (Button) findViewById(R.id.position4);
+        position5 = (Button) findViewById(R.id.position5);
+        position6 = (Button) findViewById(R.id.position6);
+        sidewaysBox = (CheckBox) findViewById(R.id.sidewaysBox);
 
+        exitA.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setExitPoint("A");
+                    }
+                }
+        );
+
+        exitB.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setExitPoint("B");
+                    }
+                }
+        );
+
+        exitC.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setExitPoint("C");
+                    }
+                }
+        );
+
+        exitD.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setExitPoint("D");
+                    }
+                }
+        );
+
+        position1.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        setParkPosition("1");
+                    }
+                }
+        );
+
+        position2.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        setParkPosition("2");
+                    }
+                }
+        );
+
+        position3.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        setParkPosition("3");
+                    }
+                }
+        );
+
+        position4.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        setParkPosition("4");
+                    }
+                }
+        );
+
+        position5.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        setParkPosition("5");
+                    }
+                }
+        );
+
+        position6.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        setParkPosition("6");
+                    }
+                }
+        );
         /*
         BluetoothDevice carBluetooth = getPairedDeviceByName(Codes.CAR_BLUETOOTH_NAME);
         if (carBluetooth == null) {
@@ -387,8 +487,11 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
 
 */
 
+        if(sidewaysBox.isChecked())
+            ShowToastMesage("The sidewaysBox is Activated");
 
-        String message = ParkPos.getText().toString();
+        //String message = ParkPos.getText().toString();
+        String message = "";
 
         if (message == null || message.isEmpty()) {
             message = "S";
@@ -464,4 +567,31 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
     public void responseArrived(ProtocolResponse response) {
 
     }
+
+    public void setExitPoint(String s){
+        if(s == "A")
+            ShowToastMesage("Exit A");
+        if(s == "B")
+            ShowToastMesage("Exit B");
+        if(s == "C")
+            ShowToastMesage("Exit C");
+        if(s == "D")
+            ShowToastMesage("Exit D");
+    }
+
+    public void setParkPosition(String s) {
+        if(s == "1")
+            ShowToastMesage("Park position 1");
+        if(s == "2")
+            ShowToastMesage("Park position 2");
+        if(s == "3")
+            ShowToastMesage("Park position 3");
+        if(s == "4")
+            ShowToastMesage("Park position 4");
+        if(s == "5")
+            ShowToastMesage("Park position 5");
+        if(s == "6")
+            ShowToastMesage("Park position 6");
+    }
+
 }
