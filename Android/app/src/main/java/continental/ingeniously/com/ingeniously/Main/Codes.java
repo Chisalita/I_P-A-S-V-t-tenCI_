@@ -13,5 +13,6 @@ public class Codes {
     public static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     public static final String NAME = "com.ingeniously.continental.team10";
     public static final String CAR_BLUETOOTH_NAME = "TEAM10";
-
+    public static final int MODE_NORMAL = 1800;
+    public static final int MODE_SIDEWAYS = 1801;
 }

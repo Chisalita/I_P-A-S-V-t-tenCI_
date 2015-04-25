@@ -1,8 +1,10 @@
 package continental.ingeniously.com.ingeniously.IO.Protocol;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
@@ -234,12 +236,18 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
 
     }
 
-    public  BluetoothIO(Context context, ProtocolObserver theClass, BluetoothAdapter ba){//, Handler handler){
+    public  BluetoothIO(Context context, ProtocolObserver theClass){//, BluetoothAdapter ba){//, Handler handler){
         //mainHandler = handler;
-        mBluetoothAdapter  = ba;
+        mBluetoothAdapter  = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            // Device does not support Bluetooth
+            ShowToastMesage( "There is no Bluetooth on this device!");
+            //finish();
+        }
         mReciver = new ApplicationBrodcastReciver(BluetoothDevicesArrayAdapter);
         mainContext = context;
         observer = theClass;
+        TurnBluetoothON();
     }
 
 
@@ -356,6 +364,24 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
 
     private void ShowToastMesage(String s) {
         Toast.makeText(mainContext, s, Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void TurnBluetoothON(){
+        // Turns the bluetooth on if it is not yet on
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            ((Activity) mainContext).startActivityForResult(enableBluetooth, Codes.REQUEST_ENABLE_BT);
+        } else {
+            ShowToastMesage("Bluetooth is already on");
+        }
+    }
+
+    private void TurnBluetoothOff() {
+        // Stops the bluetooth on the device
+        if (mBluetoothAdapter.isEnabled()) {
+            mBluetoothAdapter.disable();
+        }
 
     }
 

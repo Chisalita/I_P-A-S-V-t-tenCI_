@@ -1,5 +1,6 @@
 package continental.ingeniously.com.ingeniously.Main;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Handler;
@@ -24,7 +25,7 @@ import continental.ingeniously.com.ingeniously.R;
 public class DebugActivity extends ActionBarActivity implements ProtocolObserver {
 
     private EditText commandPrompt;
-    private BluetoothAdapter mBluetoothAdapter;
+    //private BluetoothAdapter mBluetoothAdapter;
     private ApplicationBrodcastReciver mReciver;
     private ArrayAdapter<String> BluetoothDevicesArrayAdapter;
     private BluetoothIO bluetoothIO;
@@ -79,19 +80,19 @@ public class DebugActivity extends ActionBarActivity implements ProtocolObserver
         commandPrompt = (EditText) findViewById(R.id.DebugCommand_editText);
         debugInputConsole = (TextView) findViewById(R.id.debugInputConsole);
 
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+       /* mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
             // Device does not support Bluetooth
             Toast.makeText(this, "There is no Bluetooth on this device!", Toast.LENGTH_LONG).show();
             //finish();
-        }
+        }*/
 
-        TurnBluetoothOn();
+        //TurnBluetoothOn();
         mReciver = new ApplicationBrodcastReciver(BluetoothDevicesArrayAdapter);
         //printPairedDevices();
 
         //tryConnection();
-        bluetoothIO = new BluetoothIO(this,this,mBluetoothAdapter);//, DebugHandler);
+        bluetoothIO = new BluetoothIO(this,this);//, DebugHandler);
         bluetoothIO.connect();
 
 
@@ -122,6 +123,23 @@ public class DebugActivity extends ActionBarActivity implements ProtocolObserver
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case Codes.REQUEST_ENABLE_BT:
+                if (resultCode == Activity.RESULT_OK) {
+                    // The bluetooth is now enabled
+
+                } else if (resultCode == Activity.RESULT_CANCELED) {
+                    // The user declined access to bluetooth
+                    ShowToastMesage("Make sure to activate Bluetooth!");
+                }
+
+                break;
+        }
+
+    }
 
 
     public  String fetchCommand(String command) {
@@ -205,7 +223,7 @@ public class DebugActivity extends ActionBarActivity implements ProtocolObserver
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    public void TurnBluetoothOn() {
+  /*  public void TurnBluetoothOn() {
         // Turns the bluetooth on if it is not yet on
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -215,7 +233,7 @@ public class DebugActivity extends ActionBarActivity implements ProtocolObserver
         }
 
     }
-
+*/
     public void updateInputConsole(ProtocolResponse response){
         StringBuilder sb = new StringBuilder();
         byte no_of_sens = response.getNo_of_sensors();

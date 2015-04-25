@@ -33,7 +33,7 @@ import continental.ingeniously.com.ingeniously.R;
 
 public class Main extends ActionBarActivity implements ProtocolObserver {
 
-    private BluetoothAdapter mBluetoothAdapter;
+   // private BluetoothAdapter mBluetoothAdapter;
     private ArrayAdapter<String> BluetoothDevicesArrayAdapter;
     //private ConnectThread connection;
     private ApplicationBrodcastReciver mReciver;
@@ -90,12 +90,12 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+       /* mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
             // Device does not support Bluetooth
             Toast.makeText(this, "There is no Bluetooth on this device!", Toast.LENGTH_LONG).show();
             //finish();
-        }
+        }*/
 
 
         ParkPos = (EditText) findViewById(R.id.ParkingPos_editText);
@@ -124,12 +124,12 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
         //BluetoothDevicesArrayAdapter.add("Care/");
 
 
-        TurnBluetoothOn();
+        //TurnBluetoothOn();
         mReciver = new ApplicationBrodcastReciver(BluetoothDevicesArrayAdapter);
         //printPairedDevices();
 
         //tryConnection();
-        bluetoothIO = new BluetoothIO(this, this,mBluetoothAdapter);//, MainHandler);
+        bluetoothIO = new BluetoothIO(this, this);//,mBluetoothAdapter);//, MainHandler);
         bluetoothIO.connect();
 
 
@@ -249,6 +249,8 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
 
     }
 
+
+
     /*
     public void SearchForBluetoothDevices(View v) {
         // Searches for bluetooth devices
@@ -298,7 +300,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
 
     }
 */
-
+/*
     public void TurnBluetoothOn() {
         // Turns the bluetooth on if it is not yet on
         if (!mBluetoothAdapter.isEnabled()) {
@@ -310,14 +312,15 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
 
     }
 
-    public void TurnBluetoothOff(View v) {
+*/
+ /*   public void TurnBluetoothOff(View v) {
         // Stops the bluetooth on the device
         if (mBluetoothAdapter.isEnabled()) {
             mBluetoothAdapter.disable();
         }
 
     }
-
+*/
 /*    private void tryConnection() {
 
         BluetoothDevice carBluetooth = getPairedDeviceByName(Codes.CAR_BLUETOOTH_NAME);
@@ -438,7 +441,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    BluetoothDevice getPairedDeviceByName(String name) {
+    /*BluetoothDevice getPairedDeviceByName(String name) {
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 
         // If there are paired devices
@@ -454,6 +457,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
         }
         return null;
     }
+*/
 
     @Override
     public void responseArrived(ProtocolResponse response) {

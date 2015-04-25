@@ -1,5 +1,7 @@
 package continental.ingeniously.com.ingeniously.IO.Protocol;
 
+import android.content.Intent;
+
 /**
  * Created by chisa_000 on 4/8/2015.
  */
@@ -11,4 +13,5 @@ public interface Protocol {
     void connect();
     void disconnect();
     void clearAll();
+
 }
