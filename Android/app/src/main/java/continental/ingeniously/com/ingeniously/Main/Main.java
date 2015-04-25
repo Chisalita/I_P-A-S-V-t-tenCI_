@@ -33,6 +33,7 @@ import continental.ingeniously.com.ingeniously.R;
 
 public class Main extends ActionBarActivity implements ProtocolObserver {
 
+   // Comment
    // private BluetoothAdapter mBluetoothAdapter;
     private ArrayAdapter<String> BluetoothDevicesArrayAdapter;
     //private ConnectThread connection;
