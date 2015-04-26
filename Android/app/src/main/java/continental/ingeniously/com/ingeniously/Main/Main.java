@@ -33,7 +33,7 @@ import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolResponse;
 import continental.ingeniously.com.ingeniously.R;
 
 
-public class Main extends ActionBarActivity implements ProtocolObserver {
+public class Main extends ActionBarActivity implements ProtocolObserver,View.OnClickListener {
 
    // Comment
    // private BluetoothAdapter mBluetoothAdapter;
@@ -163,141 +163,16 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
         position6.setBackgroundResource(android.R.drawable.btn_default);
         sidewaysBox = (CheckBox) findViewById(R.id.sidewaysBox);
 
-        exitA.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setExitPoint("A");
-                        exitA.setBackgroundColor(Color.GREEN);
-                        exitB.setBackgroundResource(android.R.drawable.btn_default);
-                        exitC.setBackgroundResource(android.R.drawable.btn_default);
-                        exitD.setBackgroundResource(android.R.drawable.btn_default);
-                    }
-                }
-        );
-
-        exitB.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setExitPoint("B");
-                        exitA.setBackgroundResource(android.R.drawable.btn_default);
-                        exitB.setBackgroundColor(Color.GREEN);
-                        exitC.setBackgroundResource(android.R.drawable.btn_default);
-                        exitD.setBackgroundResource(android.R.drawable.btn_default);
-                    }
-                }
-        );
-
-        exitC.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setExitPoint("C");
-                        exitA.setBackgroundResource(android.R.drawable.btn_default);
-                        exitB.setBackgroundResource(android.R.drawable.btn_default);
-                        exitC.setBackgroundColor(Color.GREEN);
-                        exitD.setBackgroundResource(android.R.drawable.btn_default);
-                    }
-                }
-        );
-
-        exitD.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setExitPoint("D");
-                        exitA.setBackgroundResource(android.R.drawable.btn_default);
-                        exitB.setBackgroundResource(android.R.drawable.btn_default);
-                        exitC.setBackgroundResource(android.R.drawable.btn_default);
-                        exitD.setBackgroundColor(Color.GREEN);
-                    }
-                }
-        );
-
-        position1.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        setParkPosition("1");
-                        position1.setBackgroundColor(Color.GREEN);
-                        position2.setBackgroundResource(android.R.drawable.btn_default);
-                        position3.setBackgroundResource(android.R.drawable.btn_default);
-                        position4.setBackgroundResource(android.R.drawable.btn_default);
-                        position5.setBackgroundResource(android.R.drawable.btn_default);
-                        position6.setBackgroundResource(android.R.drawable.btn_default);
-                    }
-                }
-        );
-
-        position2.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        setParkPosition("2");
-                        position1.setBackgroundResource(android.R.drawable.btn_default);
-                        position2.setBackgroundColor(Color.GREEN);
-                        position3.setBackgroundResource(android.R.drawable.btn_default);
-                        position4.setBackgroundResource(android.R.drawable.btn_default);
-                        position5.setBackgroundResource(android.R.drawable.btn_default);
-                        position6.setBackgroundResource(android.R.drawable.btn_default);
-                    }
-                }
-        );
-
-        position3.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        setParkPosition("3");
-                        position1.setBackgroundResource(android.R.drawable.btn_default);
-                        position2.setBackgroundResource(android.R.drawable.btn_default);
-                        position3.setBackgroundColor(Color.GREEN);
-                        position4.setBackgroundResource(android.R.drawable.btn_default);
-                        position5.setBackgroundResource(android.R.drawable.btn_default);
-                        position6.setBackgroundResource(android.R.drawable.btn_default);
-                    }
-                }
-        );
-
-        position4.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        setParkPosition("4");
-                        position1.setBackgroundResource(android.R.drawable.btn_default);
-                        position2.setBackgroundResource(android.R.drawable.btn_default);
-                        position3.setBackgroundResource(android.R.drawable.btn_default);
-                        position4.setBackgroundColor(Color.GREEN);
-                        position5.setBackgroundResource(android.R.drawable.btn_default);
-                        position6.setBackgroundResource(android.R.drawable.btn_default);
-                    }
-                }
-        );
-
-        position5.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        setParkPosition("5");
-                        position1.setBackgroundResource(android.R.drawable.btn_default);
-                        position2.setBackgroundResource(android.R.drawable.btn_default);
-                        position3.setBackgroundResource(android.R.drawable.btn_default);
-                        position4.setBackgroundResource(android.R.drawable.btn_default);
-                        position5.setBackgroundColor(Color.GREEN);
-                        position6.setBackgroundResource(android.R.drawable.btn_default);
-                    }
-                }
-        );
-
-        position6.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        setParkPosition("6");
-                        position1.setBackgroundResource(android.R.drawable.btn_default);
-                        position2.setBackgroundResource(android.R.drawable.btn_default);
-                        position3.setBackgroundResource(android.R.drawable.btn_default);
-                        position4.setBackgroundResource(android.R.drawable.btn_default);
-                        position5.setBackgroundResource(android.R.drawable.btn_default);
-                        position6.setBackgroundColor(Color.GREEN);
-                    }
-                }
-        );
+        exitA.setOnClickListener(this);
+        exitB.setOnClickListener(this);
+        exitC.setOnClickListener(this);
+        exitD.setOnClickListener(this);
+        position1.setOnClickListener(this);
+        position2.setOnClickListener(this);
+        position3.setOnClickListener(this);
+        position4.setOnClickListener(this);
+        position5.setOnClickListener(this);
+        position6.setOnClickListener(this);
         /*
         BluetoothDevice carBluetooth = getPairedDeviceByName(Codes.CAR_BLUETOOTH_NAME);
         if (carBluetooth == null) {
@@ -657,4 +532,93 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
             ShowToastMesage("Park position 6");
     }
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.exitA:
+                setExitPoint("A");
+                exitA.setBackgroundColor(Color.GREEN);
+                exitB.setBackgroundResource(android.R.drawable.btn_default);
+                exitC.setBackgroundResource(android.R.drawable.btn_default);
+                exitD.setBackgroundResource(android.R.drawable.btn_default);
+                break;
+            case R.id.exitB:
+                setExitPoint("B");
+                exitA.setBackgroundResource(android.R.drawable.btn_default);
+                exitB.setBackgroundColor(Color.GREEN);
+                exitC.setBackgroundResource(android.R.drawable.btn_default);
+                exitD.setBackgroundResource(android.R.drawable.btn_default);
+                break;
+            case R.id.exitC:
+                setExitPoint("C");
+                exitA.setBackgroundResource(android.R.drawable.btn_default);
+                exitB.setBackgroundResource(android.R.drawable.btn_default);
+                exitC.setBackgroundColor(Color.GREEN);
+                exitD.setBackgroundResource(android.R.drawable.btn_default);
+                break;
+            case R.id.exitD:
+                setExitPoint("D");
+                exitA.setBackgroundResource(android.R.drawable.btn_default);
+                exitB.setBackgroundResource(android.R.drawable.btn_default);
+                exitC.setBackgroundResource(android.R.drawable.btn_default);
+                exitD.setBackgroundColor(Color.GREEN);
+                break;
+        }
+        switch(v.getId()) {
+            case R.id.position1:
+                setParkPosition("1");
+                position1.setBackgroundColor(Color.GREEN);
+                position2.setBackgroundResource(android.R.drawable.btn_default);
+                position3.setBackgroundResource(android.R.drawable.btn_default);
+                position4.setBackgroundResource(android.R.drawable.btn_default);
+                position5.setBackgroundResource(android.R.drawable.btn_default);
+                position6.setBackgroundResource(android.R.drawable.btn_default);
+                break;
+            case R.id.position2:
+                setParkPosition("2");
+                position1.setBackgroundResource(android.R.drawable.btn_default);
+                position2.setBackgroundColor(Color.GREEN);
+                position3.setBackgroundResource(android.R.drawable.btn_default);
+                position4.setBackgroundResource(android.R.drawable.btn_default);
+                position5.setBackgroundResource(android.R.drawable.btn_default);
+                position6.setBackgroundResource(android.R.drawable.btn_default);
+                break;
+            case R.id.position3:
+                setParkPosition("3");
+                position1.setBackgroundResource(android.R.drawable.btn_default);
+                position2.setBackgroundResource(android.R.drawable.btn_default);
+                position3.setBackgroundColor(Color.GREEN);
+                position4.setBackgroundResource(android.R.drawable.btn_default);
+                position5.setBackgroundResource(android.R.drawable.btn_default);
+                position6.setBackgroundResource(android.R.drawable.btn_default);
+                break;
+            case R.id.position4:
+                setParkPosition("4");
+                position1.setBackgroundResource(android.R.drawable.btn_default);
+                position2.setBackgroundResource(android.R.drawable.btn_default);
+                position3.setBackgroundResource(android.R.drawable.btn_default);
+                position4.setBackgroundColor(Color.GREEN);
+                position5.setBackgroundResource(android.R.drawable.btn_default);
+                position6.setBackgroundResource(android.R.drawable.btn_default);
+                break;
+            case R.id.position5:
+                setParkPosition("5");
+                position1.setBackgroundResource(android.R.drawable.btn_default);
+                position2.setBackgroundResource(android.R.drawable.btn_default);
+                position3.setBackgroundResource(android.R.drawable.btn_default);
+                position4.setBackgroundResource(android.R.drawable.btn_default);
+                position5.setBackgroundColor(Color.GREEN);
+                position6.setBackgroundResource(android.R.drawable.btn_default);
+                break;
+            case R.id.position6:
+                setParkPosition("6");
+                position1.setBackgroundResource(android.R.drawable.btn_default);
+                position2.setBackgroundResource(android.R.drawable.btn_default);
+                position3.setBackgroundResource(android.R.drawable.btn_default);
+                position4.setBackgroundResource(android.R.drawable.btn_default);
+                position5.setBackgroundResource(android.R.drawable.btn_default);
+                position6.setBackgroundColor(Color.GREEN);
+                break;
+        }
+    }
 }
