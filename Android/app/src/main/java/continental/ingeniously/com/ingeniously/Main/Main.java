@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -141,15 +142,25 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
 
 
         exitA = (Button) findViewById(R.id.exitA);
+        exitA.setBackgroundResource(android.R.drawable.btn_default);
         exitB = (Button) findViewById(R.id.exitB);
+        exitB.setBackgroundResource(android.R.drawable.btn_default);
         exitC = (Button) findViewById(R.id.exitC);
+        exitC.setBackgroundResource(android.R.drawable.btn_default);
         exitD = (Button) findViewById(R.id.exitD);
+        exitD.setBackgroundResource(android.R.drawable.btn_default);
         position1 = (Button) findViewById(R.id.position1);
+        position1.setBackgroundResource(android.R.drawable.btn_default);
         position2 = (Button) findViewById(R.id.position2);
+        position2.setBackgroundResource(android.R.drawable.btn_default);
         position3 = (Button) findViewById(R.id.position3);
+        position3.setBackgroundResource(android.R.drawable.btn_default);
         position4 = (Button) findViewById(R.id.position4);
+        position4.setBackgroundResource(android.R.drawable.btn_default);
         position5 = (Button) findViewById(R.id.position5);
+        position5.setBackgroundResource(android.R.drawable.btn_default);
         position6 = (Button) findViewById(R.id.position6);
+        position6.setBackgroundResource(android.R.drawable.btn_default);
         sidewaysBox = (CheckBox) findViewById(R.id.sidewaysBox);
 
         exitA.setOnClickListener(
@@ -157,6 +168,10 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
                     @Override
                     public void onClick(View v) {
                         setExitPoint("A");
+                        exitA.setBackgroundColor(Color.GREEN);
+                        exitB.setBackgroundResource(android.R.drawable.btn_default);
+                        exitC.setBackgroundResource(android.R.drawable.btn_default);
+                        exitD.setBackgroundResource(android.R.drawable.btn_default);
                     }
                 }
         );
@@ -166,6 +181,10 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
                     @Override
                     public void onClick(View v) {
                         setExitPoint("B");
+                        exitA.setBackgroundResource(android.R.drawable.btn_default);
+                        exitB.setBackgroundColor(Color.GREEN);
+                        exitC.setBackgroundResource(android.R.drawable.btn_default);
+                        exitD.setBackgroundResource(android.R.drawable.btn_default);
                     }
                 }
         );
@@ -175,6 +194,10 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
                     @Override
                     public void onClick(View v) {
                         setExitPoint("C");
+                        exitA.setBackgroundResource(android.R.drawable.btn_default);
+                        exitB.setBackgroundResource(android.R.drawable.btn_default);
+                        exitC.setBackgroundColor(Color.GREEN);
+                        exitD.setBackgroundResource(android.R.drawable.btn_default);
                     }
                 }
         );
@@ -184,6 +207,10 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
                     @Override
                     public void onClick(View v) {
                         setExitPoint("D");
+                        exitA.setBackgroundResource(android.R.drawable.btn_default);
+                        exitB.setBackgroundResource(android.R.drawable.btn_default);
+                        exitC.setBackgroundResource(android.R.drawable.btn_default);
+                        exitD.setBackgroundColor(Color.GREEN);
                     }
                 }
         );
@@ -192,6 +219,12 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         setParkPosition("1");
+                        position1.setBackgroundColor(Color.GREEN);
+                        position2.setBackgroundResource(android.R.drawable.btn_default);
+                        position3.setBackgroundResource(android.R.drawable.btn_default);
+                        position4.setBackgroundResource(android.R.drawable.btn_default);
+                        position5.setBackgroundResource(android.R.drawable.btn_default);
+                        position6.setBackgroundResource(android.R.drawable.btn_default);
                     }
                 }
         );
@@ -200,6 +233,12 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         setParkPosition("2");
+                        position1.setBackgroundResource(android.R.drawable.btn_default);
+                        position2.setBackgroundColor(Color.GREEN);
+                        position3.setBackgroundResource(android.R.drawable.btn_default);
+                        position4.setBackgroundResource(android.R.drawable.btn_default);
+                        position5.setBackgroundResource(android.R.drawable.btn_default);
+                        position6.setBackgroundResource(android.R.drawable.btn_default);
                     }
                 }
         );
@@ -208,6 +247,12 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         setParkPosition("3");
+                        position1.setBackgroundResource(android.R.drawable.btn_default);
+                        position2.setBackgroundResource(android.R.drawable.btn_default);
+                        position3.setBackgroundColor(Color.GREEN);
+                        position4.setBackgroundResource(android.R.drawable.btn_default);
+                        position5.setBackgroundResource(android.R.drawable.btn_default);
+                        position6.setBackgroundResource(android.R.drawable.btn_default);
                     }
                 }
         );
@@ -216,6 +261,12 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         setParkPosition("4");
+                        position1.setBackgroundResource(android.R.drawable.btn_default);
+                        position2.setBackgroundResource(android.R.drawable.btn_default);
+                        position3.setBackgroundResource(android.R.drawable.btn_default);
+                        position4.setBackgroundColor(Color.GREEN);
+                        position5.setBackgroundResource(android.R.drawable.btn_default);
+                        position6.setBackgroundResource(android.R.drawable.btn_default);
                     }
                 }
         );
@@ -224,6 +275,12 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         setParkPosition("5");
+                        position1.setBackgroundResource(android.R.drawable.btn_default);
+                        position2.setBackgroundResource(android.R.drawable.btn_default);
+                        position3.setBackgroundResource(android.R.drawable.btn_default);
+                        position4.setBackgroundResource(android.R.drawable.btn_default);
+                        position5.setBackgroundColor(Color.GREEN);
+                        position6.setBackgroundResource(android.R.drawable.btn_default);
                     }
                 }
         );
@@ -232,6 +289,12 @@ public class Main extends ActionBarActivity implements ProtocolObserver {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         setParkPosition("6");
+                        position1.setBackgroundResource(android.R.drawable.btn_default);
+                        position2.setBackgroundResource(android.R.drawable.btn_default);
+                        position3.setBackgroundResource(android.R.drawable.btn_default);
+                        position4.setBackgroundResource(android.R.drawable.btn_default);
+                        position5.setBackgroundResource(android.R.drawable.btn_default);
+                        position6.setBackgroundColor(Color.GREEN);
                     }
                 }
         );
