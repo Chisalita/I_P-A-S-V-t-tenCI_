@@ -30,6 +30,7 @@ import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolCommand;
 import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolObservable;
 import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolObserver;
 import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolResponse;
+import continental.ingeniously.com.ingeniously.Processing.Logic;
 import continental.ingeniously.com.ingeniously.R;
 
 
@@ -53,6 +54,9 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
     private Button position5;
     private Button position6;
     private CheckBox sidewaysBox;
+    private int exit;
+    private int parkPosition;
+    private Logic logic;
 
 /*
     private final Handler MainHandler = new Handler() {
@@ -424,9 +428,19 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
 
 
 */
+        logic = new Logic(this,this);
 
-        if(sidewaysBox.isChecked())
-            ShowToastMesage("The sidewaysBox is Activated");
+        logic.setParkPos(parkPosition);
+        logic.setExit(exit);
+
+        if(sidewaysBox.isChecked()) {
+            logic.setMode(Codes.MODE_SIDEWAYS);
+        }
+        else {
+            logic.setMode(Codes.MODE_NORMAL);
+        }
+
+        ShowToastMesage("Exit: "+exit+", "+"Park position: "+parkPosition);
 
         //String message = ParkPos.getText().toString();
         String message = "";
@@ -537,6 +551,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
         switch(v.getId()) {
             case R.id.exitA:
                 setExitPoint("A");
+                exit = 1;
                 exitA.setBackgroundColor(Color.GREEN);
                 exitB.setBackgroundResource(android.R.drawable.btn_default);
                 exitC.setBackgroundResource(android.R.drawable.btn_default);
@@ -544,6 +559,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
                 break;
             case R.id.exitB:
                 setExitPoint("B");
+                exit = 2;
                 exitA.setBackgroundResource(android.R.drawable.btn_default);
                 exitB.setBackgroundColor(Color.GREEN);
                 exitC.setBackgroundResource(android.R.drawable.btn_default);
@@ -551,6 +567,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
                 break;
             case R.id.exitC:
                 setExitPoint("C");
+                exit = 3;
                 exitA.setBackgroundResource(android.R.drawable.btn_default);
                 exitB.setBackgroundResource(android.R.drawable.btn_default);
                 exitC.setBackgroundColor(Color.GREEN);
@@ -558,6 +575,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
                 break;
             case R.id.exitD:
                 setExitPoint("D");
+                exit = 0;
                 exitA.setBackgroundResource(android.R.drawable.btn_default);
                 exitB.setBackgroundResource(android.R.drawable.btn_default);
                 exitC.setBackgroundResource(android.R.drawable.btn_default);
@@ -567,6 +585,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
         switch(v.getId()) {
             case R.id.position1:
                 setParkPosition("1");
+                parkPosition = 1;
                 position1.setBackgroundColor(Color.GREEN);
                 position2.setBackgroundResource(android.R.drawable.btn_default);
                 position3.setBackgroundResource(android.R.drawable.btn_default);
@@ -576,6 +595,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
                 break;
             case R.id.position2:
                 setParkPosition("2");
+                parkPosition = 2;
                 position1.setBackgroundResource(android.R.drawable.btn_default);
                 position2.setBackgroundColor(Color.GREEN);
                 position3.setBackgroundResource(android.R.drawable.btn_default);
@@ -585,6 +605,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
                 break;
             case R.id.position3:
                 setParkPosition("3");
+                parkPosition = 3;
                 position1.setBackgroundResource(android.R.drawable.btn_default);
                 position2.setBackgroundResource(android.R.drawable.btn_default);
                 position3.setBackgroundColor(Color.GREEN);
@@ -594,6 +615,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
                 break;
             case R.id.position4:
                 setParkPosition("4");
+                parkPosition = 4;
                 position1.setBackgroundResource(android.R.drawable.btn_default);
                 position2.setBackgroundResource(android.R.drawable.btn_default);
                 position3.setBackgroundResource(android.R.drawable.btn_default);
@@ -603,6 +625,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
                 break;
             case R.id.position5:
                 setParkPosition("5");
+                parkPosition = 5;
                 position1.setBackgroundResource(android.R.drawable.btn_default);
                 position2.setBackgroundResource(android.R.drawable.btn_default);
                 position3.setBackgroundResource(android.R.drawable.btn_default);
@@ -612,6 +635,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
                 break;
             case R.id.position6:
                 setParkPosition("6");
+                parkPosition = 6;
                 position1.setBackgroundResource(android.R.drawable.btn_default);
                 position2.setBackgroundResource(android.R.drawable.btn_default);
                 position3.setBackgroundResource(android.R.drawable.btn_default);
@@ -620,5 +644,9 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
                 position6.setBackgroundColor(Color.GREEN);
                 break;
         }
+    }
+
+    public String toString() {
+        return "" + parkPosition;
     }
 }
