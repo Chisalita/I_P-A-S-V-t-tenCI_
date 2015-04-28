@@ -94,6 +94,7 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
                             currentResponse.setNo_of_sensors(data[1]);
                         }else{
                             //discard
+                            System.out.println("Discarded");
                             currentResponse = new ProtocolResponse();
                             isResponseStarted = false;
                             return;

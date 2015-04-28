@@ -108,7 +108,7 @@ void executeCommands(){
 	
 		
 			if(isAutonomous){
-			cm_IR = getDistance();
+			cm_IR = getInfraredRightDistance();
 			mm_US = getAverageUltrasonicValue(3);
 							
 			if(cm_IR<20 && (turning >> 1 == 0)){
@@ -123,13 +123,13 @@ void executeCommands(){
 				
 			}else if(mm_US<250 && ((turning & 1) == 0)){
 				//turnRight_90degrees();
-				turnLeft();
+			//	turnLeft();
 				turning|=1;
 				//breakAll();
 				}else if(((turning &1) ==1) && mm_US>=250){
 				turning&=~1;
-				stopTurning();
-				reverse();	
+		//		stopTurning();
+		//		reverse();	
 			}
 	
 

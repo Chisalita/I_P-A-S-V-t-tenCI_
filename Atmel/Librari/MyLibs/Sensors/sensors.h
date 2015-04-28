@@ -13,13 +13,15 @@
 
 void initADC();
 void initUSART0(int baud);
-uint8_t getDistance();
 void initSensors();
 uint16_t getLastUltrasonicValue();
 uint16_t getAverageUltrasonicValue(uint8_t no_of_values);
 void startUltrasonicMeasure();
 void setUltrasonicManualMeasure(uint8_t val);
-
+uint8_t getInfraredForwardDistance();
+uint8_t getInfraredBackDistance();
+uint8_t getInfraredRightDistance();
+uint8_t getInfraredLeftDistance();
 
 
 #endif /* SENSORS_H_ */

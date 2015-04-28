@@ -15,39 +15,79 @@
 #include <Communication/communication.h> //TESTE
 #include <stdlib.h> //TESTE
 
-#define MAX 5//asta trebuie redenumit... ii pt senzor pe adc
-#define MAX_ULTRASONIC_VALUES 16
+#define MAX_INFRARED_VALUES 4//maximum values for a sensor in the buffer
+#define MAX_INFRARED_VALUES_MSK 3
+#define NO_OF_IR_SENSORS 4 // the number of infrared sensors
+
+#define MAX_ULTRASONIC_VALUES 16 //maximum values for the sensor in the buffer
 #define MAX_ULTRASONIC_VALUES_MSK 15
 
-//
-volatile unsigned int iter =0;
-volatile uint8_t dis[MAX];
-volatile uint8_t distance=0;
+// infrared sensors
+volatile uint8_t InfraredValues[MAX_INFRARED_VALUES*NO_OF_IR_SENSORS]; //because all sensors are stored in the same array
+//the sensors are set in the ORDER: 0 Forward, 1 Right, 2 Back, 3 Left
+volatile uint8_t activeInfraredSensor = 0; //which sensor is active (is connected to the ADC by the ADC MUX)
+volatile uint8_t IR_pos_in_buffer = 0; //position in the buffer with the decoded values
+
 
 //ultrasonic
-volatile uint16_t UltraSonicValues[MAX_ULTRASONIC_VALUES];
-volatile uint16_t lastUSonicValue=0;
-volatile uint8_t ultrasonicDataPack[4];
-volatile uint8_t US_data_part_no = 0;
-volatile uint8_t US_pos_in_buffer = 0;
-volatile uint8_t US_manual_start = 0;
+volatile uint16_t UltraSonicValues[MAX_ULTRASONIC_VALUES]; // buffer for the decoded values
+volatile uint16_t lastUSonicValue=0; // the last decoded value 
+volatile uint8_t ultrasonicDataPack[4]; //buffer for pack transmitted by the sensor 
+volatile uint8_t US_data_part_no = 0; // position in the pack buffer
+volatile uint8_t US_pos_in_buffer = 0; //position in the buffer with the decoded values
+volatile uint8_t US_manual_start = 0; // is the ultrasonic sensor manually triggered or not
 
 
-//Functia asta trebuie neaparat schimbata!!
-uint8_t getDistance(){
-	
+
+uint8_t getInfraredForwardDistance(){
 	uint32_t avreage = 0;
 	
 	int j;
-	for (j=0;j<MAX;j++)
+	for (j=0;j<MAX_INFRARED_VALUES; j++)
 	{
-		avreage += dis[j];
+		avreage += InfraredValues[j];
 	}
 	
-	distance = avreage/MAX;
-	
-	return distance;
+	return avreage/MAX_INFRARED_VALUES;
 }
+
+
+uint8_t getInfraredRightDistance(){
+	uint32_t avreage = 0;
+	
+	int j;
+	for (j=0;j<MAX_INFRARED_VALUES;j++)
+	{
+		avreage += InfraredValues[j+NO_OF_IR_SENSORS];
+	}
+
+	return avreage/MAX_INFRARED_VALUES;
+}
+
+uint8_t getInfraredBackDistance(){
+	uint32_t avreage = 0;
+	
+	int j;
+	for (j=0;j<MAX_INFRARED_VALUES;j++)
+	{
+		avreage += InfraredValues[j+(2*NO_OF_IR_SENSORS)];
+	}
+	
+	return avreage/MAX_INFRARED_VALUES;
+}
+
+uint8_t getInfraredLeftDistance(){
+	uint32_t avreage = 0;
+	
+	int j;
+	for (j=0;j<MAX_INFRARED_VALUES;j++)
+	{
+		avreage += InfraredValues[j+(3*NO_OF_IR_SENSORS)];
+	}
+	
+	return avreage/MAX_INFRARED_VALUES;
+}
+
 
 uint16_t getLastUltrasonicValue(){
 	return UltraSonicValues[US_pos_in_buffer-1];//because it is always the next position
@@ -181,29 +221,29 @@ void initUSART0(int baud){
 void  initADC(void)
 {
 
-	//set Vref to Vcc
+	//disable digital pins on sensor pins
+	DIDR0 |= (1<<ADC0D) | (1<<ADC1D) | (1<<ADC2D) | (1<<ADC3D) ;
+
+	//set Vref to Vcc, va trebui sa fie referinta externa !!
 	ADMUX |= (1<<REFS0);
 	ADMUX &= ~(1<<REFS1);
 	
 	//select ADC0
 	
 	ADMUX &= ~( (1<<MUX0) | (1<<MUX1) | (1<<MUX2) | (1<<MUX3) | (1<<MUX4) );
-
-	//enable the ADC
-	ADCSRA |= (1<<ADEN);
 	
 	//enable the ADC interrupt
 	ADCSRA |= (1<<ADIE);
+	
+	
+	//enable the ADC
+	ADCSRA |= (1<<ADEN);
 	
 	//set prescaler to 128
 	ADCSRA |= (1<<ADPS0) | (1<<ADPS1) | (1<<ADPS2);
 	
 	//select free running mode
 	//ADCSRB &= ~( (1<<ADTS0) | (1<<ADTS1) | (1<<ADTS2) );
-
-
-	//disable digital pins on sensor pins
-	DIDR0 |= (1<<ADC0D) | (1<<ADC1D) | (1<<ADC2D) | (1<<ADC3D) ;
 
 
 	//start conversion
@@ -238,25 +278,48 @@ ISR(ADC_vect){
 		distance = 30.0;
 	}
 	*/
-	
 		
-		dis[iter%MAX] = floor((2076.0 / (theTenBitResult - 11.0)) + 0.5);
+		//dont forget to set IR_pos_in_buffer = 0 when changing the active sensor
+		int pos_in_buff = (activeInfraredSensor * NO_OF_IR_SENSORS) + IR_pos_in_buffer; //(IR_pos_in_buffer&MAX_INFRARED_VALUES_MSK) 
+		InfraredValues[pos_in_buff] = floor((2076.0 / (theTenBitResult - 11.0)) + 0.5);
 		
 		//under lower limit
-		if (dis[iter%MAX] < 4)
+		if (InfraredValues[pos_in_buff] < 4)
 		{
-			dis[iter%MAX] = 4;
+			InfraredValues[pos_in_buff] = 4;
 		}
 		
 		//above upper limit
-		if (dis[iter%MAX] > 30)
+		if (InfraredValues[pos_in_buff] > 30)
 		{
 			
-			dis[iter%MAX] = 30;
+			InfraredValues[pos_in_buff] = 30;
 		}
 	
 	
-	iter++;
+	IR_pos_in_buffer++;
+	
+	if (IR_pos_in_buffer == MAX_INFRARED_VALUES)
+	{
+		IR_pos_in_buffer = 0;
+		activeInfraredSensor++;
+	}
+	
+	if (activeInfraredSensor == NO_OF_IR_SENSORS)
+	{
+		activeInfraredSensor = 0;
+	}
+	
+	//if the sensors are connected starting with pin 4, then add 4 as a offset
+	
+	//clear the MUX bits first
+	ADMUX &= 0xF0;
+	
+	
+	//select the sensor
+	ADMUX |= activeInfraredSensor; //+offset
+	
+	//start a new conversion
 	ADCSRA |= 1<<ADSC;
 }
 
