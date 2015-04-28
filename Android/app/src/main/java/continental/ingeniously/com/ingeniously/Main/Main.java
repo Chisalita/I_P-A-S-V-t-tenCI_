@@ -430,29 +430,38 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
 */
         logic = new Logic(this,this);
 
-        logic.setParkPos(parkPosition);
-        logic.setExit(exit);
-
         if(sidewaysBox.isChecked()) {
             logic.setMode(Codes.MODE_SIDEWAYS);
+            exitA.setBackgroundResource(android.R.drawable.btn_default);
+            exitB.setBackgroundResource(android.R.drawable.btn_default);
+            exitC.setBackgroundResource(android.R.drawable.btn_default);
+            exitD.setBackgroundResource(android.R.drawable.btn_default);
+            position1.setBackgroundResource(android.R.drawable.btn_default);
+            position2.setBackgroundResource(android.R.drawable.btn_default);
+            position3.setBackgroundResource(android.R.drawable.btn_default);
+            position4.setBackgroundResource(android.R.drawable.btn_default);
+            position5.setBackgroundResource(android.R.drawable.btn_default);
+            position6.setBackgroundResource(android.R.drawable.btn_default);
         }
         else {
             logic.setMode(Codes.MODE_NORMAL);
+            logic.setParkPos(parkPosition);
+            logic.setExit(exit);
         }
 
-        ShowToastMesage("Exit: "+exit+", "+"Park position: "+parkPosition);
+        logic.StartProcessing();
 
         //String message = ParkPos.getText().toString();
-        String message = "";
+        //String message = "";
 
-        if (message == null || message.isEmpty()) {
+        /*if (message == null || message.isEmpty()) {
             message = "S";
         } else {
             message = message.substring(0, 1);
         }
         ProtocolCommand comm = new ProtocolCommand((byte) 10, (byte) 38, (byte) ((message.charAt(0) - '0') * 10), (short) 2056);
 
-        bluetoothIO.sendCommand(comm);
+        bluetoothIO.sendCommand(comm);*/
     }
 
 
