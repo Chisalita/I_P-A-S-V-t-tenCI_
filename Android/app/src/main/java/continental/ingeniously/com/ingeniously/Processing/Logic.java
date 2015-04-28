@@ -3,6 +3,7 @@ package continental.ingeniously.com.ingeniously.Processing;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
 
 import continental.ingeniously.com.ingeniously.IO.HMI.HMI_Info;
 import continental.ingeniously.com.ingeniously.IO.HMI.HMI_Observable;
@@ -14,17 +15,19 @@ import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolResponse;
 /**
  * Created by chisa_000 on 4/25/2015.
  */
-public class Logic extends Thread implements Processor, ProtocolObserver, HMI_Observable {
+public class Logic implements Processor, ProtocolObserver, HMI_Observable {
+
+    private Context mainContent;
     ProtocolObserver observer;
     private Context mainContext;
     private BluetoothIO bluetoothIO;
     private int ParkPos=0;
     private int Exit=0;
     private int Mode=0;
-
-    private Handler mainHandler = new Handler() {
+    private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            ShowToastMesage("Exit: "+ getExit() + ", " + "Park position: " + getParkPos());
         }
     };
 
@@ -43,10 +46,10 @@ public class Logic extends Thread implements Processor, ProtocolObserver, HMI_Ob
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                mainHandler.sendEmptyMessage(0);
+                handler.sendEmptyMessage(0);
             }
         };
-        Thread startProcessing = new Thread();
+        Thread startProcessing = new Thread(r);
         startProcessing.start();
     }
 
@@ -78,5 +81,23 @@ public class Logic extends Thread implements Processor, ProtocolObserver, HMI_Ob
     @Override
     public void notifyNewInfoToShow(HMI_Info info) {
 
+
+
+    }
+
+    public void ShowToastMesage(String s) {
+        Toast.makeText(mainContext, s, Toast.LENGTH_SHORT).show();
+    }
+
+    public int getExit() {
+        return Exit;
+    }
+
+    public int getParkPos() {
+        return ParkPos;
+    }
+
+    public int getMode() {
+        return Mode;
     }
 }
