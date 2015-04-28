@@ -1,6 +1,8 @@
 package continental.ingeniously.com.ingeniously.Processing;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 
 import continental.ingeniously.com.ingeniously.IO.HMI.HMI_Info;
 import continental.ingeniously.com.ingeniously.IO.HMI.HMI_Observable;
@@ -12,13 +14,19 @@ import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolResponse;
 /**
  * Created by chisa_000 on 4/25/2015.
  */
-public class Logic implements Processor, ProtocolObserver, HMI_Observable {
+public class Logic extends Thread implements Processor, ProtocolObserver, HMI_Observable {
     ProtocolObserver observer;
     private Context mainContext;
     private BluetoothIO bluetoothIO;
     private int ParkPos=0;
     private int Exit=0;
     private int Mode=0;
+
+    private Handler mainHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+        }
+    };
 
     public Logic(Context context, ProtocolObserver protocolObserver){
         observer = protocolObserver;
@@ -29,10 +37,17 @@ public class Logic implements Processor, ProtocolObserver, HMI_Observable {
         Mode = 0;
      }
 
-
     @Override
     public void StartProcessing() {
-    // aici trebuie inceput un nou thread in care sa proceseze informatia...
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                mainHandler.sendEmptyMessage(0);
+            }
+        };
+        Thread startProcessing = new Thread();
+        startProcessing.start();
     }
 
     @Override
