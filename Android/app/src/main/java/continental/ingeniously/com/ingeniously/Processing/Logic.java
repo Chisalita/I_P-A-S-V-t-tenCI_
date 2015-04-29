@@ -28,6 +28,7 @@ public class Logic implements Processor, ProtocolObserver, HMI_Observable {
         @Override
         public void handleMessage(Message msg) {
             ShowToastMesage("Exit: "+ getExit() + ", " + "Park position: " + getParkPos());
+
         }
     };
 

@@ -584,7 +584,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
                 break;
             case R.id.exitD:
                 setExitPoint("D");
-                exit = 0;
+                exit = 4;
                 exitA.setBackgroundResource(android.R.drawable.btn_default);
                 exitB.setBackgroundResource(android.R.drawable.btn_default);
                 exitC.setBackgroundResource(android.R.drawable.btn_default);
