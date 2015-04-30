@@ -99,7 +99,7 @@ void executeCommands(){
 			changePwm_MotorRB(car_speed);
 			changePwm_MotorLF(car_speed);
 			changePwm_MotorRF(car_speed);
-			reverse();
+			//changeMotorDirectionLeft();
 			
 			
 		}

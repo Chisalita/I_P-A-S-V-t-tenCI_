@@ -222,15 +222,17 @@ void  initADC(void)
 {
 
 	//disable digital pins on sensor pins
-	DIDR0 |= (1<<ADC0D) | (1<<ADC1D) | (1<<ADC2D) | (1<<ADC3D) ;
+	DIDR0 |= (1<<ADC4D) | (1<<ADC5D) | (1<<ADC6D) | (1<<ADC7D) ;
 
 	//set Vref to Vcc, va trebui sa fie referinta externa !!
 	ADMUX |= (1<<REFS0);
 	ADMUX &= ~(1<<REFS1);
 	
-	//select ADC0
+	//select ADC4
 	
 	ADMUX &= ~( (1<<MUX0) | (1<<MUX1) | (1<<MUX2) | (1<<MUX3) | (1<<MUX4) );
+	ADMUX |= (1<<MUX2);
+	
 	
 	//enable the ADC interrupt
 	ADCSRA |= (1<<ADIE);
@@ -317,7 +319,7 @@ ISR(ADC_vect){
 	
 	
 	//select the sensor
-	ADMUX |= activeInfraredSensor; //+offset
+	ADMUX |= activeInfraredSensor + 4; //+offset
 	
 	//start a new conversion
 	ADCSRA |= 1<<ADSC;

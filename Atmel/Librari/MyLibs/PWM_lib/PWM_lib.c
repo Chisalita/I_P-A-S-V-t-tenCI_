@@ -217,43 +217,30 @@ void turnLeft_90degrees(){
 
 void stopTurning(){
 		//setez directia initiala
-		MOTOR_LF_DIR_PORT2 |= (1<<MOTOR_LF_DIR_PIN2x);
-		MOTOR_LF_DIR_PORT1 &= ~(1<<MOTOR_LF_DIR_PIN1x);
-		MOTOR_LB_DIR_PORT2 |= (1<<MOTOR_LB_DIR_PIN2x);
-		MOTOR_LB_DIR_PORT1 &= ~(1<<MOTOR_LB_DIR_PIN1x);
-		
-		
-		MOTOR_RF_DIR_PORT2 |= (1<<MOTOR_RF_DIR_PIN2x);
-		MOTOR_RF_DIR_PORT1 &= ~(1<<MOTOR_RF_DIR_PIN1x);
-		MOTOR_RB_DIR_PORT2 |= (1<<MOTOR_RB_DIR_PIN2x);
-		MOTOR_RB_DIR_PORT1 &= ~(1<<MOTOR_RB_DIR_PIN1x);
+		MOTOR_LEFT_DIR_DDR2 |= (1<<MOTOR_LEFT_DIR_PIN2x);
+		MOTOR_LEFT_DIR_PORT1 &= ~(1<<MOTOR_LEFT_DIR_PIN1x);		
+
+		MOTOR_RIGHT_DIR_PORT2 |= (1<<MOTOR_RIGHT_DIR_PIN2x);
+		MOTOR_RIGHT_DIR_PORT1 &= ~(1<<MOTOR_RIGHT_DIR_PIN1x);
 	
 	
 }
 
 void reverse(){
-	changeMotorDirectionLB();
-	changeMotorDirectionLF();
-	changeMotorDirectionRB();
-	changeMotorDirectionRF();
+	changeMotorDirectionLeft();
+	changeMotorDirectionRight();
+
 }
 
 void move(uint16_t argc, int16_t* argv){
 	
 	if(argc == 2){
 	//setez directia initiala
-	MOTOR_LF_DIR_PORT2 |= (1<<MOTOR_LF_DIR_PIN2x);
-	MOTOR_LF_DIR_PORT1 &= ~(1<<MOTOR_LF_DIR_PIN1x);
-	MOTOR_LB_DIR_PORT2 |= (1<<MOTOR_LB_DIR_PIN2x);
-	MOTOR_LB_DIR_PORT1 &= ~(1<<MOTOR_LB_DIR_PIN1x);
+	MOTOR_LEFT_DIR_PORT2 |= (1<<MOTOR_LEFT_DIR_PIN2x);
+	MOTOR_LEFT_DIR_PORT1 &= ~(1<<MOTOR_LEFT_DIR_PIN1x);
 	
-	
-	MOTOR_RF_DIR_PORT2 |= (1<<MOTOR_RF_DIR_PIN2x);
-	MOTOR_RF_DIR_PORT1 &= ~(1<<MOTOR_RF_DIR_PIN1x);
-	MOTOR_RB_DIR_PORT2 |= (1<<MOTOR_RB_DIR_PIN2x);
-	MOTOR_RB_DIR_PORT1 &= ~(1<<MOTOR_RB_DIR_PIN1x);
-	
-
+	MOTOR_RIGHT_DIR_PORT2 |= (1<<MOTOR_RIGHT_DIR_PIN2x);
+	MOTOR_RIGHT_DIR_PORT1 &= ~(1<<MOTOR_RIGHT_DIR_PIN1x);
 	
 	int8_t d;
 	
@@ -261,23 +248,29 @@ void move(uint16_t argc, int16_t* argv){
 	
 	if (d < 0){
 		d=-d;
-		changeMotorDirectionLF();
+		if ((argv[0] & 0xff) < 0) // if both are negative numbers
+		{
+			changeMotorDirectionLeft();
+		}
+		
 	}
 	changePwm_MotorLF(d);
 	
 	
 	d = argv[0] & 0xff;
 	
-	if (d < 0){
+	if (d < 0){ // aici pot pune un si
 		d=-d;
-		changeMotorDirectionLB();
 	}
 	changePwm_MotorLB(d);
 
 	d = argv[1] >> 8;
 	if (d < 0){
 		d=-d;
-		changeMotorDirectionRF();
+		if ((argv[1] & 0xff) < 0)// if both are negative numbers
+		{
+			changeMotorDirectionRight();
+		}
 	}
 	changePwm_MotorRF(d);
 	
@@ -285,7 +278,6 @@ void move(uint16_t argc, int16_t* argv){
 	
 	if (d < 0){
 		d=-d;
-		changeMotorDirectionRB();
 	}	
 	changePwm_MotorRB(d);
 	}else if (argc == 3){
@@ -297,44 +289,32 @@ void move(uint16_t argc, int16_t* argv){
 	int16_t arg2[] = {0, 0};
 	executeCommandForTime(&move, &move, 2, arg1,2, arg2,argv[2]);
 	
-		
 	}
 	
 }
 
 
 void turnLeft(){
-	changeMotorDirectionLB();
-	changeMotorDirectionLF();
-	
+	changeMotorDirectionLeft();
 }
 
 void turnRight(){
-	changeMotorDirectionRB();
-	changeMotorDirectionRF();
+	changeMotorDirectionRight();
 }
 
 
-void changeMotorDirectionLF(){
-	MOTOR_LF_DIR_PIN1 |= (1<<MOTOR_LF_DIR_PIN1x);
-	MOTOR_LF_DIR_PIN2 |= (1<<MOTOR_LF_DIR_PIN2x);
+void changeMotorDirectionLeft(){
+	MOTOR_LEFT_DIR_PIN1 |= (1<<MOTOR_LEFT_DIR_PIN1x);
+	MOTOR_LEFT_DIR_PIN2 |= (1<<MOTOR_LEFT_DIR_PIN2x);
 }
 	
-void changeMotorDirectionLB(){
-	MOTOR_LB_DIR_PIN1 |= (1<<MOTOR_LB_DIR_PIN1x);
-	MOTOR_LB_DIR_PIN2 |= (1<<MOTOR_LB_DIR_PIN2x);
-}
+
 	  
-void changeMotorDirectionRF(){
-	MOTOR_RF_DIR_PIN1 |= (1<<MOTOR_RF_DIR_PIN1x);	
-	MOTOR_RF_DIR_PIN2 |= (1<<MOTOR_RF_DIR_PIN2x);
+void changeMotorDirectionRight(){
+	MOTOR_RIGHT_DIR_PIN1 |= (1<<MOTOR_RIGHT_DIR_PIN1x);	
+	MOTOR_RIGHT_DIR_PIN2 |= (1<<MOTOR_RIGHT_DIR_PIN2x);
 }
 	 
-void changeMotorDirectionRB(){
-	MOTOR_RB_DIR_PIN1 |= (1<<MOTOR_RB_DIR_PIN1x);
-	MOTOR_RB_DIR_PIN2 |= (1<<MOTOR_RB_DIR_PIN2x);
-}
-
 
 
 void breakAll(){
@@ -357,17 +337,13 @@ void breakRight(){
 void initTimer0(){
 	
 	//setez pini de directie
-	MOTOR_LF_DIR_DDR1 |= (1<<MOTOR_LF_DIR_PIN1x);
-	MOTOR_LF_DIR_DDR2 |= (1<<MOTOR_LF_DIR_PIN2x);
-	MOTOR_LB_DIR_DDR1 |= (1<<MOTOR_LB_DIR_PIN1x);
-	MOTOR_LB_DIR_DDR2 |= (1<<MOTOR_LB_DIR_PIN1x);
-	
+	MOTOR_LEFT_DIR_DDR1 |= (1<<MOTOR_LEFT_DIR_PIN1x);
+	MOTOR_LEFT_DIR_DDR2 |= (1<<MOTOR_LEFT_DIR_PIN2x);
+
 	//setez directia initiala
-	MOTOR_LF_DIR_PORT2 |= (1<<MOTOR_LF_DIR_PIN2x);
-	MOTOR_LF_DIR_PORT1 &= ~(1<<MOTOR_LF_DIR_PIN1x);
-	MOTOR_LB_DIR_PORT2 |= (1<<MOTOR_LB_DIR_PIN2x);
-	MOTOR_LB_DIR_PORT1 &= ~(1<<MOTOR_LB_DIR_PIN1x);
-	
+	MOTOR_LEFT_DIR_PORT2 |= (1<<MOTOR_LEFT_DIR_PIN2x);
+	MOTOR_LEFT_DIR_PORT1 &= ~(1<<MOTOR_LEFT_DIR_PIN1x);
+
 	
 	//Pt portul OC0A
 	// Setting the pwm pin to output!
@@ -402,18 +378,13 @@ void initTimer0(){
 void initTimer2(){
 	
 	//setez pini de directie
-	MOTOR_RF_DIR_DDR1 |= (1<<MOTOR_RF_DIR_PIN1x);
-	MOTOR_RF_DIR_DDR2 |= (1<<MOTOR_RF_DIR_PIN2x);
-	MOTOR_RB_DIR_DDR1 |= (1<<MOTOR_RB_DIR_PIN1x);
-	MOTOR_RB_DIR_DDR2 |= (1<<MOTOR_RB_DIR_PIN2x);
+	MOTOR_RIGHT_DIR_DDR1 |= (1<<MOTOR_RIGHT_DIR_PIN1x);
+	MOTOR_RIGHT_DIR_DDR2 |= (1<<MOTOR_RIGHT_DIR_PIN2x);
 	
 	//setez directia initiala
-	MOTOR_RF_DIR_PORT2 |= (1<<MOTOR_RF_DIR_PIN2x);
-	MOTOR_RF_DIR_PORT1 &= ~(1<<MOTOR_RF_DIR_PIN1x);
-	MOTOR_RB_DIR_PORT2 |= (1<<MOTOR_RB_DIR_PIN2x);
-	MOTOR_RB_DIR_PORT1 &= ~(1<<MOTOR_RB_DIR_PIN1x);	
-	
-	
+	MOTOR_RIGHT_DIR_PORT2 |= (1<<MOTOR_RIGHT_DIR_PIN2x);
+	MOTOR_RIGHT_DIR_PORT1 &= ~(1<<MOTOR_RIGHT_DIR_PIN1x);
+
 	
 	//Pt portul OC2A
 	// Setting the pwm pin to output!

@@ -24,10 +24,8 @@ void initTimer2();
 void breakAll();
 void breakLeft();
 void breakRight();
-void changeMotorDirectionLF();
-void changeMotorDirectionLB();
-void changeMotorDirectionRF();
-void changeMotorDirectionRB();
+void changeMotorDirectionLeft();
+void changeMotorDirectionRight();
 void reverse();
 void stopTurning();
 

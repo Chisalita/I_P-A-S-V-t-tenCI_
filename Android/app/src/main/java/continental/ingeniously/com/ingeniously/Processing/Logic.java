@@ -6,6 +6,7 @@ import continental.ingeniously.com.ingeniously.IO.HMI.HMI_Info;
 import continental.ingeniously.com.ingeniously.IO.HMI.HMI_Observable;
 import continental.ingeniously.com.ingeniously.IO.HMI.HMI_Observer;
 import continental.ingeniously.com.ingeniously.IO.Protocol.BluetoothIO;
+import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolCommand;
 import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolObserver;
 import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolResponse;
 import continental.ingeniously.com.ingeniously.Main.Codes;
@@ -68,6 +69,11 @@ public class Logic implements Processor, ProtocolObserver, HMI_Observable, State
 
     @Override
     public void reset() {
+
+    }
+
+    @Override
+    public void sendCommand(ProtocolCommand command){
 
     }
 
