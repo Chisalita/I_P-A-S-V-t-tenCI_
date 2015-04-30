@@ -2,6 +2,9 @@ package continental.ingeniously.com.ingeniously.Main;
 
 import java.util.UUID;
 
+import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolCommand;
+import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolResponse;
+
 /**
  * Created by chisa_000 on 2/28/2015.
  */
@@ -15,4 +18,5 @@ public class Codes {
     public static final String CAR_BLUETOOTH_NAME = "TEAM10";
     public static final int MODE_NORMAL = 1800;
     public static final int MODE_SIDEWAYS = 1801;
+    public static final ProtocolCommand STATUS_UPDATE_COMMAND = new ProtocolCommand((byte)0x80, (byte) 0, (byte) 0, (short) 0);
 }

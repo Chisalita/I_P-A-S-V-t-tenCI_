@@ -13,5 +13,6 @@ public interface Protocol {
     void connect();
     void disconnect();
     void clearAll();
+    void forceResponseArrived_DEBUG(ProtocolResponse response);
 
 }

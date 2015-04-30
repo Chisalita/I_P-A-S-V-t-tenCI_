@@ -30,6 +30,7 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
     private ApplicationBrodcastReciver mReciver;
     private ArrayAdapter<String> BluetoothDevicesArrayAdapter;
     private boolean isRegistered = false;
+    private boolean connectedToCar = false;
     private ProtocolResponse currentResponse = new ProtocolResponse();
 
     //this stores the last response only if it is valid!
@@ -64,10 +65,12 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
 
                     break;
                 case Codes.CONNECTION_ESTABLISHED:
+                    connectedToCar = true;
                     System.out.println("Connection established");
                     ShowToastMesage("Connection established");
                     break;
                 case Codes.CONNECTION_LOST:
+                    connectedToCar = false;
                     ShowToastMesage("Connection lost!!");
                     //Connection lost, so try to reconnect
                     //tryConnection();
@@ -76,6 +79,7 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
 
         }
     };
+
 
     private void decodeResponseData(byte[] data, int length) {
 
@@ -262,6 +266,12 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
         return null;
     }
 
+
+    @Override
+    public void forceResponseArrived_DEBUG(ProtocolResponse response) {
+        notifyResponseArrived(response);
+    }
+
     @Override
     public void sendCommand(ProtocolCommand command) {
 
@@ -340,6 +350,10 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
             isRegistered = false;
         }
 
+    }
+
+    public boolean isConnected(){
+        return connectedToCar;
     }
 
     private void SearchForBluetoothDevices() {

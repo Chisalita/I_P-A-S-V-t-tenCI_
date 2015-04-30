@@ -21,9 +21,11 @@ public class ProtocolResponse {
     public ProtocolResponse(){
         Header = 0;
         No_of_sensors = 0;
+        setInfo(new byte[]{0,0,0,0});
         Time = 0;
         CRC = 0;
         Index = 0;
+
     }
 
     public ProtocolResponse(ProtocolResponse copy){
@@ -55,9 +57,9 @@ public class ProtocolResponse {
 
 
         No_of_sensors = no_of_sensors;
-        if(Info == null){
-            Info = new byte[no_of_sensors];
-        }
+        //if(Info == null){
+            Info = new byte[no_of_sensors]; //lose all info!! when changing the no of sensors
+        //}
         Index = 2;
     }
 
@@ -66,12 +68,16 @@ public class ProtocolResponse {
     }
 
     public void setInfo(byte[] info) {
-        if(Info == null){
-            Info = new byte[info.length];
-            setNo_of_sensors((byte)info.length);
+        if(info.length > 0) {
+
+            if (Info == null) {
+                Info = new byte[info.length];
+                setNo_of_sensors((byte) info.length);
+            }
+            System.arraycopy(info, 0, Info, 0, info.length);
+            Index = 2 + No_of_sensors;
+
         }
-        System.arraycopy( info, 0, Info, 0, info.length );
-        Index = 2+No_of_sensors;
     }
 
     public void setInfo(byte info_i, int index) throws Exception{

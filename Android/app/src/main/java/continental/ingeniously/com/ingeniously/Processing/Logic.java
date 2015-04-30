@@ -33,10 +33,10 @@ public class Logic implements Processor, ProtocolObserver, HMI_Observable, State
     private int Exit=0;
     private int Mode=0;
 
-    public Logic(Context context, ProtocolObserver protocolObserver){
-        observer = protocolObserver;
+    public Logic(Context context){//, ProtocolObserver protocolObserver){
+        //observer = protocolObserver;
         mainContext = context;
-        bluetoothIO = new BluetoothIO(mainContext, protocolObserver);
+        bluetoothIO = new BluetoothIO(mainContext, this);
         ParkPos =0;
         Exit = 0;
         Mode = 0;
@@ -47,9 +47,8 @@ public class Logic implements Processor, ProtocolObserver, HMI_Observable, State
     public void StartProcessing() {
     // aici trebuie inceput un nou thread in care sa proceseze informatia...
 
-        stateChanged(States.SEARCH_FOR_PARKING_SPOT); // starts looking for parking spots...
-
-
+        stateChanged(States.SEARCH_FOR_PARKING_SPOT); // starts looking for parking spots...b
+        forceResponseArrived_DEBUG(new ProtocolResponse()); // simulez ca am primit un raspuns gol
     }
 
     @Override
@@ -74,7 +73,16 @@ public class Logic implements Processor, ProtocolObserver, HMI_Observable, State
 
     @Override
     public void sendCommand(ProtocolCommand command){
+        if(bluetoothIO.isConnected()){
+            bluetoothIO.sendCommand(command);
+        }else{
+            System.out.println("Logic: phone is not connected to car but a command should be sent");
+        }
+    }
 
+    @Override
+    public void forceResponseArrived_DEBUG(ProtocolResponse response) {
+        bluetoothIO.forceResponseArrived_DEBUG(response);
     }
 
     @Override

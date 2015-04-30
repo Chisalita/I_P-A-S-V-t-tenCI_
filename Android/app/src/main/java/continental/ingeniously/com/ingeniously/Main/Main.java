@@ -428,7 +428,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
 
 
 */
-        logic = new Logic(this,this);
+        logic = new Logic(this);
 
         logic.setParkPos(parkPosition);
         logic.setExit(exit);
@@ -440,8 +440,11 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
             logic.setMode(Codes.MODE_NORMAL);
         }
 
+       logic.StartProcessing();
+
         ShowToastMesage("Exit: "+exit+", "+"Park position: "+parkPosition);
 
+        /*
         //String message = ParkPos.getText().toString();
         String message = "";
 
@@ -453,6 +456,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
         ProtocolCommand comm = new ProtocolCommand((byte) 10, (byte) 38, (byte) ((message.charAt(0) - '0') * 10), (short) 2056);
 
         bluetoothIO.sendCommand(comm);
+        */
     }
 
 

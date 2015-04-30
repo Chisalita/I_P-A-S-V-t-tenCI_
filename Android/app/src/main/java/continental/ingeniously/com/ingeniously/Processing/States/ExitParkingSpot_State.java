@@ -1,6 +1,7 @@
 package continental.ingeniously.com.ingeniously.Processing.States;
 
 import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolResponse;
+import continental.ingeniously.com.ingeniously.Main.Codes;
 
 /**
  * Created by chisa_000 on 4/28/2015.
@@ -15,7 +16,6 @@ public class ExitParkingSpot_State extends State {
 
     @Override
     public void process(ProtocolResponse response) {
-
     }
 
     @Override
