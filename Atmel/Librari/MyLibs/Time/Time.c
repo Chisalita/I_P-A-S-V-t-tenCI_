@@ -95,8 +95,8 @@ void initTimer1()
 		
 		////////////////////////
 		//stop timer, it MUST be called first!!!
-		TCCR1B &= ~((1<<CS10) | (1<<CS11) | (1<<CS12));
-		OCR1A = 0;
+	//	TCCR1B &= ~((1<<CS10) | (1<<CS11) | (1<<CS12));
+	//	OCR1A = 0;
 		//////////////////////
 	
 	//OCR1A = 0;

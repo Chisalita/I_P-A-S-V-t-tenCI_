@@ -249,7 +249,7 @@ void  initADC(void)
 
 
 	//start conversion
-	//ADCSRA |= (1<<ADSC);
+	ADCSRA |= (1<<ADSC);
 
 }
 

@@ -11,7 +11,7 @@
 #include <stdint.h>
 
 #define NO_OF_SENSORS 6
-#define Header_StatusUpdate 128
+#define Header_StatusUpdate 127
 #define Header_SpeedUpdate	255
 
 
