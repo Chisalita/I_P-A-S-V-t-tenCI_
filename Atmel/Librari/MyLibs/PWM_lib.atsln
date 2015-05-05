@@ -9,6 +9,8 @@ Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Sensors", "Sensors\Sensors.
 EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Time", "Time\Time.cproj", "{F0242D59-689A-404E-8790-3E06101C27BD}"
 EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Algoritm", "Algoritm\Algoritm.cproj", "{0927CEF4-9C9C-4B49-9881-EA1458483D17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -31,6 +33,10 @@ Global
 		{F0242D59-689A-404E-8790-3E06101C27BD}.Debug|AVR.Build.0 = Debug|AVR
 		{F0242D59-689A-404E-8790-3E06101C27BD}.Release|AVR.ActiveCfg = Release|AVR
 		{F0242D59-689A-404E-8790-3E06101C27BD}.Release|AVR.Build.0 = Release|AVR
+		{0927CEF4-9C9C-4B49-9881-EA1458483D17}.Debug|AVR.ActiveCfg = Debug|AVR
+		{0927CEF4-9C9C-4B49-9881-EA1458483D17}.Debug|AVR.Build.0 = Debug|AVR
+		{0927CEF4-9C9C-4B49-9881-EA1458483D17}.Release|AVR.ActiveCfg = Release|AVR
+		{0927CEF4-9C9C-4B49-9881-EA1458483D17}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

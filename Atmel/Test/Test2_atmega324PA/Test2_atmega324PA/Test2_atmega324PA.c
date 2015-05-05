@@ -19,6 +19,7 @@
 #include <Communication/communication.h>
 #include <Sensors/sensors.h>
 #include <Time/time.h>
+#include <Algoritm/algoritm.h>
 
 //
 #include <util/crc16.h> //TESTE
@@ -63,7 +64,9 @@ int main(void)
 	
 	while(1)
 	{
-		executeCommands();
+		executeScheduled();
+		interpretCommands();
+		//executeCommands();
 	}
 	
 }
@@ -77,7 +80,7 @@ void executeCommands(){
 	//CHECK CRCs	
 	if(s==1){
 		//LED_CMD_PIN |= (1<<LED_CMD_PINx);
-		sendStatusUpdate();//// sar putea sa nu poata transmite atat de repede + intreruperile la 10 ms nu cred ca il lasa sa transmita bine...
+		//sendStatusUpdate();//// sar putea sa nu poata transmite atat de repede + intreruperile la 10 ms nu cred ca il lasa sa transmita bine...
 						/*response resp;
 						resp.header = lastcmd.header;
 						resp.sensorInfo[0]=33;
@@ -95,11 +98,12 @@ void executeCommands(){
 			if(lastcmd.time){
 				
 				isAutonomous = 0;
-				response resp;
+				/*response resp;
 				resp.header = lastcmd.header;
 				resp.sensorInfo[0]=2;
 				resp.sensorInfo[1]=3;
 				resp.time=lastcmd.time;
+				*/
 				//sendResponse(resp);
 				
 				if(lastcmd.right!=0){

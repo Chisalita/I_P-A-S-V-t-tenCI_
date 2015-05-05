@@ -12,7 +12,12 @@
 #define MAX_ARGS 10
 
 void initTimer1();
+void setTimeForCommandToBeExecuted(uint16_t t);
+void resetTime();
+void startTime();
 uint16_t getTimeExecutedLastCmd();
+void setTimeLimit(uint16_t t_limit);
+void executeScheduled();
 void executeCommandForTime(void (*startF) (uint16_t, int16_t*), void (*stopF) (uint16_t, int16_t*),
 uint16_t argc_start, int16_t* argv_start, uint16_t argc_stop, int16_t* argv_stop, uint16_t time);
 

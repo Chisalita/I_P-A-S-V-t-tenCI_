@@ -130,7 +130,7 @@ command fetchCommand(uint8_t lastPackPos, uint8_t *CRC_correct){
 	uint16_t crc = 0xFFFF;
 	for(i=0; i<COMMAND_SIZE; i++){
 		crc = _crc16_update(crc, rxBuffer[(lastPackPosInBuff+i) & RX_BUFFER_SIZE_MSK].data);
-		rxBuffer[(lastPackPosInBuff+i) & RX_BUFFER_SIZE_MSK].pack_no = -1;
+		rxBuffer[(lastPackPosInBuff+i) & RX_BUFFER_SIZE_MSK].pack_no = -1; //erase data from buffer
 	}
 	
 	if (crc == 0){

@@ -15,6 +15,8 @@
 #include <Communication/communication.h> //TEST
 
 
+#define TIME_QUANTA 1000
+
 //the function called when the timer begins
 //void (*startFunction) (uint16_t argc, uint16_t* argv) = 0;
 //the function called when the timer ends
@@ -28,6 +30,13 @@ volatile int16_t argv2[MAX_ARGS];
 
 // the number of ticks for the time
 volatile uint32_t ticks = 999999;
+
+//the variable that keeps track of time
+volatile uint16_t TIME = 0;
+volatile uint16_t TIME_LIMIT = 0;
+volatile uint8_t enableCountingTime=0;
+volatile uint8_t sendStatusUpdateFLAG = 0;
+
 
 
 void executeCommandForTime(void (*startF) (uint16_t, int16_t*), void (*stopF) (uint16_t, int16_t*), 
@@ -54,7 +63,7 @@ uint16_t argc_start, int16_t* argv_start, uint16_t argc_stop, int16_t* argv_stop
 	}
 	*/
 	
-	ticks = floor((time / 1000) +0.5); //10
+	ticks = floor((time / TIME_QUANTA) +0.5); //10
 	
 	
 	//start the function
@@ -88,7 +97,7 @@ void initTimer1()
 	// reset counter
 	TCNT1 = 0;
 	
-	OCR1A = ((F_CPU / 1000L) / PRESCALER_TIMER_0_1)*1000L; //100
+	OCR1A = ((F_CPU / 1000L) / PRESCALER_TIMER_0_1)*TIME_QUANTA; //100
 		//Clock Select: clk/64 prescaler
 		TCCR1B &= ~((1<<CS11)); //1024
 		TCCR1B |= (1<<CS10) | (1<<CS12);
@@ -110,12 +119,62 @@ void initTimer1()
 
 
 uint16_t getTimeExecutedLastCmd(){
+	return TIME;
+}
+
+void resetTime(){
+	enableCountingTime = 0;
+	TIME = 0; 
+	TIME_LIMIT = 0;
+}
+
+void startTime(){
+	enableCountingTime = 1;
+}
+
+void setTimeForCommandToBeExecuted(uint16_t t){
 	
 	
-	return 0;
+}
+
+void setTimeLimit(uint16_t t_limit){
+	
+	if (t_limit)
+	{
+		TIME_LIMIT = t_limit;
+	}else{
+		resetTime();
+	}
+	
+}
+
+
+void executeScheduled(){
+	
+	if (sendStatusUpdateFLAG)
+	{
+		sendStatusUpdateFLAG = 0;
+		sendStatusUpdate();
+	}
+	
+	if(enableCountingTime == -1){
+		//sendStatusUpdate();
+		enableCountingTime=0;
+	}
+	
 }
 
 ISR(TIMER1_COMPA_vect){		
+	
+	if(enableCountingTime == 1 ){
+		TIME+=TIME_QUANTA;
+		sendStatusUpdateFLAG = 1;
+		
+		if(TIME == TIME_LIMIT){ //disable counting if time limit reached
+			enableCountingTime = -1;
+		}
+		
+	}
 	
 	/*
 	if(ticks){

@@ -83,10 +83,10 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
 
     private void decodeResponseData2(byte[] data) {
 
-        for(int i=0; i< data.length; i++){
+      /*  for(int i=0; i< data.length; i++){
             System.out.println("Am primit: "+String.format(" %02X", data[i]));
         }
-
+*/
         currentResponse = new ProtocolResponse();
         currentResponse.setHeader(data[0]);
         currentResponse.setNo_of_sensors(data[1]);
