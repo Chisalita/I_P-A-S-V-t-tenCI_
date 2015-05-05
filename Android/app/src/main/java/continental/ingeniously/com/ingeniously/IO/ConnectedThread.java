@@ -6,6 +6,8 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
+
 import android.os.Handler;
 
 import continental.ingeniously.com.ingeniously.Main.Codes;
@@ -19,7 +21,9 @@ public class ConnectedThread extends Thread{
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;
     private final Handler mainHandler;
-
+    private byte BUFFER[] = new byte[1024]; //12 e provizoriu...
+    private int bytesInBuffer = 0;
+    private final int no_of_sensors =12;
 
     public ConnectedThread(BluetoothSocket socket, Handler handler) {
         mainHandler = handler;
@@ -50,11 +54,29 @@ public class ConnectedThread extends Thread{
             try {
                 // Read from the InputStream
                 bytes = mmInStream.read(buffer);
+                System.arraycopy(buffer, 0, BUFFER, bytesInBuffer, bytes); //copy to the biger buffer
+                bytesInBuffer += bytes;
+
+                int i;
+                // send the packs formed in the buffer
+                for(i=0; i< (bytesInBuffer/no_of_sensors); i++){ //12 e provizoriu..
+
+                   // Arrays.copyOfRange( buffer, i*12, (i+1)*12);
+                    // Send the obtained bytes to the UI activity
+                    mainHandler.obtainMessage(Codes.MESSAGE_READ, no_of_sensors, -1, Arrays.copyOfRange( BUFFER, i*no_of_sensors, (i+1)*no_of_sensors)).sendToTarget();
+                }
+                    //i e deja incrementat
+                //shift the buffer to left to start from 0
+                System.arraycopy(BUFFER, i*13, BUFFER,0, bytesInBuffer-(i*no_of_sensors));
+
+
+
+/*
                 // Send the obtained bytes to the UI activity
                 mainHandler.obtainMessage(Codes.MESSAGE_READ, bytes, -1, buffer).sendToTarget();
                 //DEBUG!!!
                 //write("OK! This is the server".getBytes());
-
+*/
             } catch (IOException e) {
                 e.printStackTrace();
                 System.err.println("Connection Lost!");

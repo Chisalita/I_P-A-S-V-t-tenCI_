@@ -11,6 +11,7 @@ import android.os.Message;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import java.util.Arrays;
 import java.util.Observer;
 import java.util.Set;
 
@@ -48,8 +49,8 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
             switch (msg.what) {
                 case Codes.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
-                    decodeResponseData(readBuf, msg.arg1);
-
+                    //decodeResponseData(readBuf, msg.arg1);
+                    decodeResponseData2(readBuf);
                     /*
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
@@ -80,6 +81,29 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
         }
     };
 
+    private void decodeResponseData2(byte[] data) {
+
+        for(int i=0; i< data.length; i++){
+            System.out.println("Am primit: "+String.format(" %02X", data[i]));
+        }
+
+        currentResponse = new ProtocolResponse();
+        currentResponse.setHeader(data[0]);
+        currentResponse.setNo_of_sensors(data[1]);
+        currentResponse.setInfo(Arrays.copyOfRange(data, 2, 2 + currentResponse.getNo_of_sensors())); //+1
+        currentResponse.setTime_High(data[8]);
+        currentResponse.setTime_Low(data[9]);
+        currentResponse.setCRC_High(data[10]);
+        currentResponse.setCRC_Low(data[11]);
+
+        if(currentResponse.verifyCRC()){
+            notifyResponseArrived(currentResponse);
+        }
+
+        discardCurrentResponse();
+
+    }
+
 
     private void decodeResponseData(byte[] data, int length) {
 
@@ -89,6 +113,8 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
 
 
             if(!isResponseStarted){ //if the response starts now
+                System.out.println("Intr-una");
+
                 isResponseStarted = true;
 
                 switch (length){
@@ -163,6 +189,8 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
                 }
 
             }else{ // it is in the middle of the response
+
+                System.out.println("separat");
                 for(int i=0; i<length; i++){//for all data received check where to put in response
 
                     int index_pos = currentResponse.getIndex();
@@ -402,6 +430,7 @@ public class BluetoothIO implements Protocol, ProtocolObservable {
 
     @Override
     public void notifyResponseArrived(ProtocolResponse response) {
+        System.out.println("BluetoothIO: response arrived!");
         lastResponse = new ProtocolResponse(response);
         /// notify...
         observer.responseArrived(lastResponse);

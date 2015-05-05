@@ -68,6 +68,8 @@ public class CRC16 {
         crc_invers = (short)(crc>>8);
         crc_invers |= (short)((crc & 0x00ff)<<8);
 */
+
+        System.out.println("CRC16: verifyCRC finished with "+(short)crc);
         return (short)crc;
     }
 

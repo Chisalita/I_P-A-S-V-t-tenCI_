@@ -1,14 +1,9 @@
 package continental.ingeniously.com.ingeniously.Main;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,15 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.CheckBox;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import continental.ingeniously.com.ingeniously.IO.AcceptThread;
-import continental.ingeniously.com.ingeniously.IO.ConnectThread;
 import continental.ingeniously.com.ingeniously.IO.Protocol.BluetoothIO;
-import continental.ingeniously.com.ingeniously.IO.Protocol.Protocol;
-import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolCommand;
-import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolObservable;
 import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolObserver;
 import continental.ingeniously.com.ingeniously.IO.Protocol.ProtocolResponse;
 import continental.ingeniously.com.ingeniously.Processing.Logic;
@@ -232,7 +219,7 @@ public class Main extends ActionBarActivity implements ProtocolObserver,View.OnC
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             ///////TEST/////////
-            Intent intent = new Intent(this, Starter_Activity.class);
+            Intent intent = new Intent(this, Preferences_Activity.class);
             startActivity(intent);
             /////////////////
             return true;

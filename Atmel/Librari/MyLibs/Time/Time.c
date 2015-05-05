@@ -9,6 +9,7 @@
 #include <avr/interrupt.h>
 #include <io_definitions.h>
 #include <Time/time.h>
+#include <math.h>
 
 ////
 #include <Communication/communication.h> //TEST
@@ -26,15 +27,13 @@ volatile uint16_t argc2 = 0;
 volatile int16_t argv2[MAX_ARGS];
 
 // the number of ticks for the time
-volatile uint32_t ticks = 99999;
-volatile uint16_t lastCOMPARE = 0;
+volatile uint32_t ticks = 999999;
 
 
 void executeCommandForTime(void (*startF) (uint16_t, int16_t*), void (*stopF) (uint16_t, int16_t*), 
 uint16_t argc_start, int16_t* argv_start, uint16_t argc_stop, int16_t* argv_stop, uint16_t time){
-	//init timer
-
-
+	
+	//copy arguments timer
 	cli();
 	stopFunction = stopF;
 	argc2 = argc_stop;
@@ -42,131 +41,104 @@ uint16_t argc_start, int16_t* argv_start, uint16_t argc_stop, int16_t* argv_stop
 		argv2[i] = argv_stop[i];
 	}
 	
-	////////////////////////////////////
 	/*
+	//settings for timer
+	ticks  = ( ((F_CPU / 1000L) / PRESCALER_TIMER_0_1)*time ) -1;
 	
-	F_CPU tacturi .............. 1 s
-	x tacturi ................... 10^-3 s
-	
-	x = F_CPU / 1000 (tacturi/ms)
-	
-	Compare Register = (milisecunde * x) / prescaler
-	
-	*/
-	///////////////////////////////////
-	
-/*	volatile uint16_t x = F_CPU / 1000L;
-	x = time * x * PRESCALER_TIMER_0_1;
-*/
-
-	//ticks = F_CPU / 1000L;
-	//ticks = time * (F_CPU / 1000L) * PRESCALER_TIMER_0_1;
-	//ticks = (time * (F_CPU / 1000L)) / PRESCALER_TIMER_0_1;
-	//ticks++;
-	//start timer
-	
-//	cli();
-	
-	/*if(ticks > 0xFFFF){
+	if(ticks > 0xFFFF){  //set the ticks variable
 		OCR1A  = 0xFFFF;
 		ticks -= 0xFFFF;
-	}else{
+		}else{
 		OCR1A = ticks;
 		ticks = 0;
 	}
 	*/
 	
+	ticks = floor((time / 1000) +0.5); //10
 	
-		// Clock Select: clk/64 prescaler
-//		TCCR1B &= ~((1<<CS12));
-//		TCCR1B |= (1<<CS10) | (1<<CS11);
-
-	//OCR1A = 0;
-	//TCCR1B &= ~((1<<CS10) | (1<<CS11));
-
-//	sei();		
 	
-	//call start function
-	ticks = time;
+	//start the function
 	startF(argc_start, argv_start);
-	LED_CMD_PORT |= (1<<LED_CMD_PINx);
+	//LED_CMD_PORT |= (1<<LED_CMD_PINx);
+		
+	//start timer
+		
+/*	// reset counter
+	TCNT1 = 0;
+		
+	//Clock Select: clk/64 prescaler
+	TCCR1B &= ~((1<<CS11)); //1024
+	TCCR1B |= (1<<CS10) | (1<<CS12);
+	*/
+	
 	sei();
 }
 
 void initTimer1()
 {
 	//Normal port operation, OC1A/OC1B disconnected.
-    TCCR1A &= ~((1<<COM1A1) | (1<<COM1A0) | (1<<COM1B1) | (1<<COM1A0));	
+    TCCR1A &= ~((1<<COM1A1) | (1<<COM1A0) | (1<<COM1B1) | (1<<COM1B0));	
 	
 	//Timer/Counter mode of operation: CTC, TOP = OCR1A, Update of OCR1x at Immediate TOVn flag set on MAX
 	TCCR1A &= ~((1<<WGM10) | (1<<WGM11));
 	TCCR1B |= (1<<WGM12);
 	TCCR1B &= ~(1<<WGM13);
-	
-	// Clock Select: clk/64 prescaler
-	TCCR1B &= ~((1<<CS12));
-	TCCR1B |= (1<<CS10) | (1<<CS11);
-	
-	
+
 	
 	// reset counter
 	TCNT1 = 0;
 	
-	// disable compare for the moment
+	OCR1A = ((F_CPU / 1000L) / PRESCALER_TIMER_0_1)*1000L; //100
+		//Clock Select: clk/64 prescaler
+		TCCR1B &= ~((1<<CS11)); //1024
+		TCCR1B |= (1<<CS10) | (1<<CS12);
+		
+		////////////////////////
+		//stop timer, it MUST be called first!!!
+		TCCR1B &= ~((1<<CS10) | (1<<CS11) | (1<<CS12));
+		OCR1A = 0;
+		//////////////////////
+	
 	//OCR1A = 0;
-	//OCR1B = 0;
+	//OCR1B = (((F_CPU / 1000L) / PRESCALER_TIMER_0_1)*3000L) -1; //1 s
 	
-	//set OCR1A for 1 ms interrupts
-	OCR1A = ((F_CPU / 1000L) / PRESCALER_TIMER_0_1)*10L;
-	
-	//enable Output Compare A Match Interrupt Enable
-	TIMSK1 |= (1<<OCIE1A);// (1<<OCIE1B) | (1<<OCIE1A);
+	//enable Output Compare A/B Match Interrupt Enable
+	TIMSK1 |= (1<<OCIE1A);/* | (1<<OCIE1B); */
+
 	
 }
 
-ISR(TIMER1_COMPA_vect){
-		
-	//	LED_CMD_PIN |= (1<<LED_CMD_PINx);
-		
-		if(ticks && ticks != 99999){
-			ticks--;
-			//LED_CMD_PIN |= (1<<LED_CMD_PINx);
-		}else if(ticks == 0){
-			ticks = 99999;
-			stopFunction(argc2,argv2);
-			//LED_CMD_PIN |= (1<<LED_CMD_PINx);
-			LED_CMD_PORT &= ~(1<<LED_CMD_PINx);
-			
-		}
-		
-/*		
-	if(ticks>0){// > lastCOMPARE){
-		//LED_CMD_PIN |= (1<<LED_CMD_PINx);
+
+uint16_t getTimeExecutedLastCmd(){
+	
+	
+	return 0;
+}
+
+ISR(TIMER1_COMPA_vect){		
+	
+	/*
+	if(ticks){
 		if(ticks > 0xFFFF){
-			sendResponse('R');
-			lastCOMPARE = 0xFFFF;
-			OCR1A = 0xFFFF;
-			ticks -= lastCOMPARE; 
-			TCCR1A = 0;
+			OCR1A  = 0xFFFF;
+			ticks -= 0xFFFF;
 		}else{
 			OCR1A = ticks;
 			ticks = 0;
-			TCCR1A = 0;
-			sendResponse('Y');
 		}
-		
-		//sendResponse('T');
-		
-	}else{
-
-	//the time run out, stop the timer
-	OCR1A = 0;
-	TCCR1A = 0;
-	TCCR1B &= ~((1<<CS10) | (1<<CS11));
-	
-	//call the stop function
-	stopFunction(argc2, argv2);
-	}
-
 */
+	
+	LED_CMD_PIN |= (1<<LED_CMD_PINx);	
+	if(ticks && ticks != 999999){
+		ticks--;
+	}else if (ticks==0){
+		/*
+		//stop timer, it MUST be called first!!!
+		TCCR1B &= ~((1<<CS10) | (1<<CS11) | (1<<CS12)); 
+		OCR1A = 0; 
+		LED_CMD_PORT &= ~(1<<LED_CMD_PINx);			
+		*/
+		stopFunction(argc2,argv2);						
+	}		
 }
+

@@ -14,6 +14,7 @@
 #define Header_StatusUpdate 128
 #define Header_SpeedUpdate	255
 
+
 typedef struct{
 	uint8_t header;
 	int8_t right;
@@ -36,10 +37,11 @@ command getLastCommand(int8_t *success);
 int8_t checkPackIsFullLength(uint8_t lastPackPos);
 command fetchCommand(uint8_t lastPackPos, uint8_t *CRC_correct);
 void sendResponse(response r);
-
+void sendStatusUpdate();
 
 //////////////////////////////////////////////////////////////////////////TEST
 void sendByte(uint8_t r);
+/////////////////////////////////////////////////////////////////////////
 
 //Private functions:
 void __tryToSend();
