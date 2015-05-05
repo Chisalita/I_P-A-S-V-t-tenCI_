@@ -32,23 +32,11 @@
         <activity
             android:name=".Main.DebugActivity"
             android:label="@string/title_activity_debug"
-            android:parentActivityName=".Main.Main"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="continental.ingeniously.com.ingeniously.Main.Main" />
-        </activity>
-        <activity
-            android:name=".Main.Preferences_Activity"
-            android:label="@string/title_activity_preferences"
+            android:screenOrientation="portrait"
             android:parentActivityName=".Main.Main" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="continental.ingeniously.com.ingeniously.Main.Main" />
-        </activity>
-        <activity
-            android:name=".pref2"
-            android:label="@string/title_activity_pref2" >
         </activity>
     </application>
 

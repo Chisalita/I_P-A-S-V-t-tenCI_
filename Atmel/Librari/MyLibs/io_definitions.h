@@ -7,7 +7,7 @@
 #endif
 
 #ifndef PRESCALER_TIMER_0_1
-#define PRESCALER_TIMER_0_1 1024 //64
+#define PRESCALER_TIMER_0_1 64
 #endif
 
 

@@ -6,6 +6,4 @@
     <string name="action_debug">Debug</string>
     <string name="title_activity_starter_">Starter_Activity</string>
     <string name="title_activity_debug">DebugActivity</string>
-    <string name="title_activity_preferences">Preferences</string>
-    <string name="title_activity_pref2">pref2</string>
 </resources>

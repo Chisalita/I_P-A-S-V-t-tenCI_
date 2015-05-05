@@ -13,10 +13,6 @@
 ////
 #include <Communication/communication.h> //TESTE
 
-
-volatile uint16_t TIME_TO_TURN_MS = 830; // 900 pe parchet , 1400 pe mocheta Conti
-volatile uint16_t TURN_SPEED = 80;
-
 void changePwm_MotorLF(int duty){	
 	OCR0A = ((duty/100.0) * 255);
 }
@@ -46,16 +42,13 @@ void driveRightForTime(uint8_t pwm, uint16_t time){
 		
 	}else{
 	
-	//int16_t arg1[] = {0xB0B0, 0x5050};
-	int16_t arg1[] = {TURN_SPEED, -TURN_SPEED};
+	int16_t arg1[] = {0xB0B0, 0x5050};
 	int16_t arg2[3];	
 	
-	// ATENTIE NU CRED CA MAI TREBUIE!!!!!!!!!!!///
 	arg2[0] = pwm;
 	arg2[0] |= pwm << 8;	
 	arg2[1] = pwm;
 	arg2[1] |= pwm << 8;	
-	// ATENTIE NU CRED CA MAI TREBUIE!!!!!!!!!!!///
 
 	arg2[2] = time;
 
@@ -78,12 +71,10 @@ void driveForwardForTime(uint8_t pwm, uint16_t time){
 		int16_t arg1[3];
 		int16_t arg2[]= {0, 0};
 		
-		// ATENTIE NU CRED CA MAI TREBUIE!!!!!!!!!!!///
 		arg1[0] = pwm;
 		arg1[0] |= pwm << 8;
 		arg1[1] = pwm;
 		arg1[1] |= pwm << 8;
-		// ATENTIE NU CRED CA MAI TREBUIE!!!!!!!!!!!///
 
 		executeCommandForTime(&move, &move, 2, arg1,2, arg2, time);
 	}	
@@ -137,8 +128,7 @@ void driveLeftForTime(uint8_t pwm, uint16_t time){
 		
 		}else{
 		
-		//int16_t arg1[] = {0x5050, 0xB0B0};
-		int16_t arg1[] = {-TURN_SPEED, TURN_SPEED};
+		int16_t arg1[] = {0x5050, 0xB0B0};
 		int16_t arg2[3];
 		
 		arg2[0] = pwm;
@@ -163,8 +153,7 @@ void driveRight(uint8_t pwm){
 		driveLeft(pwm_signed);
 			
 		}else{
-		//int16_t arg1[] = {0xB0B0, 0x5050};
-		int16_t arg1[] = {TURN_SPEED, -TURN_SPEED};
+		int16_t arg1[] = {0xB0B0, 0x5050};
 		int16_t arg2[2];
 	
 					///////////////Asta doar pt ca merge cu spatele//////////////////////////////
@@ -195,8 +184,7 @@ void driveLeft(uint8_t pwm){
 		
 		}else{
 		
-		//int16_t arg1[] = {0x5050, 0xB0B0};
-		int16_t arg1[] = {-TURN_SPEED, TURN_SPEED};
+		int16_t arg1[] = {0x5050, 0xB0B0};
 		int16_t arg2[2];
 		
 		arg2[0] = pwm;
@@ -209,8 +197,8 @@ void driveLeft(uint8_t pwm){
 }
 
 void turnRight_90degrees(){	
-
-	int16_t arg1[] = {TURN_SPEED, -TURN_SPEED};
+	
+	int16_t arg1[] = {0xB0B0, 0x5050};
 	int16_t arg2[] = {0, 0};
 	executeCommandForTime(&move, &move, 2, arg1,2, arg2, TIME_TO_TURN_MS);
 	
@@ -219,8 +207,7 @@ void turnRight_90degrees(){
 
 void turnLeft_90degrees(){	
 	
-	//int16_t arg1[] = {0x5050, 0xB0B0};
-	int16_t arg1[] = {-TURN_SPEED, TURN_SPEED};
+	int16_t arg1[] = {0x5050, 0xB0B0};
 	int16_t arg2[] = {0, 0};
 	executeCommandForTime(&move, &move, 2, arg1,2, arg2, TIME_TO_TURN_MS);
 	
@@ -245,7 +232,6 @@ void reverse(){
 
 }
 
-/*
 void move(uint16_t argc, int16_t* argv){
 	
 	if(argc == 2){
@@ -306,49 +292,7 @@ void move(uint16_t argc, int16_t* argv){
 	}
 	
 }
-*/
 
-void move(uint16_t argc, int16_t* argv){
-	
-	if(argc == 2){
-		//setez directia initiala
-		MOTOR_LEFT_DIR_PORT2 |= (1<<MOTOR_LEFT_DIR_PIN2x);
-		MOTOR_LEFT_DIR_PORT1 &= ~(1<<MOTOR_LEFT_DIR_PIN1x);
-		
-		MOTOR_RIGHT_DIR_PORT2 |= (1<<MOTOR_RIGHT_DIR_PIN2x);
-		MOTOR_RIGHT_DIR_PORT1 &= ~(1<<MOTOR_RIGHT_DIR_PIN1x);
-		
-		int8_t d;
-		
-		d = argv[0];
-		
-		if (d < 0){
-			d=-d;
-			changeMotorDirectionLeft();			
-		}
-		changePwm_MotorLF(d);
-		changePwm_MotorLB(d);
-		
-		d = argv[1] ;
-		if (d < 0){
-			d=-d;
-			changeMotorDirectionRight();
-		}
-		changePwm_MotorRF(d);
-		changePwm_MotorRB(d);
-		
-		}else if (argc == 3){
-		
-		int16_t arg1[2];
-		arg1[0] = argv[0];
-		arg1[1] = argv[1];
-		
-		int16_t arg2[] = {0, 0};
-		executeCommandForTime(&move, &move, 2, arg1,2, arg2,argv[2]);
-		
-	}
-	
-}
 
 void turnLeft(){
 	changeMotorDirectionLeft();
@@ -388,22 +332,6 @@ void breakLeft(){
 void breakRight(){
 	changePwm_MotorRF(0);
 	changePwm_MotorRB(0);
-}
-
-void setTurningSpeed(uint16_t speed){
-	TURN_SPEED = speed;
-}
-
-void setTurningTime(uint16_t time){
-	TIME_TO_TURN_MS = time;
-}
-
-uint16_t getTurningTime(){
-	return TIME_TO_TURN_MS;
-}
-
-uint16_t getTurningSpeed(){
-	return TURN_SPEED;
 }
 
 void initTimer0(){

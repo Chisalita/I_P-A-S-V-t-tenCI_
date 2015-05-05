@@ -9,6 +9,8 @@
 #ifndef PWM_LIB_H_
 #define PWM_LIB_H_
 
+#define TIME_TO_TURN_MS 140 // 90 pe parchet
+
 void changePwm_MotorLF(int duty);
 void changePwm_MotorLB(int duty);
 void changePwm_MotorRF(int duty);
@@ -38,10 +40,5 @@ void driveBackwardForTime(uint8_t pwm, uint16_t time);
 
 void driveRight(uint8_t pwm);
 void driveLeft(uint8_t pwm);
-
-void setTurningSpeed(uint16_t speed);
-void setTurningTime(uint16_t time);
-uint16_t getTurningTime();
-uint16_t getTurningSpeed();
 
 #endif /* PWM_LIB_H_ */

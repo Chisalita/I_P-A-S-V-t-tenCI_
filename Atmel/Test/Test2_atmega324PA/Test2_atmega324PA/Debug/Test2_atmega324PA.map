@@ -1,9 +1,9 @@
 Archive member included because of file (symbol)
 
 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
-                              Test2_atmega324PA.o (breakAll)
+                              Test2_atmega324PA.o (changePwm_MotorLF)
 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                              Test2_atmega324PA.o (initSensors)
+                              Test2_atmega324PA.o (getInfraredRightDistance)
 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
                               Test2_atmega324PA.o (initUSART1)
 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
@@ -60,8 +60,6 @@ c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-t
                               Test2_atmega324PA.o (__do_copy_data)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_clear_bss.o)
                               Test2_atmega324PA.o (__do_clear_bss)
-c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_umulhisi3.o)
-                              G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o) (__umulhisi3)
 
 Allocating common symbols
 Common symbol       size              file
@@ -81,9 +79,6 @@ Discarded input sections
  .data          0x00000000        0x0 Test2_atmega324PA.o
  .bss           0x00000000        0x0 Test2_atmega324PA.o
  .bss.bune      0x00000000        0x2 Test2_atmega324PA.o
- .bss.mm_US     0x00000000        0x2 Test2_atmega324PA.o
- .bss.cm_IR     0x00000000        0x1 Test2_atmega324PA.o
- .bss.turning   0x00000000        0x2 Test2_atmega324PA.o
  .data.enableLeft
                 0x00000000        0x2 Test2_atmega324PA.o
  .data.enableRight
@@ -92,61 +87,29 @@ Discarded input sections
  .text          0x00000000        0x0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
  .data          0x00000000        0x0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
  .bss           0x00000000        0x0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.changePwm_MotorLF
-                0x00000000       0x2e G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.changePwm_MotorLB
-                0x00000000       0x2e G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.changePwm_MotorRF
-                0x00000000       0x30 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.changePwm_MotorRB
-                0x00000000       0x30 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.driveBackwardForTime
-                0x00000000       0x86 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.driveForwardForTime
-                0x00000000       0x84 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.driveLeftForTime
-                0x00000000       0xa4 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.driveRightForTime
-                0x00000000       0xa4 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
  .text.driveLeft
-                0x00000000       0xa0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000000       0x94 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
  .text.driveRight
-                0x00000000       0xa2 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000000       0x96 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
  .text.turnRight_90degrees
-                0x00000000       0x8a G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000000       0x7e G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
  .text.turnLeft_90degrees
-                0x00000000       0x8a G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.stopTurning
-                0x00000000        0xa G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.changeMotorDirectionLeft
-                0x00000000        0x6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.turnLeft
-                0x00000000        0x6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.changeMotorDirectionRight
-                0x00000000        0x6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.reverse  0x00000000        0xa G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.move     0x00000000      0x116 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000000       0x7e G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
  .text.turnRight
                 0x00000000        0x6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
  .text.breakLeft
                 0x00000000        0x6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
  .text.breakRight
                 0x00000000        0xa G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.setTurningSpeed
-                0x00000000        0xa G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.setTurningTime
-                0x00000000        0xa G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.getTurningTime
-                0x00000000        0xa G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .text.getTurningSpeed
-                0x00000000        0xa G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .data.TURN_SPEED
-                0x00000000        0x2 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .data.TIME_TO_TURN_MS
-                0x00000000        0x2 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
  .text          0x00000000        0x0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
  .data          0x00000000        0x0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
  .bss           0x00000000        0x0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+ .text.getInfraredForwardDistance
+                0x00000000       0x40 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+ .text.getInfraredBackDistance
+                0x00000000       0x40 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+ .text.getInfraredLeftDistance
+                0x00000000       0x40 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
  .text.getLastUltrasonicValue
                 0x00000000       0x14 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
  .text.setUltrasonicManualMeasure
@@ -161,8 +124,8 @@ Discarded input sections
  .text          0x00000000        0x0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
  .data          0x00000000        0x0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
  .bss           0x00000000        0x0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
- .text.executeCommandForTime
-                0x00000000       0xce G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+ .bss.lastCOMPARE
+                0x00000000        0x2 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(addsf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(addsf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(addsf3.o)
@@ -313,22 +276,6 @@ Discarded input sections
                 0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_clear_bss.o)
  .text.libgcc.fixed
                 0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_clear_bss.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_umulhisi3.o)
- .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_umulhisi3.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc.mul
-                0x00000000       0x1e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc.div
-                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc.prologue
-                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc.builtins
-                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc.fmul
-                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc.fixed
-                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_umulhisi3.o)
 
 Memory Configuration
 
@@ -450,7 +397,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x15c0
+.text           0x00000000     0x1ab8
  *(.vectors)
  .vectors       0x00000000       0x7c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5/crtm324pa.o
                 0x00000000                __vector_default
@@ -538,168 +485,196 @@ END GROUP
  .text.initAll  0x000000ba       0x1a Test2_atmega324PA.o
                 0x000000ba                initAll
  .text.executeCommands
-                0x000000d4       0x7c Test2_atmega324PA.o
+                0x000000d4      0x1ac Test2_atmega324PA.o
                 0x000000d4                executeCommands
- .text.main     0x00000150       0x12 Test2_atmega324PA.o
-                0x00000150                main
+ .text.main     0x00000280       0x12 Test2_atmega324PA.o
+                0x00000280                main
+ .text.move     0x00000292      0x166 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000292                move
+ .text.changePwm_MotorLF
+                0x000003f8       0x2e G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x000003f8                changePwm_MotorLF
+ .text.changePwm_MotorLB
+                0x00000426       0x2e G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000426                changePwm_MotorLB
+ .text.changePwm_MotorRF
+                0x00000454       0x30 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000454                changePwm_MotorRF
+ .text.changePwm_MotorRB
+                0x00000484       0x30 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000484                changePwm_MotorRB
+ .text.driveBackwardForTime
+                0x000004b4       0x86 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x000004b4                driveBackwardForTime
+ .text.driveForwardForTime
+                0x0000053a       0x84 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x0000053a                driveForwardForTime
+ .text.driveLeftForTime
+                0x000005be       0x98 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x000005be                driveLeftForTime
+ .text.driveRightForTime
+                0x00000656       0x98 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000656                driveRightForTime
+ .text.stopTurning
+                0x000006ee        0xa G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x000006ee                stopTurning
+ .text.changeMotorDirectionLeft
+                0x000006f8        0x6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x000006f8                changeMotorDirectionLeft
+ .text.turnLeft
+                0x000006fe        0x6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x000006fe                turnLeft
+ .text.changeMotorDirectionRight
+                0x00000704        0x6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000704                changeMotorDirectionRight
+ .text.reverse  0x0000070a        0xa G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x0000070a                reverse
  .text.breakAll
-                0x00000162        0xe G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
-                0x00000162                breakAll
+                0x00000714        0xe G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000714                breakAll
  .text.initTimer0
-                0x00000170       0x36 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
-                0x00000170                initTimer0
+                0x00000722       0x36 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000722                initTimer0
  .text.initTimer2
-                0x000001a6       0x4c G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
-                0x000001a6                initTimer2
- .text.getInfraredForwardDistance
-                0x000001f2       0x40 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x000001f2                getInfraredForwardDistance
+                0x00000758       0x4c G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000758                initTimer2
  .text.getInfraredRightDistance
-                0x00000232       0x40 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x00000232                getInfraredRightDistance
- .text.getInfraredBackDistance
-                0x00000272       0x40 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x00000272                getInfraredBackDistance
- .text.getInfraredLeftDistance
-                0x000002b2       0x40 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x000002b2                getInfraredLeftDistance
+                0x000007a4       0x40 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x000007a4                getInfraredRightDistance
  .text.getAverageUltrasonicValue
-                0x000002f2       0x90 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x000002f2                getAverageUltrasonicValue
+                0x000007e4       0x90 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x000007e4                getAverageUltrasonicValue
  .text.initUSART0
-                0x00000382       0xd6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x00000382                initUSART0
- .text.initADC  0x00000458       0x3e G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x00000458                initADC
+                0x00000874       0xd6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x00000874                initUSART0
+ .text.initADC  0x0000094a       0x44 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x0000094a                initADC
  .text.initSensors
-                0x00000496       0x16 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x00000496                initSensors
+                0x0000098e       0x16 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x0000098e                initSensors
  .text.__vector_24
-                0x000004ac      0x122 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x000004ac                __vector_24
+                0x000009a4      0x122 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x000009a4                __vector_24
  .text.__vector_20
-                0x000005ce      0x1d8 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x000005ce                __vector_20
+                0x00000ac6      0x1d8 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x00000ac6                __vector_20
  .text.checkPackIsFullLength
-                0x000007a6       0x9a G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x000007a6                checkPackIsFullLength
+                0x00000c9e       0x9a G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00000c9e                checkPackIsFullLength
  .text.fetchCommand
-                0x00000840      0x176 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00000840                fetchCommand
+                0x00000d38      0x176 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00000d38                fetchCommand
  .text.__clearBuffers
-                0x000009b6       0x48 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x000009b6                __clearBuffers
+                0x00000eae       0x38 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00000eae                __clearBuffers
  .text.initUSART1
-                0x000009fe       0xba G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x000009fe                initUSART1
+                0x00000ee6       0xba G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00000ee6                initUSART1
  .text.__tryToSend
-                0x00000ab8       0x6c G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00000ab8                __tryToSend
+                0x00000fa0       0x6c G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00000fa0                __tryToSend
  .text.sendResponse
-                0x00000b24      0x15a G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00000b24                sendResponse
+                0x0000100c      0x15a G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x0000100c                sendResponse
  .text.getLastCommand
-                0x00000c7e       0xfa G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00000c7e                getLastCommand
- .text.sendStatusUpdate
-                0x00000d78       0x74 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00000d78                sendStatusUpdate
+                0x00001166       0xf0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00001166                getLastCommand
  .text.__vector_28
-                0x00000dec       0xb4 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00000dec                __vector_28
+                0x00001256       0xb2 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00001256                __vector_28
  .text.__vector_30
-                0x00000ea0       0x7e G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00000ea0                __vector_30
+                0x00001308       0x7e G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00001308                __vector_30
+ .text.executeCommandForTime
+                0x00001386       0x8c G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+                0x00001386                executeCommandForTime
  .text.initTimer1
-                0x00000f1e       0x5a G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
-                0x00000f1e                initTimer1
- .text.getTimeExecutedLastCmd
-                0x00000f78        0x6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
-                0x00000f78                getTimeExecutedLastCmd
+                0x00001412       0x4c G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+                0x00001412                initTimer1
  .text.__vector_13
-                0x00000f7e       0xce G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
-                0x00000f7e                __vector_13
+                0x0000145e       0xe6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+                0x0000145e                __vector_13
  .text.avr-libc.fplib
-                0x0000104c        0xa c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(addsf3.o)
-                0x0000104c                __subsf3
-                0x0000104e                __addsf3
+                0x00001544        0xa c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(addsf3.o)
+                0x00001544                __subsf3
+                0x00001546                __addsf3
  .text.avr-libc.fplib
-                0x00001056       0xc0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(addsf3x.o)
-                0x00001070                __addsf3x
+                0x0000154e       0xc0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(addsf3x.o)
+                0x00001568                __addsf3x
  .text.avr-libc.fplib
-                0x00001116        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(divsf3.o)
-                0x00001116                __divsf3
+                0x0000160e        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(divsf3.o)
+                0x0000160e                __divsf3
  .text.avr-libc.fplib
-                0x0000111a       0xcc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(divsf3x.o)
-                0x00001130                __divsf3x
-                0x00001134                __divsf3_pse
+                0x00001612       0xcc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(divsf3x.o)
+                0x00001628                __divsf3x
+                0x0000162c                __divsf3_pse
  .text.avr-libc.fplib
-                0x000011e6       0x58 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
-                0x000011e6                __fixunssfsi
+                0x000016de       0x58 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
+                0x000016de                __fixunssfsi
  .text.avr-libc.fplib
-                0x0000123e       0x7a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(floatsisf.o)
-                0x0000123e                __floatunsisf
-                0x00001242                __floatsisf
+                0x00001736       0x7a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(floatsisf.o)
+                0x00001736                __floatunsisf
+                0x0000173a                __floatsisf
  .text.avr-libc.fplib
-                0x000012b8       0x26 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(floor.o)
-                0x000012b8                floor
+                0x000017b0       0x26 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(floor.o)
+                0x000017b0                floor
  .text.avr-libc.fplib
-                0x000012de        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_inf.o)
-                0x000012de                __fp_inf
+                0x000017d6        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_inf.o)
+                0x000017d6                __fp_inf
  .text.avr-libc.fplib
-                0x000012ea       0x36 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_mintl.o)
-                0x000012ea                __fp_mintl
+                0x000017e2       0x36 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_mintl.o)
+                0x000017e2                __fp_mintl
  .text.avr-libc.fplib
-                0x00001320       0x1c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_mpack.o)
-                0x00001320                __fp_mpack
-                0x00001324                __fp_mpack_finite
+                0x00001818       0x1c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_mpack.o)
+                0x00001818                __fp_mpack
+                0x0000181c                __fp_mpack_finite
  .text.avr-libc.fplib
-                0x0000133c        0x6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_nan.o)
-                0x0000133c                __fp_nan
+                0x00001834        0x6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_nan.o)
+                0x00001834                __fp_nan
  .text.avr-libc.fplib
-                0x00001342        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
-                0x00001342                __fp_pscA
+                0x0000183a        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
+                0x0000183a                __fp_pscA
  .text.avr-libc.fplib
-                0x00001350        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
-                0x00001350                __fp_pscB
+                0x00001848        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
+                0x00001848                __fp_pscB
  .text.avr-libc.fplib
-                0x0000135e       0x22 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_round.o)
-                0x0000135e                __fp_round
+                0x00001856       0x22 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_round.o)
+                0x00001856                __fp_round
  .text.avr-libc.fplib
-                0x00001380       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_split3.o)
-                0x00001380                __fp_split3
-                0x00001390                __fp_splitA
+                0x00001878       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_split3.o)
+                0x00001878                __fp_split3
+                0x00001888                __fp_splitA
  .text.avr-libc.fplib
-                0x000013c4       0x2e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_trunc.o)
-                0x000013c4                __fp_trunc
+                0x000018bc       0x2e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_trunc.o)
+                0x000018bc                __fp_trunc
  .text.avr-libc.fplib
-                0x000013f2        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_zero.o)
-                0x000013f2                __fp_zero
-                0x000013f4                __fp_szero
+                0x000018ea        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(fp_zero.o)
+                0x000018ea                __fp_zero
+                0x000018ec                __fp_szero
  .text.avr-libc.fplib
-                0x00001400       0x74 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(lrint.o)
-                0x00001400                lrint
+                0x000018f8       0x74 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(lrint.o)
+                0x000018f8                lrint
  .text.avr-libc.fplib
-                0x00001474        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(mulsf3.o)
-                0x00001474                __mulsf3
+                0x0000196c        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(mulsf3.o)
+                0x0000196c                __mulsf3
  .text.avr-libc.fplib
-                0x00001478       0xc2 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
-                0x0000148c                __mulsf3x
-                0x00001490                __mulsf3_pse
+                0x00001970       0xc2 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
+                0x00001984                __mulsf3x
+                0x00001988                __mulsf3_pse
  .text.libgcc.div
-                0x0000153a       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodsi4.o)
-                0x0000153a                __udivmodsi4
+                0x00001a32       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodsi4.o)
+                0x00001a32                __udivmodsi4
  .text.libgcc.div
-                0x0000157e       0x2e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_divmodsi4.o)
-                0x0000157e                __divmodsi4
+                0x00001a76       0x2e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_divmodsi4.o)
+                0x00001a76                __divmodsi4
  .text.libgcc.div
-                0x000015ac       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_negsi2.o)
-                0x000015ac                __negsi2
-                0x000015bc                . = ALIGN (0x2)
+                0x00001aa4       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_negsi2.o)
+                0x00001aa4                __negsi2
+                0x00001ab4                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000015bc        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
-                0x000015bc                _exit
-                0x000015bc                exit
+ .fini9         0x00001ab4        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
+                0x00001ab4                _exit
+                0x00001ab4                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -718,11 +693,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000015bc        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
+ .fini0         0x00001ab4        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000015c0                _etext = .
+                0x00001ab8                _etext = .
 
-.data           0x00800100        0x4 load address 0x000015c0
+.data           0x00800100        0x4 load address 0x00001ab8
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -735,83 +710,86 @@ END GROUP
                 0x00800104                _edata = .
                 0x00800104                PROVIDE (__data_end, .)
 
-.bss            0x00800104      0x25e
+.bss            0x00800104      0x262
                 0x00800104                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.car_speed
                 0x00800104        0x1 Test2_atmega324PA.o
                 0x00800104                car_speed
+ .bss.mm_US     0x00800105        0x2 Test2_atmega324PA.o
+                0x00800105                mm_US
+ .bss.cm_IR     0x00800107        0x1 Test2_atmega324PA.o
+                0x00800107                cm_IR
  .bss.isAutonomous
-                0x00800105        0x2 Test2_atmega324PA.o
-                0x00800105                isAutonomous
+                0x00800108        0x2 Test2_atmega324PA.o
+                0x00800108                isAutonomous
+ .bss.turning   0x0080010a        0x2 Test2_atmega324PA.o
+                0x0080010a                turning
  .bss.US_manual_start
-                0x00800107        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x00800107                US_manual_start
- .bss.US_pos_in_buffer
-                0x00800108        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x00800108                US_pos_in_buffer
- .bss.US_data_part_no
-                0x00800109        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x00800109                US_data_part_no
- .bss.lastUSonicValue
-                0x0080010a        0x2 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x0080010a                lastUSonicValue
- .bss.IR_pos_in_buffer
                 0x0080010c        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x0080010c                IR_pos_in_buffer
- .bss.activeInfraredSensor
+                0x0080010c                US_manual_start
+ .bss.US_pos_in_buffer
                 0x0080010d        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x0080010d                activeInfraredSensor
+                0x0080010d                US_pos_in_buffer
+ .bss.US_data_part_no
+                0x0080010e        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x0080010e                US_data_part_no
+ .bss.lastUSonicValue
+                0x0080010f        0x2 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x0080010f                lastUSonicValue
+ .bss.IR_pos_in_buffer
+                0x00800111        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x00800111                IR_pos_in_buffer
+ .bss.activeInfraredSensor
+                0x00800112        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x00800112                activeInfraredSensor
  .bss.txWritePos
-                0x0080010e        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x0080010e                txWritePos
- .bss.txReadPos
-                0x0080010f        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x0080010f                txReadPos
- .bss.lastCommandHeader
-                0x00800110        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00800110                lastCommandHeader
- .bss.lastPackPosInBuff
-                0x00800111        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00800111                lastPackPosInBuff
- .bss.lastPackNo
-                0x00800112        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00800112                lastPackNo
- .bss.packStarted
                 0x00800113        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00800113                packStarted
- .bss.rxWritePos
+                0x00800113                txWritePos
+ .bss.txReadPos
                 0x00800114        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00800114                rxWritePos
- .bss.rxReadPos
+                0x00800114                txReadPos
+ .bss.lastPackPosInBuff
                 0x00800115        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x00800115                rxReadPos
- .bss.argc2     0x00800116        0x2 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
-                0x00800116                argc2
+                0x00800115                lastPackPosInBuff
+ .bss.lastPackNo
+                0x00800116        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00800116                lastPackNo
+ .bss.packStarted
+                0x00800117        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00800117                packStarted
+ .bss.rxWritePos
+                0x00800118        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00800118                rxWritePos
+ .bss.rxReadPos
+                0x00800119        0x1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00800119                rxReadPos
+ .bss.argc2     0x0080011a        0x2 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+                0x0080011a                argc2
  .bss.stopFunction
-                0x00800118        0x2 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
-                0x00800118                stopFunction
+                0x0080011c        0x2 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+                0x0080011c                stopFunction
  *(COMMON)
- COMMON         0x0080011a       0x34 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
-                0x0080011a                UltraSonicValues
-                0x0080013a                InfraredValues
-                0x0080014a                ultrasonicDataPack
- COMMON         0x0080014e      0x200 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                0x0080014e                rxBuffer
-                0x0080024e                txBuffer
- COMMON         0x0080034e       0x14 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
-                0x0080034e                argv2
-                0x00800362                PROVIDE (__bss_end, .)
-                0x000015c0                __data_load_start = LOADADDR (.data)
-                0x000015c4                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0080011e       0x34 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x0080011e                UltraSonicValues
+                0x0080013e                InfraredValues
+                0x0080014e                ultrasonicDataPack
+ COMMON         0x00800152      0x200 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00800152                rxBuffer
+                0x00800252                txBuffer
+ COMMON         0x00800352       0x14 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+                0x00800352                argv2
+                0x00800366                PROVIDE (__bss_end, .)
+                0x00001ab8                __data_load_start = LOADADDR (.data)
+                0x00001abc                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800362        0x0
-                0x00800362                PROVIDE (__noinit_start, .)
+.noinit         0x00800366        0x0
+                0x00800366                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800362                PROVIDE (__noinit_end, .)
-                0x00800362                _end = .
-                0x00800362                PROVIDE (__heap_start, .)
+                0x00800366                PROVIDE (__noinit_end, .)
+                0x00800366                _end = .
+                0x00800366                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -874,74 +852,74 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x250
+.debug_aranges  0x00000000      0x220
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x30 Test2_atmega324PA.o
  .debug_aranges
-                0x00000030       0xf8 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                0x00000030       0xd8 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
  .debug_aranges
-                0x00000128       0x80 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+                0x00000108       0x80 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
  .debug_aranges
-                0x000001a8       0x70 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                0x00000188       0x68 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
  .debug_aranges
-                0x00000218       0x38 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+                0x000001f0       0x30 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x1ea1
+.debug_info     0x00000000     0x1e51
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0x37a Test2_atmega324PA.o
- .debug_info    0x0000037a      0xd0a G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .debug_info    0x00001084      0x4e6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
- .debug_info    0x0000156a      0x6db G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
- .debug_info    0x00001c45      0x25c G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+ .debug_info    0x00000000      0x4fc Test2_atmega324PA.o
+ .debug_info    0x000004fc      0xc77 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+ .debug_info    0x00001173      0x4e6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+ .debug_info    0x00001659      0x5d5 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+ .debug_info    0x00001c2e      0x223 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
 
-.debug_abbrev   0x00000000      0xa55
+.debug_abbrev   0x00000000      0x98e
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x184 Test2_atmega324PA.o
- .debug_abbrev  0x00000184      0x279 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .debug_abbrev  0x000003fd      0x21a G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
- .debug_abbrev  0x00000617      0x2f6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
- .debug_abbrev  0x0000090d      0x148 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+ .debug_abbrev  0x00000000      0x1b1 Test2_atmega324PA.o
+ .debug_abbrev  0x000001b1      0x211 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+ .debug_abbrev  0x000003c2      0x21a G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+ .debug_abbrev  0x000005dc      0x2bc G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+ .debug_abbrev  0x00000898       0xf6 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
 
-.debug_line     0x00000000      0xb22
+.debug_line     0x00000000      0xaac
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000      0x1ba Test2_atmega324PA.o
- .debug_line    0x000001ba      0x327 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .debug_line    0x000004e1      0x208 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
- .debug_line    0x000006e9      0x323 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
- .debug_line    0x00000a0c      0x116 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+ .debug_line    0x00000000      0x1ea Test2_atmega324PA.o
+ .debug_line    0x000001ea      0x2ee G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+ .debug_line    0x000004d8      0x209 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+ .debug_line    0x000006e1      0x2d3 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+ .debug_line    0x000009b4       0xf8 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
 
-.debug_frame    0x00000000      0x828
+.debug_frame    0x00000000      0x7b8
  *(.debug_frame)
- .debug_frame   0x00000000       0x64 Test2_atmega324PA.o
- .debug_frame   0x00000064      0x384 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .debug_frame   0x000003e8      0x1d0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
- .debug_frame   0x000005b8      0x198 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
- .debug_frame   0x00000750       0xd8 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+ .debug_frame   0x00000000       0x78 Test2_atmega324PA.o
+ .debug_frame   0x00000078      0x344 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+ .debug_frame   0x000003bc      0x1d0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+ .debug_frame   0x0000058c      0x16c G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+ .debug_frame   0x000006f8       0xc0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
 
-.debug_str      0x00000000      0x9f8
+.debug_str      0x00000000      0x95e
  *(.debug_str)
- .debug_str     0x00000000      0x260 Test2_atmega324PA.o
-                                0x29b (size before relaxing)
- .debug_str     0x00000260      0x2c1 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
-                                0x37b (size before relaxing)
- .debug_str     0x00000521      0x25b G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+ .debug_str     0x00000000      0x333 Test2_atmega324PA.o
+                                0x36e (size before relaxing)
+ .debug_str     0x00000333      0x1c4 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+                                0x31c (size before relaxing)
+ .debug_str     0x000004f7      0x228 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
                                 0x383 (size before relaxing)
- .debug_str     0x0000077c      0x1cc G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
-                                0x3ee (size before relaxing)
- .debug_str     0x00000948       0xb0 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
-                                0x222 (size before relaxing)
+ .debug_str     0x0000071f      0x183 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+                                0x323 (size before relaxing)
+ .debug_str     0x000008a2       0xbc G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+                                0x20a (size before relaxing)
 
-.debug_loc      0x00000000     0x20bd
+.debug_loc      0x00000000     0x1fff
  *(.debug_loc)
- .debug_loc     0x00000000       0xda Test2_atmega324PA.o
- .debug_loc     0x000000da      0xb9d G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .debug_loc     0x00000c77      0x832 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
- .debug_loc     0x000014a9      0x92b G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
- .debug_loc     0x00001dd4      0x2e9 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+ .debug_loc     0x00000000      0x123 Test2_atmega324PA.o
+ .debug_loc     0x00000123      0xbb3 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+ .debug_loc     0x00000cd6      0x832 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+ .debug_loc     0x00001508      0x828 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+ .debug_loc     0x00001d30      0x2cf G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -961,13 +939,13 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x218
+.debug_ranges   0x00000000      0x1e8
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x20 Test2_atmega324PA.o
- .debug_ranges  0x00000020       0xe8 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
- .debug_ranges  0x00000108       0x88 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
- .debug_ranges  0x00000190       0x60 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
- .debug_ranges  0x000001f0       0x28 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
+ .debug_ranges  0x00000020       0xc8 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\PWM_lib\Debug\libPWM_lib.a(PWM_lib.o)
+ .debug_ranges  0x000000e8       0x88 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Sensors\Debug\libSensors.a(Sensors.o)
+ .debug_ranges  0x00000170       0x58 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Communication\Debug\libCommunication.a(Communication.o)
+ .debug_ranges  0x000001c8       0x20 G:\Ingeniously\I_P-A-S-V-t-tenCI_\Atmel\Librari\MyLibs\Time\Debug\libTime.a(Time.o)
 
 .debug_macro
  *(.debug_macro)

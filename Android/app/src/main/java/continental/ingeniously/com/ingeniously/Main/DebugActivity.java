@@ -160,13 +160,7 @@ public class DebugActivity extends ActionBarActivity implements ProtocolObserver
             }else if(commands[i].startsWith("search")){
 
                 serachForDevices();
-            }else if(commands[i].startsWith("sendstatusupdate")){
 
-                ProtocolCommand c = new ProtocolCommand((byte)100,(byte)1,(byte)2,(short)3);
-                System.out.println("Status UPDATE CRC ok: "+c.verifyCRC());
-
-                bluetoothIO.sendCommand(c);//(Codes.STATUS_UPDATE_COMMAND);
-                System.out.println("Status update sent");
             }else {
                 System.out.println("Undefined command: \"" + commands[i] + "\" !");
             }
@@ -247,7 +241,7 @@ public class DebugActivity extends ActionBarActivity implements ProtocolObserver
 
         sb.append("Header = "+response.getHeader());
         sb.append("\nNo of sensors = "+no_of_sens);
-        sb.append("\nInfo = ");
+        sb.append("\nInfo = "+no_of_sens);
 
         for (int i=0; i<no_of_sens; i++){
             sb.append(info[i]+"; ");
